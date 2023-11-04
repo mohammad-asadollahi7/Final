@@ -82,7 +82,6 @@ public class FinalContext : IdentityDbContext<ApplicationUser, IdentityRole<int>
         modelBuilder.Entity<Auction>(entity =>
         {
             entity.ToTable("Auction");
-
             entity.HasIndex(e => e.ProductId, "IX_Auction").IsUnique();
 
             entity.Property(e => e.FromDate).HasColumnType("datetime");
@@ -250,7 +249,7 @@ public class FinalContext : IdentityDbContext<ApplicationUser, IdentityRole<int>
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Products_Booths");
 
-            entity.HasOne(d => d.IdNavigation).WithOne(p => p.Product)
+            entity.HasOne(d => d.Auction).WithOne(p => p.Product)
                 .HasPrincipalKey<Auction>(p => p.ProductId)
                 .HasForeignKey<Product>(d => d.Id)
                 .OnDelete(DeleteBehavior.ClientSetNull)

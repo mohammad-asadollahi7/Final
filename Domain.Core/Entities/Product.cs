@@ -17,7 +17,7 @@ public partial class Product
 
     public int BoothId { get; set; }
 
-    public bool SellType { get; set; }
+    public int SellType { get; set; }
 
     public bool? IsApproved { get; set; }
 
@@ -27,8 +27,7 @@ public partial class Product
 
     public virtual ICollection<CustomAttribute> CustomAttributes { get; set; } = new List<CustomAttribute>();
 
-    public virtual Auction IdNavigation { get; set; } = null!;
-
+    public virtual Auction? Auction { get; set; }
     public virtual NonAuctionPrice? NonAuctionPrice { get; set; }
 
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();

@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Domain.Core\Domain.Core.csproj" />
+    <ProjectReference Include="..\Infra.Db.EF\Infra.Db.EF.csproj" />
+  </ItemGroup>
+
 </Project>
