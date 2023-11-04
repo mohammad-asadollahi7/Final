@@ -8,8 +8,11 @@ namespace Domain.Core.Contracts.Repos;
 
 public interface IProductRepository
 {
-    Task<ProductDetailsDto?> GetNonAuctionsById(int productId,
+    Task<ProductDetailsDto?> GetNonAuctionProductById(int productId,
                                                 CancellationToken cancellationToken);
+
+    Task<ProductDetailsDto?> GetAuctionProductById(int productId,
+                                                                CancellationToken cancellationToken);
 
     Task<int> Create(string persianTitle,
                      string englishTitle,

@@ -15,8 +15,8 @@ public class ProductRepository : IProductRepository
 
     public ProductRepository(FinalContext context) => _context = context;
 
-    public async Task<ProductDetailsDto?> GetNonAuctionsById(int productId,
-                                                 CancellationToken cancellationToken)
+    public async Task<ProductDetailsDto?> GetNonAuctionProductById(int productId,
+                                                            CancellationToken cancellationToken)
     {
         var productDetailsDto = await _context.Products.Where(p => p.Id == productId)
                                                    .Select(p => new ProductDetailsDto()
@@ -42,6 +42,37 @@ public class ProductRepository : IProductRepository
                                                        })
 
                                                    }).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
+
+        return productDetailsDto;
+    }
+
+
+    public async Task<ProductDetailsDto?> GetAuctionProductById(int productId,
+                                                                CancellationToken cancellationToken)
+    {
+        var productDetailsDto = await _context.Products.Where(p => p.Id == productId)
+                                                  .Select(p => new ProductDetailsDto()
+                                                  {
+                                                      Id = p.Id,
+                                                      PersianTitle = p.PersianTitle,
+                                                      EnglishTitle = p.EnglishTitle,
+                                                      Description = p.Description,
+                                                      Price = p.AuctionOrders.Select(a => a.Price).Max(),
+                                                      BoothId = p.BoothId,
+                                                      ProductPictureDto = p.ProductPictures.Select(p => p.Picture)
+                                                                                           .Select(p => new ProductPictureDto()
+                                                                                           {
+                                                                                               Id = p.Id,
+                                                                                               Name = p.Name,
+                                                                                           }),
+                                                      CustomAttributes = p.CustomAttributes.Select(c => new CustomAttributeDto()
+                                                      {
+                                                          Id = c.Id,
+                                                          Title = c.AttributeTitle,
+                                                          Value = c.AttributeValue
+                                                      })
+
+                                                  }).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
 
         return productDetailsDto;
     }
@@ -192,6 +223,44 @@ public class ProductRepository : IProductRepository
 
         if (isCommit)
             await _context.SaveChangesAsync(canellationToken);
+    }
+
+
+    public async Task<bool> Update(int productId,
+                                  UpdateProductDto productDto,
+                                  CancellationToken cancellationToken)
+    {
+        var product = await _context.Products.Where(p => p.Id == productId)
+                                             .Include(p => p.CustomAttributes)
+                                             .FirstOrDefaultAsync(cancellationToken);
+
+        product.PersianTitle = productDto.PersianTitle;
+        product.EnglishTitle = productDto.EnglishTitle;
+        product.Description = productDto.Description;
+
+        List<CustomAttributes> newCustomAttributes = new();
+        var attributes = product.CustomAttributes.ToList();
+        foreach (var attribute in attributes)
+        {
+            var customAttribute = new CustomAttributes()
+            {
+                Id = attribute.Id,
+                ProductId = product.Id,
+                AttributeTitle = attribute.AttributeTitle,
+                AttributeValue = productDto.CustomAttributes.Where(c => c.Id == attribute.Id
+                                                        && c.Title == attribute.AttributeTitle)
+                                                        .Select(c => c.Value).First()
+            };
+            newCustomAttributes.Add(customAttribute);
+        }
+        product.CustomAttributes = newCustomAttributes;
+
+
+        var isAffected = await _context.SaveChangesAsync(cancellationToken);
+        if (isAffected == 0)
+            return false;
+
+        return true;
     }
 
 }
