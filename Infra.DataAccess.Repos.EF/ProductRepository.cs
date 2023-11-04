@@ -1,6 +1,7 @@
 ﻿using Domain.Core.Contracts.Repos;
 using Domain.Core.Dtos.Product;
 using Domain.Core.Dtos.Products;
+using Domain.Core.Entities;
 using Domain.Core.Enums;
 using Infra.Db.EF;
 using Microsoft.EntityFrameworkCore;
@@ -42,5 +43,38 @@ public class ProductRepository : IProductRepository
                                                    }).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
 
         return productDetailsDto;
+    }
+
+    public async Task<int> Create(string persianTitle,
+                                  string englishTitle,
+                                  string description,
+                                  int categoryId,
+                                  int boothId,
+                                  SellType sellType,
+                                  bool isCommit,
+                                  CancellationToken cancellationToken)
+    {
+
+        var category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == categoryId);
+
+        var newProduct = new Product()
+        {
+            PersianTitle = persianTitle,
+            EnglishTitle = englishTitle,
+            Description = description,
+            IsDeleted = false,
+            IsApproved = false,
+            BoothId = boothId,
+            SellType = (int)sellType,
+        };
+        newProduct.Categories.Add(category);
+
+
+        await _context.Products.AddAsync(newProduct, cancellationToken);
+
+        if (isCommit)
+            await _context.SaveChangesAsync(cancellationToken);
+
+        return _context.Entry(newProduct).Property(p => p.Id).CurrentValue;
     }
 }
