@@ -77,4 +77,70 @@ public class ProductRepository : IProductRepository
 
         return _context.Entry(newProduct).Property(p => p.Id).CurrentValue;
     }
+
+
+    public async Task AddCustomAttributes(int productId,
+                                          List<CustomAttributeDto> attributes,
+                                          bool isCommit,
+                                          CancellationToken cancellationToken)
+    {
+        List<CustomAttributes> customAttributes = new();
+        foreach (var attribute in attributes)
+        {
+            var customAttribute = new CustomAttributes()
+            {
+                ProductId = productId,
+                AttributeTitle = attribute.Title,
+                AttributeValue = attribute.Value,
+            };
+            customAttributes.Add(customAttribute);
+        }
+
+        await _context.CustomAttributes.AddRangeAsync(customAttributes);
+
+        if (isCommit)
+            await _context.SaveChangesAsync(cancellationToken);
+
+    }
+
+    public async Task AddNonAuctionPrice(decimal price,
+                                         int discount,
+                                         int productId,
+                                         bool isCommit,
+                                         CancellationToken cancellationToken)
+    {
+        var nonAuctionPrice = new NonAuctionPrice()
+        {
+            Price = price,
+            Discount = discount,
+            ProductId = productId
+        };
+
+        await _context.NonAuctionPrices.AddAsync(nonAuctionPrice, cancellationToken);
+
+        if (isCommit)
+            await _context.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task AddAuction(int productId,
+                                 DateTime fromDate,
+                                 DateTime toDate,
+                                 decimal minPrice,
+                                 bool isCommit,
+                                 CancellationToken cancellationToken)
+    {
+        var auction = new Auction()
+        {
+            ProductId = productId,
+            FromDate = fromDate,
+            ToDate = toDate,
+            MinPrice = minPrice
+        };
+
+        await _context.Auctions.AddAsync(auction, cancellationToken);
+
+        if (isCommit)
+            await _context.SaveChangesAsync(cancellationToken);
+    }
 }
+

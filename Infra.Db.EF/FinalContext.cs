@@ -32,7 +32,7 @@ public class FinalContext : IdentityDbContext<ApplicationUser, IdentityRole<int>
 
     public virtual DbSet<Comment> Comments { get; set; }
 
-    public virtual DbSet<CustomAttribute> CustomAttributes { get; set; }
+    public virtual DbSet<CustomAttributes> CustomAttributes { get; set; }
 
     public virtual DbSet<CustomAttributesTemplate> CustomAttributesTemplates { get; set; }
 
@@ -162,7 +162,7 @@ public class FinalContext : IdentityDbContext<ApplicationUser, IdentityRole<int>
                 .HasConstraintName("FK_Comments_Products1");
         });
 
-        modelBuilder.Entity<CustomAttribute>(entity =>
+        modelBuilder.Entity<CustomAttributes>(entity =>
         {
             entity.HasIndex(e => e.ProductId, "IX_CustomAttributes_ProductId");
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Domain.Core.Entities;
 
-public partial class CustomAttribute
+public partial class CustomAttributes
 {
     public int Id { get; set; }
 

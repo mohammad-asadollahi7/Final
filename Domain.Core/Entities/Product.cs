@@ -25,7 +25,7 @@ public partial class Product
 
     public virtual Booth Booth { get; set; } = null!;
 
-    public virtual ICollection<CustomAttribute> CustomAttributes { get; set; } = new List<CustomAttribute>();
+    public virtual ICollection<CustomAttributes> CustomAttributes { get; set; } = new List<CustomAttributes>();
 
     public virtual Auction? Auction { get; set; }
     public virtual NonAuctionPrice? NonAuctionPrice { get; set; }
