@@ -1,4 +1,5 @@
 ﻿
+using Domain.Core.Dtos.Pictures;
 using Domain.Core.Dtos.Product;
 using Domain.Core.Dtos.Products;
 using Domain.Core.Enums;
@@ -34,4 +35,17 @@ public interface IProductRepository
                     decimal minPrice,
                     bool isCommit,
                     CancellationToken cancellationToken);
+
+    Task AddQuantityRecord(int productId,
+                           int quantity,
+                           DateTime submitDate,
+                           bool isSold,
+                           CancellationToken cancellationToken,
+                           bool isCommit);
+
+    Task AddPicture(int productId,
+                    PictureDto pictureDto,
+                    CancellationToken canellationToken,
+                    bool isCommit);
+
 }

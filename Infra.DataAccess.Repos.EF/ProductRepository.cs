@@ -1,4 +1,5 @@
 ﻿using Domain.Core.Contracts.Repos;
+using Domain.Core.Dtos.Pictures;
 using Domain.Core.Dtos.Product;
 using Domain.Core.Dtos.Products;
 using Domain.Core.Entities;
@@ -142,5 +143,56 @@ public class ProductRepository : IProductRepository
         if (isCommit)
             await _context.SaveChangesAsync(cancellationToken);
     }
+
+
+    public async Task AddQuantityRecord(int productId,
+                                        int quantity,
+                                        DateTime submitDate,
+                                        bool isSold,
+                                        CancellationToken cancellationToken,
+                                        bool isCommit)
+    {
+        var productInventory = new ProductInventory()
+        {
+            IsSold = isSold,
+            ChangedAt = submitDate,
+            ProductId = productId,
+            Quantity = quantity
+        };
+        await _context.ProductInventories.AddAsync(productInventory);
+
+        if (isCommit)
+            await _context.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task AddPicture(int productId,
+                                 PictureDto pictureDto,
+                                 CancellationToken canellationToken,
+                                 bool isCommit)
+    {
+        List<Picture> pictures = new();
+        List<ProductPicture> productPictures = new();
+
+        var newPicture = new Picture()
+        {
+            Name = pictureDto.PictureName,
+        };
+        var newProductPicture = new ProductPicture()
+        {
+            ProductId = productId,
+            Picture = newPicture
+        };
+        pictures.Add(newPicture);
+        productPictures.Add(newProductPicture);
+
+
+        await _context.Pictures.AddRangeAsync(pictures, canellationToken);
+        await _context.ProductPictures.AddRangeAsync(productPictures, canellationToken);
+
+
+        if (isCommit)
+            await _context.SaveChangesAsync(canellationToken);
+    }
+
 }
 
