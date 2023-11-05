@@ -1,20 +1,21 @@
-﻿
-using Domain.Core.Dtos.Pictures;
+﻿using Domain.Core.Dtos.Pictures;
 using Domain.Core.Dtos.Product;
 using Domain.Core.Dtos.Products;
-using Domain.Core.Entities;
 using Domain.Core.Enums;
-using Microsoft.EntityFrameworkCore;
 
 namespace Domain.Core.Contracts.Repos;
 
 public interface IProductRepository
 {
     Task<ProductDetailsDto?> GetNonAuctionProductById(int productId,
-                                                CancellationToken cancellationToken);
+                                                      CancellationToken cancellationToken);
 
     Task<ProductDetailsDto?> GetAuctionProductById(int productId,
-                                                                CancellationToken cancellationToken);
+                                                   CancellationToken cancellationToken);
+
+    Task<List<ProductInventoryDto>> GetProductInventories(int productId,
+                                                          CancellationToken cancellationToken);
+
 
     Task<int> Create(string persianTitle,
                      string englishTitle,
@@ -26,14 +27,14 @@ public interface IProductRepository
                      CancellationToken cancellationToken);
 
     Task AddCustomAttributes(int productId,
-                                          List<CustomAttributeDto> attributes,
-                                          bool isCommit,
-                                          CancellationToken cancellationToken);
+                             List<CustomAttributeDto> attributes,
+                             bool isCommit,
+                             CancellationToken cancellationToken);
     Task AddNonAuctionPrice(decimal price,
-                                         int discount,
-                                         int productId,
-                                         bool isCommit,
-                                         CancellationToken cancellationToken);
+                            int discount,
+                            int productId,
+                            bool isCommit,
+                            CancellationToken cancellationToken);
     Task AddAuction(int productId,
                     DateTime fromDate,
                     DateTime toDate,

@@ -77,6 +77,19 @@ public class ProductRepository : IProductRepository
         return productDetailsDto;
     }
 
+
+    public async Task<List<ProductInventoryDto>> GetProductInventories(int productId,
+                                                                     CancellationToken cancellationToken)
+    {
+
+        return await _context.ProductInventories.Where(pi => pi.ProductId == productId)
+                                                .Select(pi => new ProductInventoryDto()
+                                                {
+                                                    Id = pi.Id,
+                                                    IsSold = pi.IsSold,
+                                                    Quantity = pi.Quantity
+                                                }).ToListAsync(cancellationToken);
+    }
     public async Task<int> Create(string persianTitle,
                                   string englishTitle,
                                   string description,
