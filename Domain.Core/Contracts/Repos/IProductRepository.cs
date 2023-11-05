@@ -2,7 +2,9 @@
 using Domain.Core.Dtos.Pictures;
 using Domain.Core.Dtos.Product;
 using Domain.Core.Dtos.Products;
+using Domain.Core.Entities;
 using Domain.Core.Enums;
+using Microsoft.EntityFrameworkCore;
 
 namespace Domain.Core.Contracts.Repos;
 
@@ -51,4 +53,34 @@ public interface IProductRepository
                     CancellationToken canellationToken,
                     bool isCommit);
 
+     Task Update(int productId,
+                 UpdateProductDto productDto,
+                 bool isCommit,
+                 CancellationToken cancellationToken);
+    
+
+   Task UpdateAuctionRecord(int productId,
+                            AuctionDto auctionDto,
+                            bool isCommit,
+                            CancellationToken cancellationToken);
+    
+
+     Task UpdateNonAuctionPrice(int productId,
+                                decimal price,
+                                int discount,
+                                bool isCommit,
+                                CancellationToken cancellationToken);
+
+    Task<bool> Delete(int productId,
+                      CancellationToken cancellationToken);
+
+    Task<bool> IsDeleted(int productId,
+                         CancellationToken cancellationToken);
+
+
+    Task<bool> IsExistById(int id,
+                           CancellationToken cancellationToken);
+
+    Task SaveChangesAsync(CancellationToken cancellationToken);
+    
 }

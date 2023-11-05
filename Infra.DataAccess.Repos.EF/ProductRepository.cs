@@ -4,7 +4,6 @@ using Domain.Core.Dtos.Product;
 using Domain.Core.Dtos.Products;
 using Domain.Core.Entities;
 using Domain.Core.Enums;
-using Hangfire;
 using Infra.Db.EF;
 using Microsoft.EntityFrameworkCore;
 
@@ -290,6 +289,39 @@ public class ProductRepository : IProductRepository
 
         if(isCommit)
             await _context.SaveChangesAsync(cancellationToken);
+    }
+
+
+    public async Task<bool> Delete(int productId,
+                                   CancellationToken cancellationToken)
+    {
+        var product = await _context.Products.SingleOrDefaultAsync(p => p.Id == productId, cancellationToken);
+        product.IsDeleted = true;
+        var isAffected = await _context.SaveChangesAsync(cancellationToken);
+        return isAffected == 1;
+    }
+
+    public async Task<bool> IsDeleted(int productId,
+                                      CancellationToken cancellationToken)
+    {
+        var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == productId,
+                                                                  cancellationToken);
+        return product.IsDeleted;
+    }
+
+
+
+    public async Task<bool> IsExistById(int id,
+                                        CancellationToken cancellationToken)
+    {
+        return await _context.Products.AnyAsync(p => p.Id == id, cancellationToken);
+    }
+
+
+
+    public async Task SaveChangesAsync(CancellationToken cancellationToken)
+    {
+        await _context.SaveChangesAsync(cancellationToken);
     }
 
 }
