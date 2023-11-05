@@ -16,8 +16,6 @@ public class FinalContext : IdentityDbContext<ApplicationUser, IdentityRole<int>
     {
     }
 
-    public virtual DbSet<Address> Addresses { get; set; }
-
     public virtual DbSet<Admin> Admins { get; set; }
 
     public virtual DbSet<Auction> Auctions { get; set; }
@@ -57,19 +55,6 @@ public class FinalContext : IdentityDbContext<ApplicationUser, IdentityRole<int>
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Address>(entity =>
-        {
-            entity.Property(e => e.Id).ValueGeneratedOnAdd();
-            entity.Property(e => e.City).HasMaxLength(50);
-            entity.Property(e => e.Province).HasMaxLength(50);
-            entity.Property(e => e.Street).HasMaxLength(50);
-
-            entity.HasOne(d => d.IdNavigation).WithOne(p => p.Address)
-                .HasPrincipalKey<Customer>(p => p.AddressId)
-                .HasForeignKey<Address>(d => d.Id)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Addresses_Customers");
-        });
 
         modelBuilder.Entity<Admin>(entity =>
         {
@@ -192,7 +177,6 @@ public class FinalContext : IdentityDbContext<ApplicationUser, IdentityRole<int>
 
             entity.HasIndex(e => e.ApplicationUserId, "IX_Customers").IsUnique();
 
-            entity.HasIndex(e => e.AddressId, "IX_Customers_1").IsUnique();
 
             entity.HasOne(d => d.ApplicationUser).WithOne(p => p.Customer)
                 .HasForeignKey<Customer>(d => d.ApplicationUserId)
@@ -319,21 +303,15 @@ public class FinalContext : IdentityDbContext<ApplicationUser, IdentityRole<int>
         {
             entity.HasIndex(e => e.ApplicationUserId, "IX_Sellers").IsUnique();
 
-            entity.HasIndex(e => e.AddressId, "IX_Sellers_1").IsUnique();
 
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
-
-            entity.HasOne(d => d.Address).WithOne(p => p.Seller)
-                .HasForeignKey<Seller>(d => d.AddressId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Sellers_Addresses");
 
             entity.HasOne(d => d.ApplicationUser).WithOne(p => p.Seller)
                 .HasForeignKey<Seller>(d => d.ApplicationUserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Sellers_AspNetUsers");
 
-            entity.HasOne(d => d.IdNavigation).WithOne(p => p.Seller)
+            entity.HasOne(d => d.Booth).WithOne(p => p.Seller)
                 .HasForeignKey<Seller>(d => d.Id)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Sellers_Booths");

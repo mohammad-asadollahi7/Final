@@ -757,14 +757,14 @@ namespace Infra.Db.EF.Migrations
 
             modelBuilder.Entity("Domain.Core.Entities.Address", b =>
                 {
-                    b.HasOne("Domain.Core.Entities.Customer", "IdNavigation")
+                    b.HasOne("Domain.Core.Entities.Customer", "Booth")
                         .WithOne("Address")
                         .HasForeignKey("Domain.Core.Entities.Address", "Id")
                         .HasPrincipalKey("Domain.Core.Entities.Customer", "AddressId")
                         .IsRequired()
                         .HasConstraintName("FK_Addresses_Customers");
 
-                    b.Navigation("IdNavigation");
+                    b.Navigation("Booth");
                 });
 
             modelBuilder.Entity("Domain.Core.Entities.Admin", b =>
@@ -799,13 +799,13 @@ namespace Infra.Db.EF.Migrations
 
             modelBuilder.Entity("Domain.Core.Entities.Booth", b =>
                 {
-                    b.HasOne("Domain.Core.Entities.Picture", "IdNavigation")
+                    b.HasOne("Domain.Core.Entities.Picture", "Booth")
                         .WithOne("Booth")
                         .HasForeignKey("Domain.Core.Entities.Booth", "Id")
                         .IsRequired()
                         .HasConstraintName("FK_Booths_Pictures");
 
-                    b.Navigation("IdNavigation");
+                    b.Navigation("Booth");
                 });
 
             modelBuilder.Entity("Domain.Core.Entities.Cart", b =>
@@ -921,7 +921,7 @@ namespace Infra.Db.EF.Migrations
                         .IsRequired()
                         .HasConstraintName("FK_Products_Booths");
 
-                    b.HasOne("Domain.Core.Entities.Auction", "IdNavigation")
+                    b.HasOne("Domain.Core.Entities.Auction", "Booth")
                         .WithOne("Product")
                         .HasForeignKey("Domain.Core.Entities.Product", "Id")
                         .HasPrincipalKey("Domain.Core.Entities.Auction", "ProductId")
@@ -930,7 +930,7 @@ namespace Infra.Db.EF.Migrations
 
                     b.Navigation("Booth");
 
-                    b.Navigation("IdNavigation");
+                    b.Navigation("Booth");
                 });
 
             modelBuilder.Entity("Domain.Core.Entities.ProductInventory", b =>
@@ -988,7 +988,7 @@ namespace Infra.Db.EF.Migrations
                         .IsRequired()
                         .HasConstraintName("FK_Sellers_AspNetUsers");
 
-                    b.HasOne("Domain.Core.Entities.Booth", "IdNavigation")
+                    b.HasOne("Domain.Core.Entities.Booth", "Booth")
                         .WithOne("Seller")
                         .HasForeignKey("Domain.Core.Entities.Seller", "Id")
                         .IsRequired()
@@ -998,7 +998,7 @@ namespace Infra.Db.EF.Migrations
 
                     b.Navigation("ApplicationUser");
 
-                    b.Navigation("IdNavigation");
+                    b.Navigation("Booth");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>

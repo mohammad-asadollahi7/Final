@@ -9,10 +9,6 @@ public partial class Customer
 
     public int ApplicationUserId { get; set; }
 
-    public int AddressId { get; set; }
-
-    public virtual Address? Address { get; set; }
-
     public virtual ApplicationUser ApplicationUser { get; set; } = null!;
 
     public virtual ICollection<AuctionOrder> AuctionOrders { get; set; } = new List<AuctionOrder>();

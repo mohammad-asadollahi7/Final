@@ -9,11 +9,7 @@ public partial class Seller
 
     public int ApplicationUserId { get; set; }
 
-    public int AddressId { get; set; }
-
-    public virtual Address Address { get; set; } = null!;
-
     public virtual ApplicationUser ApplicationUser { get; set; } = null!;
 
-    public virtual Booth IdNavigation { get; set; } = null!;
+    public virtual Booth Booth { get; set; } = null!;
 }

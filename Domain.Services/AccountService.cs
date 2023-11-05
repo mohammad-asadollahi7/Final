@@ -17,16 +17,19 @@ public class AccountService : IAccountService
     private readonly IAccountRepository _accountRepository;
     private readonly IAdminService _adminService;
     private readonly ICustomerService _customerService;
+    private readonly ISellerService _sellerService;
     private readonly IOptionsSnapshot<JWTConfiguration> _JWTConfigs;
 
     public AccountService(IAccountRepository accountRepository,
                           IAdminService adminService,
                           ICustomerService customerService,
+                          ISellerService sellerService,
                           IOptionsSnapshot<JWTConfiguration> JWTConfigs)
     {
         _accountRepository = accountRepository;
         _adminService = adminService;
         _customerService = customerService;
+        _sellerService = sellerService;
         _JWTConfigs = JWTConfigs;
     }
 
@@ -85,15 +88,19 @@ public class AccountService : IAccountService
     }
 
 
-    public async Task CreateAdminOrCustomerByUserId(int userId,
-                                                    Role role,
-                                                    CancellationToken cancellationToken)
+    public async Task CreateRoleByUserId(int userId,
+                                         Role role,
+                                         CancellationToken cancellationToken)
     {
         if (role.ToString().ToLower() == "admin")
             await _adminService.AddByApplicationUserId(userId, cancellationToken);
 
         else if (role.ToString().ToLower() == "customer")
             await _customerService.AddByApplicationUserId(userId, cancellationToken);
+
+        else if(role.ToString().ToLower() == "seller")
+            await _sellerService.AddByApplicationUserId(userId, cancellationToken);
+
     }
 
 

@@ -39,9 +39,9 @@ public class AccountAppService : IAccountAppService
         await _accountService.EnsureUniquePhoneNumber(user.PhoneNumber, cancellationToken);
         await _accountService.Register(user, password, role);
         var sumbittedApplicationUser = await _accountService.GetApplicationUserByEmail(user.Email);
-        await _accountService.CreateAdminOrCustomerByUserId(sumbittedApplicationUser.Id,
-                                                            role,
-                                                            cancellationToken);
+        await _accountService.CreateRoleByUserId(sumbittedApplicationUser.Id,
+                                                 role,
+                                                 cancellationToken);
 
     }
 }

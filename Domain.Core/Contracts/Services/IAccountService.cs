@@ -19,7 +19,7 @@ public interface IAccountService
     Task EnsurePassword(ApplicationUser user,
                         string password);
 
-    Task CreateAdminOrCustomerByUserId(int userId,
+    Task CreateRoleByUserId(int userId,
                                        Role role,
                                        CancellationToken cancellationToken);
 
