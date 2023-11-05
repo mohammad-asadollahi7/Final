@@ -1,5 +1,4 @@
-﻿
-using Domain.Core.Contracts.Repos;
+﻿using Domain.Core.Contracts.Repos;
 using Domain.Core.Entities;
 using Domain.Core.Enums;
 using Infra.Db.EF;

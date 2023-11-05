@@ -1,0 +1,40 @@
+﻿@model Endpoint.MVC.Dtos.RegisterDto
+
+
+<div class="main d-flex flex-column gap-4 pt-2 border border-black rounded-2">
+
+    <div class="d-flex flex-column">
+        <div class="d-flex justify-content-center align-items-center gap-2">
+            <h6>خوش آمدید</h6>
+            <img width="40" src="~/icons/register.png">
+        </div>
+    </div>
+
+    <form method="post" asp-action="register" asp-controller="account" class="d-flex flex-column gap-3 mx-1">
+        <input name="FName" class="form-control" type="text" placeholder="نام">
+        <span class="text-danger" asp-validation-for="@Model.FName"></span>
+        <input name="LName" class="form-control" type="text" placeholder="نام خانوادگی">
+        <span class="text-danger" asp-validation-for="@Model.LName"></span>
+        <input name="Username" class="form-control" type="text" placeholder="نام کاربری">
+        <span class="text-danger" asp-validation-for="@Model.Username"></span>
+        <input name="Email" class="form-control" type="email" placeholder="ایمیل">
+        <span class="text-danger" asp-validation-for="@Model.Email"></span>
+        <input name="PhoneNumber" class="form-control" type="text" placeholder="شماره موبایل">
+        <span class="text-danger" asp-validation-for="@Model.PhoneNumber"></span>
+        <input name="Password" class="form-control" type="password" placeholder="رمز عبور">
+        <span class="text-danger" asp-validation-for="@Model.Password"></span>
+        <input name="ConfirmPassword" class="form-control" type="password" placeholder="تکرار رمز عبور">
+        <span class="text-danger" asp-validation-for="@Model.ConfirmPassword"></span>
+        <select name="Role" class="form-select">
+            <option class="form-control" disabled selected>نقش</option>
+            <option class="form-control" value="0">خریدار</option>
+            <option class="form-control" value="1">ادمین</option>
+        </select>
+
+
+        <button class="btn btn-primary mt-3 mx-4 fw-bold" type="submit">ثبت نام</button>
+    </form>
+</div>
+
+
+

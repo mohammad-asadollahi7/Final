@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Endpoint.API", "Endpoint.API\Endpoint.API.csproj", "{C3CFCCEB-3F98-4A1F-BE09-A69997AE5A2B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Endpoint.API", "Endpoint.API\Endpoint.API.csproj", "{C3CFCCEB-3F98-4A1F-BE09-A69997AE5A2B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Domain", "1.Domain", "{CF4318AA-2979-4009-A587-30BF3189CA68}"
 EndProject
@@ -15,21 +15,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{5C424310-7
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{72B3ABCB-AD44-4F7A-8132-5AAC1B05F15A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain.Core", "Domain.Core\Domain.Core.csproj", "{A5EFC4E2-DFA3-4E04-A692-5A3DCE8FEED4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain.Core", "Domain.Core\Domain.Core.csproj", "{A5EFC4E2-DFA3-4E04-A692-5A3DCE8FEED4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain.Services", "Domain.Services\Domain.Services.csproj", "{DBC5AFC2-3D4D-495A-BBEF-E70DBC430A90}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain.Services", "Domain.Services\Domain.Services.csproj", "{DBC5AFC2-3D4D-495A-BBEF-E70DBC430A90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain.AppServices", "Domain.AppServices\Domain.AppServices.csproj", "{03D8640E-99C3-4FDE-8DDF-478D32DEFD9A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain.AppServices", "Domain.AppServices\Domain.AppServices.csproj", "{03D8640E-99C3-4FDE-8DDF-478D32DEFD9A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataAccess", "DataAccess", "{816EBBD6-3FB3-4931-9734-E33ED2181253}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Db", "Db", "{718A1D82-3722-4523-9EB4-2986AB8CC6C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infra.Db.EF", "Infra.Db.EF\Infra.Db.EF.csproj", "{FC87D7DC-F56D-44F6-ABF4-E14E2A92F5B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infra.Db.EF", "Infra.Db.EF\Infra.Db.EF.csproj", "{FC87D7DC-F56D-44F6-ABF4-E14E2A92F5B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infra.DataAccess.Repos.EF", "Infra.DataAccess.Repos.EF\Infra.DataAccess.Repos.EF.csproj", "{1875404B-BC9D-4D38-B7F7-5AD2880E55BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infra.DataAccess.Repos.EF", "Infra.DataAccess.Repos.EF\Infra.DataAccess.Repos.EF.csproj", "{1875404B-BC9D-4D38-B7F7-5AD2880E55BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infra.DataAccess.Repos.Dapper", "Infra.DataAccess.Repos.Dapper\Infra.DataAccess.Repos.Dapper.csproj", "{37B5CEEA-C5B4-470C-834F-2CEAE36C7A12}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infra.DataAccess.Repos.Dapper", "Infra.DataAccess.Repos.Dapper\Infra.DataAccess.Repos.Dapper.csproj", "{37B5CEEA-C5B4-470C-834F-2CEAE36C7A12}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Endpoint.MVC", "Endpoint.MVC\Endpoint.MVC.csproj", "{2D39C2C4-3130-4799-89DE-D83D69FC968E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,6 +67,10 @@ Global
 		{37B5CEEA-C5B4-470C-834F-2CEAE36C7A12}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37B5CEEA-C5B4-470C-834F-2CEAE36C7A12}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{37B5CEEA-C5B4-470C-834F-2CEAE36C7A12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D39C2C4-3130-4799-89DE-D83D69FC968E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D39C2C4-3130-4799-89DE-D83D69FC968E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D39C2C4-3130-4799-89DE-D83D69FC968E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D39C2C4-3130-4799-89DE-D83D69FC968E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -81,6 +87,7 @@ Global
 		{FC87D7DC-F56D-44F6-ABF4-E14E2A92F5B6} = {718A1D82-3722-4523-9EB4-2986AB8CC6C5}
 		{1875404B-BC9D-4D38-B7F7-5AD2880E55BF} = {816EBBD6-3FB3-4931-9734-E33ED2181253}
 		{37B5CEEA-C5B4-470C-834F-2CEAE36C7A12} = {816EBBD6-3FB3-4931-9734-E33ED2181253}
+		{2D39C2C4-3130-4799-89DE-D83D69FC968E} = {F117F967-5234-433D-B9F1-61F2CB63E3FC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C184782E-B71D-4EA3-B577-A50F5EEEC334}

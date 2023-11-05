@@ -11,8 +11,6 @@ public class CustomerService : ICustomerService
 
     public CustomerService(ICustomerRepository customerRepository) => _customerRepository
                                                                            = customerRepository;
-
-
     public async Task AddByApplicationUserId(int applicationUserId,
                                              CancellationToken cancellationToken)
     {

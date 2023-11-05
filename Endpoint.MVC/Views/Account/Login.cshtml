@@ -1,0 +1,36 @@
+﻿@model Endpoint.MVC.Dtos.LoginDto
+
+
+<div class="main d-flex flex-column gap-4 pt-2 border border-black rounded-2">
+
+    <div class="d-flex flex-column">
+        <div class="d-flex justify-content-center align-items-center gap-2">
+            <h6>خوش آمدید</h6>
+            <img width="40" src="~/icons/login.png">
+        </div>
+    </div>
+
+    <form method="post" asp-action="login" asp-controller="account" class="d-flex flex-column gap-3 mx-1">
+        <input name="Username" class="form-control" type="text" placeholder="نام کاربری">
+        <span class="text-danger" asp-validation-for="@Model.Username"></span>
+        <input name="Password" class="form-control" type="password" placeholder="رمز عبور">
+        <span class="text-danger" asp-validation-for="@Model.Password"></span>
+        <select name="Role" class="form-select">
+            <option class="form-control" disabled selected>نقش</option>
+            <option class="form-control" value="0">خریدار</option>
+            <option class="form-control" value="1">ادمین</option>
+        </select>
+
+
+
+        <div class="d-flex justify-content-around">
+            <div>
+                <input id="check" type="checkbox" checked>
+                <label for="check">مرا بخاطر بسپار</label>
+            </div>
+        </div>
+
+        <button class="btn btn-primary mt-3 mx-4 fw-bold" type="submit">ورود</button>
+        <a href="register" class="btn m-1" type="button">آیا حساب ندارید؟</a>
+    </form>
+</div>

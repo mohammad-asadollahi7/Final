@@ -18,18 +18,21 @@ public class AccountService : IAccountService
     private readonly IAdminService _adminService;
     private readonly ICustomerService _customerService;
     private readonly ISellerService _sellerService;
+    private readonly ICustomerRepository _customerRepository;
     private readonly IOptionsSnapshot<JWTConfiguration> _JWTConfigs;
 
     public AccountService(IAccountRepository accountRepository,
                           IAdminService adminService,
                           ICustomerService customerService,
                           ISellerService sellerService,
+                          ICustomerRepository customerRepository,
                           IOptionsSnapshot<JWTConfiguration> JWTConfigs)
     {
         _accountRepository = accountRepository;
         _adminService = adminService;
         _customerService = customerService;
         _sellerService = sellerService;
+        _customerRepository = customerRepository;
         _JWTConfigs = JWTConfigs;
     }
 
@@ -46,7 +49,7 @@ public class AccountService : IAccountService
     public async Task EnsureUniquePhoneNumber(string phoneNumber,
                                               CancellationToken cancellationToken)
     {
-        var customer = await _customerService.GetCustomerIdByUserId(phoneNumber, cancellationToken);
+        var customer = await _customerRepository.GetCustomerByPhoneNumber(phoneNumber, cancellationToken);
                                                 
         if (customer is not null)
             throw new AppException(string.Format(ExpMessage.RegisterdUser, phoneNumber),
