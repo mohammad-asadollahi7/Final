@@ -27,10 +27,9 @@ public partial class Product
 
     public virtual ICollection<CustomAttributes> CustomAttributes { get; set; } = new List<CustomAttributes>();
 
+    public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
     public virtual Auction? Auction { get; set; }
     public virtual NonAuctionPrice? NonAuctionPrice { get; set; }
-
-    public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
 
     public virtual ICollection<ProductInventory> ProductInventories { get; set; } = new List<ProductInventory>();
 

@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
 
-namespace Domain.Core.Entities;
+using System.Reflection.Metadata.Ecma335;
 
-public partial class Auction
+namespace Domain.Core.Dtos.Product;
+
+public class AuctionDto
 {
     public int Id { get; set; }
-
-    public int ProductId { get; set; }
-
     public DateTime FromDate { get; set; }
     public DateTime ToDate { get; set; }
 
     public decimal MinPrice { get; set; }
 
     public bool IsActive { get; set; }
-
-    public virtual Product? Product { get; set; }
 }

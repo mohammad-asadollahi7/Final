@@ -4,6 +4,7 @@ using Domain.Core.Dtos.Product;
 using Domain.Core.Dtos.Products;
 using Domain.Core.Entities;
 using Domain.Core.Enums;
+using Hangfire;
 using Infra.Db.EF;
 using Microsoft.EntityFrameworkCore;
 
@@ -226,9 +227,10 @@ public class ProductRepository : IProductRepository
     }
 
 
-    public async Task<bool> Update(int productId,
-                                  UpdateProductDto productDto,
-                                  CancellationToken cancellationToken)
+    public async Task Update(int productId,
+                             UpdateProductDto productDto,
+                             bool isCommit,
+                             CancellationToken cancellationToken)
     {
         var product = await _context.Products.Where(p => p.Id == productId)
                                              .Include(p => p.CustomAttributes)
@@ -255,12 +257,39 @@ public class ProductRepository : IProductRepository
         }
         product.CustomAttributes = newCustomAttributes;
 
+        if (isCommit)
+            await _context.SaveChangesAsync(cancellationToken);
+    }
 
-        var isAffected = await _context.SaveChangesAsync(cancellationToken);
-        if (isAffected == 0)
-            return false;
+    public async Task UpdateAuctionRecord(int productId,
+                                          AuctionDto auctionDto,
+                                          bool isCommit,
+                                          CancellationToken cancellationToken)
+    {
+        var auction = await _context.Auctions.FirstOrDefaultAsync(a => a.ProductId == productId,
+                                                                  cancellationToken);
+        auction.FromDate = auctionDto.FromDate;
+        auction.ToDate = auctionDto.ToDate;
+        auction.MinPrice = auctionDto.MinPrice;
 
-        return true;
+
+        if (isCommit)
+            await _context.SaveChangesAsync(cancellationToken);
+    }  
+
+    public async Task UpdateNonAuctionPrice(int productId,
+                                            decimal price,
+                                            int discount,
+                                            bool isCommit,
+                                            CancellationToken cancellationToken)
+    {
+        var nonAuctionPrice = await _context.NonAuctionPrices.FirstOrDefaultAsync
+                                                              (n => n.ProductId == productId);
+        nonAuctionPrice.Price = price;
+        nonAuctionPrice.Discount = discount;
+
+        if(isCommit)
+            await _context.SaveChangesAsync(cancellationToken);
     }
 
 }
