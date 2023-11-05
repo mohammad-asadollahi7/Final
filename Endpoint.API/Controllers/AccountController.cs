@@ -34,6 +34,7 @@ public class AccountController : BaseController
         return Ok();
     }
 
+
     [HttpPost("Login")]
     [AllowAnonymous]
     public async Task<IActionResult> Login(LoginDto model,

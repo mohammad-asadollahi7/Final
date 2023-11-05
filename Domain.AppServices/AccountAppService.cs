@@ -9,10 +9,7 @@ namespace Domain.AppServices;
 public class AccountAppService : IAccountAppService
 {
     private readonly IAccountService _accountService;
-
-
     public AccountAppService(IAccountService accountService) => _accountService = accountService;
-
 
     public async Task<string> Login(string username,
                                     string password,
@@ -28,8 +25,6 @@ public class AccountAppService : IAccountAppService
                                                               cancellationToken);
         return JWTToken;
     }
-
-
 
     public async Task Register(ApplicationUser user,
                                string password,

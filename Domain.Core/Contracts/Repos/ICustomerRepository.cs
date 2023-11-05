@@ -1,5 +1,6 @@
 ﻿
 using Domain.Core.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Domain.Core.Contracts.Repos;
 
@@ -10,4 +11,8 @@ public interface ICustomerRepository
 
     Task<int?> GetCustomerIdByUserId(int applicationUserId,
                                      CancellationToken cancellationToken);
+
+    Task<Customer?> GetCustomerByPhoneNumber(string PhoneNumber,
+                                             CancellationToken cancellationToken);
+   
 }

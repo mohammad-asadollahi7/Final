@@ -46,8 +46,8 @@ public class AccountService : IAccountService
     public async Task EnsureUniquePhoneNumber(string phoneNumber,
                                               CancellationToken cancellationToken)
     {
-        var customer = await _accountRepository.GetCustomerByPhoneNumber
-                                                (phoneNumber, cancellationToken);
+        var customer = await _customerService.GetCustomerIdByUserId(phoneNumber, cancellationToken);
+                                                
         if (customer is not null)
             throw new AppException(string.Format(ExpMessage.RegisterdUser, phoneNumber),
                                    ExpStatusCode.Conflict);
@@ -124,6 +124,11 @@ public class AccountService : IAccountService
         {
             var customerId = await _customerService.GetCustomerIdByUserId(user.Id, cancellationToken);
             claims.Add(new Claim(ClaimTypes.NameIdentifier, customerId.ToString()));
+        }
+        else if (role.ToLower() == "seller")
+        {
+            var sellerId = await _sellerService.GetSellerIdByUserId(user.Id, cancellationToken);
+            claims.Add(new Claim(ClaimTypes.NameIdentifier, sellerId.ToString()));
         }
 
 

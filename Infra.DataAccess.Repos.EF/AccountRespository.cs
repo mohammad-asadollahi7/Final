@@ -12,13 +12,9 @@ namespace Infra.DataAccess.Repos.EF;
 public class AccountRespository : IAccountRepository
 {
     private readonly UserManager<ApplicationUser> _userManager;
-    private readonly FinalContext _context;
-
-    public AccountRespository(UserManager<ApplicationUser> userManager,
-                              FinalContext context)
+    public AccountRespository(UserManager<ApplicationUser> userManager)
     {
         _userManager = userManager;
-        _context = context;
     }
     public async Task<IdentityResult> Register(ApplicationUser user,
                                                string password, Role role)
@@ -28,12 +24,6 @@ public class AccountRespository : IAccountRepository
         return identityResult;
     }
 
-    public async Task<Customer?> GetCustomerByPhoneNumber(string PhoneNumber,
-                                                          CancellationToken cancellationToken)
-    {
-        return await _context.Customers.FirstOrDefaultAsync(c =>
-                                c.ApplicationUser.PhoneNumber == PhoneNumber, cancellationToken);
-    }
 
     public async Task<ApplicationUser?> GetApplicationUserByEmail(string email)
     {

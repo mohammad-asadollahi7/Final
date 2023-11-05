@@ -12,9 +12,6 @@ public interface IAccountRepository
                                   string password,
                                   Role role);
 
-    Task<Customer?> GetCustomerByPhoneNumber(string PhoneNumber,
-                                            CancellationToken cancellationToken);
-
     Task<ApplicationUser?> GetApplicationUserByUsername(string username);
 
     Task<ApplicationUser?> GetApplicationUserByEmail(string email);
