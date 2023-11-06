@@ -18,7 +18,8 @@ public class ProductRepository : IProductRepository
     public async Task<ProductDetailsDto?> GetNonAuctionProductById(int productId,
                                                                    CancellationToken cancellationToken)
     {
-        var productDetailsDto = await _context.Products.Where(p => p.Id == productId && p.SellType == 0)
+        var productDetailsDto = await _context.Products.Where(p => p.Id == productId && p.SellType == SellType.NonAuction 
+                                                              && p.IsDeleted == false && p.IsApproved == true)
                                                    .Select(p => new ProductDetailsDto()
                                                    {
                                                        Id = p.Id,
@@ -50,7 +51,8 @@ public class ProductRepository : IProductRepository
     public async Task<ProductDetailsDto?> GetAuctionProductById(int productId,
                                                                 CancellationToken cancellationToken)
     {
-        var productDetailsDto = await _context.Products.Where(p => p.Id == productId && p.SellType == 1)
+        var productDetailsDto = await _context.Products.Where(p => p.Id == productId && p.SellType == SellType.Auction
+                                                              && p.IsDeleted == false && p.IsApproved == true)
                                                   .Select(p => new ProductDetailsDto()
                                                   {
                                                       Id = p.Id,
@@ -117,7 +119,7 @@ public class ProductRepository : IProductRepository
             IsDeleted = false,
             IsApproved = false,
             BoothId = boothId,
-            SellType = (int)sellType,
+            SellType = sellType,
         };
         newProduct.Categories.Add(category);
 
@@ -342,7 +344,7 @@ public class ProductRepository : IProductRepository
                                         SellType sellType,
                                         CancellationToken cancellationToken)
     {
-        return await _context.Products.AnyAsync(p => p.Id == id && p.SellType == (int)sellType, cancellationToken);
+        return await _context.Products.AnyAsync(p => p.Id == id && p.SellType == sellType, cancellationToken);
     }
 
     public async Task<bool> IsExistById(int id,

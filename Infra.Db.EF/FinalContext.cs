@@ -97,10 +97,15 @@ public class FinalContext : IdentityDbContext<ApplicationUser, IdentityRole<int>
                 .IsUnicode(false);
             entity.Property(e => e.Title).HasMaxLength(50);
 
-            entity.HasOne(d => d.IdNavigation).WithOne(p => p.Booth)
+            entity.HasOne(d => d.Picture).WithOne(p => p.Booth)
                 .HasForeignKey<Booth>(d => d.Id)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Booths_Pictures");
+
+            entity.HasOne(d => d.Seller).WithOne(p => p.Booth)
+                        .HasForeignKey<Booth>(d => d.SellerId)
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("FK_Booths_Sellers");
         });
 
         modelBuilder.Entity<Cart>(entity =>

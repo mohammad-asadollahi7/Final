@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
+﻿
 namespace Domain.Core.Entities;
 
 public partial class Booth
@@ -9,15 +7,19 @@ public partial class Booth
 
     public string Title { get; set; } = null!;
 
+    public string Description { get; set; }
     public int Wage { get; set; }
 
     public string Medal { get; set; } = null!;
+    public bool IsDeleted { get; set; }
 
-    public virtual Picture IdNavigation { get; set; } = null!;
+    public virtual Picture Picture { get; set; } = null!;
 
     public virtual ICollection<Product> Products { get; set; } = new List<Product>();
 
-    public virtual ICollection<ProductsBooth> ProductsBooths { get; set; } = new List<ProductsBooth>();
+    public int SellerId { get; set; }
 
     public virtual Seller? Seller { get; set; }
+
+    public virtual ICollection<ProductsBooth> ProductsBooths { get; set; } = new List<ProductsBooth>();
 }

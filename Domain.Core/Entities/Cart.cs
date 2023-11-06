@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Core.Enums;
+using System;
 using System.Collections.Generic;
 
 namespace Domain.Core.Entities;
@@ -7,7 +8,7 @@ public partial class Cart
 {
     public int Id { get; set; }
 
-    public int Status { get; set; }
+    public CartStatus Status { get; set; }
 
     public DateTime OrderAt { get; set; }
 

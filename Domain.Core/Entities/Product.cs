@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Core.Enums;
+using System;
 using System.Collections.Generic;
 
 namespace Domain.Core.Entities;
@@ -17,7 +18,7 @@ public partial class Product
 
     public int BoothId { get; set; }
 
-    public int SellType { get; set; }
+    public SellType SellType { get; set; }
 
     public bool? IsApproved { get; set; }
 
