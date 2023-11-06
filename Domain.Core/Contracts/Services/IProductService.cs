@@ -13,8 +13,12 @@ public interface IProductService
 
     Task<ProductDetailsDto?> GetAuctionProductById(int productId,
                                                    CancellationToken cancellationToken);
-    Task<List<ProductOutputDto>> GetAllByCategoryId(CancellationToken cancellationToken,
+
+    Task<List<ProductOutputDto>> GetNonAuctionsByCategoryId(CancellationToken cancellationToken,
                                                     params int[] ids);
+
+    Task<SellType> GetSellType(int productId, CancellationToken cancellationToken);
+
     Task<int> Create(string persianTitle,
                      string englishTitle,
                      string description,
@@ -55,22 +59,16 @@ public interface IProductService
                            CancellationToken cancellationToken,
                            bool isCommit);
 
-    Task Update(int productId,
-                UpdateProductDto productDto,
-                CancellationToken cancellationToken);
-
-    Task UpdateAuctionRecord(int productId,
-                             AuctionDto auctionDto,
-                             bool isCommit,
-                             CancellationToken cancellationToken);
-
-
-    Task UpdateNonAuctionPrice(int productId,
-                               decimal price,
-                               int discount,
+    Task UpdateAuctionProduct(int productId,
+                               UpdateAuctionProductDto productDto,
                                bool isCommit,
                                CancellationToken cancellationToken);
 
+
+    Task UpdateNonAuctionProduct(int productId,
+                               UpdateNonAuctionProductDto productDto,
+                               bool isCommit,
+                               CancellationToken cancellationToken);
 
 
     Task Remove(int productId,
@@ -78,6 +76,7 @@ public interface IProductService
 
 
     Task EnsureExistById(int productId,
+                         SellType? sellType,
                          CancellationToken cancellationToken);
 
     Task EnsureProductQuantitySufficient(int productId,

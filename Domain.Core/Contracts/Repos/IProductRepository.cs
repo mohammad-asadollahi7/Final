@@ -16,6 +16,7 @@ public interface IProductRepository
     Task<List<ProductInventoryDto>> GetProductInventories(int productId,
                                                           CancellationToken cancellationToken);
 
+    Task<SellType> GetSellType(int productId, CancellationToken cancellationToken);
 
     Task<int> Create(string persianTitle,
                      string englishTitle,
@@ -54,17 +55,24 @@ public interface IProductRepository
                     CancellationToken canellationToken,
                     bool isCommit);
 
-     Task Update(int productId,
-                 UpdateProductDto productDto,
-                 bool isCommit,
-                 CancellationToken cancellationToken);
-    
+    Task Update(int productId,
+                string persianTitle,
+                string englishTitle,
+                string description,
+                List<CustomAttributeDto> customAttributes,
+                bool isCommit,
+                CancellationToken cancellationToken);
 
-   Task UpdateAuctionRecord(int productId,
-                            AuctionDto auctionDto,
-                            bool isCommit,
-                            CancellationToken cancellationToken);
-    
+
+
+    Task UpdateAuctionRecord(int productId,
+                              DateTime fromDate,
+                              DateTime toDate,
+                              decimal minPrice,
+                              bool isCommit,
+                              CancellationToken cancellationToken);
+
+
 
      Task UpdateNonAuctionPrice(int productId,
                                 decimal price,
@@ -80,7 +88,10 @@ public interface IProductRepository
 
 
     Task<bool> IsExistById(int id,
+                           SellType sellType,
                            CancellationToken cancellationToken);
+
+    Task<bool> IsExistById(int id, CancellationToken cancellationToken);
 
     Task SaveChangesAsync(CancellationToken cancellationToken);
     

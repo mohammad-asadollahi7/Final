@@ -16,9 +16,9 @@ public class ProductRepository : IProductRepository
     public ProductRepository(FinalContext context) => _context = context;
 
     public async Task<ProductDetailsDto?> GetNonAuctionProductById(int productId,
-                                                            CancellationToken cancellationToken)
+                                                                   CancellationToken cancellationToken)
     {
-        var productDetailsDto = await _context.Products.Where(p => p.Id == productId)
+        var productDetailsDto = await _context.Products.Where(p => p.Id == productId && p.SellType == 0)
                                                    .Select(p => new ProductDetailsDto()
                                                    {
                                                        Id = p.Id,
@@ -50,7 +50,7 @@ public class ProductRepository : IProductRepository
     public async Task<ProductDetailsDto?> GetAuctionProductById(int productId,
                                                                 CancellationToken cancellationToken)
     {
-        var productDetailsDto = await _context.Products.Where(p => p.Id == productId)
+        var productDetailsDto = await _context.Products.Where(p => p.Id == productId && p.SellType == 1)
                                                   .Select(p => new ProductDetailsDto()
                                                   {
                                                       Id = p.Id,
@@ -77,6 +77,13 @@ public class ProductRepository : IProductRepository
         return productDetailsDto;
     }
 
+    
+    public async Task<SellType> GetSellType(int productId, CancellationToken cancellationToken)
+    {
+        return  (SellType)(await _context.Products.Where(p => p.Id == productId)
+                                                  .Select(p => p.SellType)
+                                                  .FirstOrDefaultAsync(cancellationToken));
+    }
 
     public async Task<List<ProductInventoryDto>> GetProductInventories(int productId,
                                                                      CancellationToken cancellationToken)
@@ -240,7 +247,10 @@ public class ProductRepository : IProductRepository
 
 
     public async Task Update(int productId,
-                             UpdateProductDto productDto,
+                             string persianTitle,
+                             string englishTitle,
+                             string description,
+                             List<CustomAttributeDto> customAttributes,
                              bool isCommit,
                              CancellationToken cancellationToken)
     {
@@ -248,9 +258,9 @@ public class ProductRepository : IProductRepository
                                              .Include(p => p.CustomAttributes)
                                              .FirstOrDefaultAsync(cancellationToken);
 
-        product.PersianTitle = productDto.PersianTitle;
-        product.EnglishTitle = productDto.EnglishTitle;
-        product.Description = productDto.Description;
+        product.PersianTitle = persianTitle;
+        product.EnglishTitle = englishTitle;
+        product.Description = description;
 
         List<CustomAttributes> newCustomAttributes = new();
         var attributes = product.CustomAttributes.ToList();
@@ -261,28 +271,32 @@ public class ProductRepository : IProductRepository
                 Id = attribute.Id,
                 ProductId = product.Id,
                 AttributeTitle = attribute.AttributeTitle,
-                AttributeValue = productDto.CustomAttributes.Where(c => c.Id == attribute.Id
-                                                        && c.Title == attribute.AttributeTitle)
-                                                        .Select(c => c.Value).First()
+                AttributeValue = customAttributes.Where(c => c.Id == attribute.Id
+                                                    && c.Title == attribute.AttributeTitle)
+                                                    .Select(c => c.Value).First()
             };
             newCustomAttributes.Add(customAttribute);
         }
         product.CustomAttributes = newCustomAttributes;
+
 
         if (isCommit)
             await _context.SaveChangesAsync(cancellationToken);
     }
 
     public async Task UpdateAuctionRecord(int productId,
-                                          AuctionDto auctionDto,
+                                          DateTime fromDate,
+                                          DateTime toDate,
+                                          decimal minPrice,
                                           bool isCommit,
                                           CancellationToken cancellationToken)
     {
-        var auction = await _context.Auctions.FirstOrDefaultAsync(a => a.ProductId == productId,
-                                                                  cancellationToken);
-        auction.FromDate = auctionDto.FromDate;
-        auction.ToDate = auctionDto.ToDate;
-        auction.MinPrice = auctionDto.MinPrice;
+        var auction = await _context.Auctions.
+                            FirstOrDefaultAsync(a => a.ProductId == productId,
+                                                cancellationToken);
+        auction.FromDate = fromDate;
+        auction.ToDate = toDate;
+        auction.MinPrice = minPrice;
 
 
         if (isCommit)
@@ -325,11 +339,17 @@ public class ProductRepository : IProductRepository
 
 
     public async Task<bool> IsExistById(int id,
+                                        SellType sellType,
+                                        CancellationToken cancellationToken)
+    {
+        return await _context.Products.AnyAsync(p => p.Id == id && p.SellType == (int)sellType, cancellationToken);
+    }
+
+    public async Task<bool> IsExistById(int id,
                                         CancellationToken cancellationToken)
     {
         return await _context.Products.AnyAsync(p => p.Id == id, cancellationToken);
     }
-
 
 
     public async Task SaveChangesAsync(CancellationToken cancellationToken)

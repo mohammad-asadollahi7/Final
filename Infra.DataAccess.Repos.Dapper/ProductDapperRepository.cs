@@ -14,7 +14,7 @@ public class ProductDapperRepository : IProductDapperRepository
     {
         _config = configuration;
     }
-    public async Task<List<ProductOutputDto>> GetAllByCategoryId(CancellationToken cancellationToken,
+    public async Task<List<ProductOutputDto>> GetNonAuctionsByCategoryId(CancellationToken cancellationToken,
                                                                  params int[] ids)
     {
         string WhereClause = string.Empty;

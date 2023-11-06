@@ -20,10 +20,10 @@ public class ProductService : IProductService
         _productDapperRepository = productDapperRepository;
     }
 
-    public async Task<List<ProductOutputDto>> GetAllByCategoryId(CancellationToken cancellationToken,
-                                                                 params int[] ids)
+    public async Task<List<ProductOutputDto>> GetNonAuctionsByCategoryId(CancellationToken cancellationToken,
+                                                                         params int[] ids)
     {
-        var products = await _productDapperRepository.GetAllByCategoryId(cancellationToken, ids);
+        var products = await _productDapperRepository.GetNonAuctionsByCategoryId(cancellationToken, ids);
         if (products.Count() == 0)
             throw new AppException(ExpMessage.HaveNotProduct,
                                    ExpStatusCode.BadRequest);
@@ -35,11 +35,12 @@ public class ProductService : IProductService
     {
         var product = await _productRepository.GetNonAuctionProductById(productId, cancellationToken);
 
-        if (product == null) 
+        if (product == null)
             throw new AppException(string.Format(ExpMessage.NotChangedProduct, "پیدا"),
                                    ExpStatusCode.NotFound);
         return product;
     }
+
 
     public async Task<ProductDetailsDto?> GetAuctionProductById(int productId, CancellationToken cancellationToken)
     {
@@ -49,6 +50,11 @@ public class ProductService : IProductService
             throw new AppException(string.Format(ExpMessage.NotChangedProduct, "پیدا"),
                                    ExpStatusCode.NotFound);
         return product;
+    }
+
+    public async Task<SellType> GetSellType(int productId, CancellationToken cancellationToken)
+    {
+        return await _productRepository.GetSellType(productId, cancellationToken);
     }
 
     public async Task<int> Create(string persianTitle,
@@ -140,43 +146,51 @@ public class ProductService : IProductService
                                                        isCommit);
     }
 
-    public async Task Update(int productId,
-                             UpdateProductDto productDto,
-                             bool isCommit,
-                             CancellationToken cancellationToken)
+
+    public async Task UpdateAuctionProduct(int productId,
+                                           UpdateAuctionProductDto productDto,
+                                           bool isCommit,   
+                                           CancellationToken cancellationToken)
     {
-        await _productRepository.Update(productId, 
-                                        productDto, 
+        await _productRepository.Update(productId,
+                                        productDto.PersianTitle,
+                                        productDto.EnglishTitle,
+                                        productDto.Description,
+                                        productDto.CustomAttributes,
                                         isCommit,
                                         cancellationToken);
+
+        await _productRepository.UpdateAuctionRecord(productId, 
+                                                     productDto.FromDate,
+                                                     productDto.ToDate,
+                                                     productDto.MinPrice,
+                                                     isCommit, 
+                                                     cancellationToken);
     }
 
 
-    public async Task UpdateAuctionRecord(int productId, 
-                                    AuctionDto auctionDto, 
-                                    bool isCommit, 
-                                    CancellationToken cancellationToken)
+    public async Task UpdateNonAuctionProduct(int productId,
+                                            UpdateNonAuctionProductDto productDto,
+                                            bool isCommit,
+                                            CancellationToken cancellationToken)
     {
-        await _productRepository.UpdateAuctionRecord(productId,auctionDto, 
-                                                    isCommit,cancellationToken);
-    }
 
-
-    public async Task UpdateNonAuctionPrice(int productId, 
-                                      decimal price, 
-                                      int discount, 
-                                      bool isCommit, 
-                                      CancellationToken cancellationToken)
-    {
+        await _productRepository.Update(productId,
+                                        productDto.PersianTitle,
+                                        productDto.EnglishTitle,
+                                        productDto.Description,
+                                        productDto.CustomAttributes,
+                                        isCommit,
+                                        cancellationToken);
 
         await _productRepository.UpdateNonAuctionPrice(productId,
-                                                       price,
-                                                       discount,
+                                                       productDto.Price,
+                                                       productDto.Discount,
                                                        isCommit,
                                                        cancellationToken);
     }
-    
-    
+
+
     public async Task Remove(int productId,
                              CancellationToken cancellationToken)
     {
@@ -211,9 +225,15 @@ public class ProductService : IProductService
 
 
     public async Task EnsureExistById(int productId,
+                                      SellType? sellType,
                                       CancellationToken cancellationToken)
     {
-        var isExist = await _productRepository.IsExistById(productId, cancellationToken);
+        bool isExist;
+        if (sellType is not null)
+            isExist = await _productRepository.IsExistById(productId, sellType ?? 0, cancellationToken);
+        else
+            isExist = await _productRepository.IsExistById(productId, cancellationToken);
+
 
         if (!isExist)
             throw new AppException(string.Format(ExpMessage.NotChangedProduct, "پیدا"),
@@ -225,4 +245,5 @@ public class ProductService : IProductService
     {
         await _productRepository.SaveChangesAsync(cancellationToken);
     }
+
 }
