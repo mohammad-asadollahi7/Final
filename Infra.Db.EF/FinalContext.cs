@@ -48,8 +48,6 @@ public class FinalContext : IdentityDbContext<ApplicationUser, IdentityRole<int>
 
     public virtual DbSet<ProductPicture> ProductPictures { get; set; }
 
-    public virtual DbSet<ProductsBooth> ProductsBooths { get; set; }
-
     public virtual DbSet<Seller> Sellers { get; set; }
 
 
@@ -294,15 +292,6 @@ public class FinalContext : IdentityDbContext<ApplicationUser, IdentityRole<int>
                 .HasConstraintName("FK_ProductPictures_Products");
         });
 
-        modelBuilder.Entity<ProductsBooth>(entity =>
-        {
-            entity.Property(e => e.Type).HasComment("0 equal NonAuction\r\n1 equal Auction\r\n");
-
-            entity.HasOne(d => d.Booth).WithMany(p => p.ProductsBooths)
-                .HasForeignKey(d => d.BoothId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_ProductsBooths_Booths");
-        });
 
         modelBuilder.Entity<Seller>(entity =>
         {

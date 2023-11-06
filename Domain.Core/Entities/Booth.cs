@@ -23,5 +23,4 @@ public partial class Booth
 
     public virtual Seller? Seller { get; set; }
 
-    public virtual ICollection<ProductsBooth> ProductsBooths { get; set; } = new List<ProductsBooth>();
 }
