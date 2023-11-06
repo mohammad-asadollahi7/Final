@@ -8,5 +8,6 @@ public class ProductInventoryDto
     public int Quantity { get; set; }
 
     public bool IsSold { get; set; }
+    public decimal? SellPrice { get; set; }
 
 }

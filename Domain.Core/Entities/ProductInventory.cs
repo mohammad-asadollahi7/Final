@@ -13,6 +13,8 @@ public partial class ProductInventory
 
     public bool IsSold { get; set; }
 
+    public decimal? SellPrice { get; set; }
+
     public DateTime ChangedAt { get; set; }
 
     public virtual Product Product { get; set; } = null!;

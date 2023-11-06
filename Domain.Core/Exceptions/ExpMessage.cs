@@ -17,11 +17,12 @@ public static class ExpMessage
 
     public static string InsufficientProduct { get; } = "موجودی ناکافی";
     public static string NotExistRecord { get; } = "{0}محصول پیدا نشد";
-    public static string HaveNotProduct { get; } = "دسته بندی انتخابی دارای محصول نیست";
+    public static string HaveNotProduct { get; } = "محصولی وجود ندارد";
     public static string HaveNotComment { get; } = "نظری ثبت نشده است";
     public static string NotFoundUserId { get; } = "کاربر یافت نشد";
     public static string NotExistCart { get; } = "سبد خرید مدنظر یافت نشد";
     public static string NotExistCarts { get; } = "سبد خریدی برای کاربر یافت نشد";
     public static string NotChanged { get; } = "تغییرات انجام نشد";
     public static string Unauthorized { get; } = "عدم دسترسی به محتوای جاری";
+    public static string NotFoundBooth { get; } = "غرفه ای پیدا نشد";
 }

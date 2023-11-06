@@ -9,7 +9,11 @@ public interface IBoothRepository
 {
     Task<BoothDto?> GetBoothBySellerId(int sellerId, CancellationToken cancellationToken);
 
-    Task<List<ProductOutputDto>> GetProductsByBoothTitle(string title, CancellationToken cancellationToken);
+    Task<List<ProductOutputDto>> GetNonAuctionsByBoothTitle(string title, 
+                                          CancellationToken cancellationToken);
+
+    Task<List<ProductInventoryDto>> GetInventoriesByBoothId(int boothId,
+                                                            CancellationToken cancellationToken);
 
     Task Create(int sellerId,
                 string title,

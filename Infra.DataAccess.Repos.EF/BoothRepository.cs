@@ -1,12 +1,11 @@
 ﻿using Domain.Core.Contracts.Repos;
 using Domain.Core.Dtos.Booth;
 using Domain.Core.Dtos.Product;
-using Domain.Core.Dtos.Products;
 using Domain.Core.Entities;
 using Domain.Core.Enums;
 using Infra.Db.EF;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics.Eventing.Reader;
+
 
 namespace Infra.DataAccess.Repos.EF;
 
@@ -34,7 +33,7 @@ public class BoothRepository : IBoothRepository
     }
 
 
-    public async Task<List<ProductOutputDto>> GetProductsByBoothTitle(string title, 
+    public async Task<List<ProductOutputDto>> GetNonAuctionsByBoothTitle(string title, 
                                                             CancellationToken cancellationToken)
     {
         return await _context.Products.Where(p => p.Booth.Title == title)
@@ -49,6 +48,22 @@ public class BoothRepository : IBoothRepository
                                                                .Select(p => p.Picture.Name).First(),
                                          }).AsNoTracking()
                                          .ToListAsync(cancellationToken);
+    }
+
+
+
+    public async Task<List<ProductInventoryDto>> GetInventoriesByBoothId(int boothId,
+                                                               CancellationToken cancellationToken)
+    {
+        return await _context.Products.Where(p => p.BoothId == boothId)
+                    .SelectMany(p => p.ProductInventories
+                    .Select(pi => new ProductInventoryDto()
+                    {
+                        Id = pi.Id,
+                        IsSold = pi.IsSold,
+                        Quantity = pi.Quantity,
+                        SellPrice = pi.SellPrice
+                    })).ToListAsync(cancellationToken);
     }
 
 

@@ -96,7 +96,8 @@ public class ProductRepository : IProductRepository
                                                 {
                                                     Id = pi.Id,
                                                     IsSold = pi.IsSold,
-                                                    Quantity = pi.Quantity
+                                                    Quantity = pi.Quantity,
+                                                    SellPrice = pi.SellPrice,
                                                 }).ToListAsync(cancellationToken);
     }
     public async Task<int> Create(string persianTitle,
