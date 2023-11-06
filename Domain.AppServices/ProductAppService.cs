@@ -78,6 +78,7 @@ public class ProductAppService : IProductAppService
                                          createProduct.PictureDto,
                                          cancellationToken, false);
 
+       
         await _productService.SaveChangesAsync(cancellationToken);
     }
 
