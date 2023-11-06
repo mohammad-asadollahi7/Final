@@ -21,8 +21,14 @@ public interface IBoothService
     Task Update(int boothId, UpdateBoothDto boothDto,
                     CancellationToken cancellationToken);
 
-    Task UpdateWage(int boothId, CancellationToken cancellationToken);
+    Task UpdateWage(int boothId,  CancellationToken cancellationToken);
 
     Task Delete(int boothId, CancellationToken cancellationToken);
+
+    Task EnsureExistById(int id, CancellationToken cancellationToken);
+
+
+    Task EnsureExistByTitle(string title, 
+                                CancellationToken cancellationToken);
     
 }

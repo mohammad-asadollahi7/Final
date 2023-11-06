@@ -33,12 +33,6 @@ public class BoothService : IBoothService
     public async Task<List<ProductOutputDto>> GetNonAuctionsByBoothTitle(string title,
                                                        CancellationToken cancellationToken)
     {
-        var isExist = await _boothRepository.IsExistByTitle(title, cancellationToken);
-        if (!isExist)
-            throw new AppException(ExpMessage.NotFoundBooth,
-                                    ExpStatusCode.NotFound);
-
-
         var products = await _boothRepository.GetNonAuctionsByBoothTitle(title,
                                                                     cancellationToken);
         if (products.Count() == 0)
@@ -65,12 +59,6 @@ public class BoothService : IBoothService
     public async Task Update(int boothId, UpdateBoothDto boothDto,
                                 CancellationToken cancellationToken)
     {
-        var isExist = await _boothRepository.IsExistById(boothId, cancellationToken);
-        if (!isExist)
-            throw new AppException(ExpMessage.NotFoundBooth,
-                                    ExpStatusCode.NotFound);
-
-
         await _boothRepository.Update(boothId,
                                       boothDto,
                                       cancellationToken);
@@ -79,11 +67,6 @@ public class BoothService : IBoothService
     public async Task UpdateWage(int boothId,
                                  CancellationToken cancellationToken)
     {
-        var isExist = await _boothRepository.IsExistById(boothId, cancellationToken);
-        if (!isExist)
-            throw new AppException(ExpMessage.NotFoundBooth,
-                                    ExpStatusCode.NotFound);
-
         var productInventories = await _boothRepository.GetInventoriesByBoothId(boothId, 
                                                                             cancellationToken);
         
@@ -121,12 +104,24 @@ public class BoothService : IBoothService
 
     public async Task Delete(int boothId, CancellationToken cancellationToken)
     {
-        var isExist = await _boothRepository.IsExistById(boothId, cancellationToken);
-        if (!isExist)
-            throw new AppException(ExpMessage.NotFoundBooth,
-                                    ExpStatusCode.NotFound);
-
         await _boothRepository.Delete(boothId, cancellationToken);
     }
 
+
+
+    public async Task EnsureExistById(int id, CancellationToken cancellationToken)
+    {
+        var isExist = await _boothRepository.IsExistById(id, cancellationToken);
+        if (!isExist)
+            throw new AppException(ExpMessage.NotFoundBooth,
+                                    ExpStatusCode.NotFound);
+    }
+
+    public async Task EnsureExistByTitle(string title, CancellationToken cancellationToken)
+    {
+        var isExist = await _boothRepository.IsExistByTitle(title, cancellationToken);
+        if (!isExist)
+            throw new AppException(ExpMessage.NotFoundBooth,
+                                    ExpStatusCode.NotFound);
+    }
 }
