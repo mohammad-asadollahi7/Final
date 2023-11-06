@@ -27,7 +27,7 @@ public class ProductDapperRepository : IProductDapperRepository
         }
 
         using var conn = new SqlConnection(_config.GetConnectionString("Default"));
-        string sqlQuery = String.Format(Queries.GetProductsByCategoryId, WhereClause);
+        string sqlQuery = String.Format(Queries.GetNonAuctionProductsByCategoryId, WhereClause);
         var productdto = await conn.QueryAsync<ProductOutputDto>(sqlQuery, cancellationToken);
         return productdto.ToList();
     }

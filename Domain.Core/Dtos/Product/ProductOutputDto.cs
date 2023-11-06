@@ -11,6 +11,8 @@ public class ProductOutputDto
 
     public int DiscountPercent { get; set; }
 
+    public string BoothTitle { get; set; }
+
     public string MainPicturePath { get; set; }
 
 }

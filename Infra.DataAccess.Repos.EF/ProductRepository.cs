@@ -312,7 +312,7 @@ public class ProductRepository : IProductRepository
                                             CancellationToken cancellationToken)
     {
         var nonAuctionPrice = await _context.NonAuctionPrices.FirstOrDefaultAsync
-                                                              (n => n.ProductId == productId);
+                                                          (n => n.ProductId == productId);
         nonAuctionPrice.Price = price;
         nonAuctionPrice.Discount = discount;
 
@@ -324,7 +324,8 @@ public class ProductRepository : IProductRepository
     public async Task<bool> Delete(int productId,
                                    CancellationToken cancellationToken)
     {
-        var product = await _context.Products.SingleOrDefaultAsync(p => p.Id == productId, cancellationToken);
+        var product = await _context.Products.SingleOrDefaultAsync(p => p.Id == productId, 
+                                                                    cancellationToken);
         product.IsDeleted = true;
         var isAffected = await _context.SaveChangesAsync(cancellationToken);
         return isAffected == 1;
@@ -344,13 +345,19 @@ public class ProductRepository : IProductRepository
                                         SellType sellType,
                                         CancellationToken cancellationToken)
     {
-        return await _context.Products.AnyAsync(p => p.Id == id && p.SellType == sellType, cancellationToken);
+        return await _context.Products.AnyAsync(p => p.Id == id &&
+                                        p.SellType == sellType &&
+                                        p.IsApproved == true &&
+                                        p.IsDeleted == false, 
+                                        cancellationToken);
     }
 
     public async Task<bool> IsExistById(int id,
                                         CancellationToken cancellationToken)
     {
-        return await _context.Products.AnyAsync(p => p.Id == id, cancellationToken);
+        return await _context.Products.AnyAsync(p => p.Id == id && p.IsDeleted == false
+                                            && p.IsApproved == true,
+                                            cancellationToken);
     }
 
 

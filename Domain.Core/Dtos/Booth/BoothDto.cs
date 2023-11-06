@@ -1,4 +1,5 @@
 ﻿using Domain.Core.Entities;
+using Domain.Core.Enums;
 
 namespace Domain.Core.Dtos.Booth;
 
@@ -11,7 +12,7 @@ public class BoothDto
     public string Description { get; set; }
     public int Wage { get; set; }
 
-    public string Medal { get; set; } = null!;
+    public Medal Medal { get; set; }
     public virtual Picture Picture { get; set; } = null!;
 
 }

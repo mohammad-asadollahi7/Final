@@ -7,18 +7,30 @@ namespace Domain.Core.Contracts.Repos;
 
 public interface IBoothRepository
 {
-    Task<BoothDto> GetBoothBySellerId(int sellerId);
+    Task<BoothDto?> GetBoothBySellerId(int sellerId, CancellationToken cancellationToken);
 
-    Task<ProductDetailsDto> GetProductsByBoothTitle(string title);
+    Task<List<ProductOutputDto>> GetProductsByBoothTitle(string title, CancellationToken cancellationToken);
 
     Task Create(int sellerId,
                 string title,
                 string description,
                 int wage,
                 Medal medal,
-                Picture picture);
+                Picture picture, 
+                CancellationToken cancellationToken);
 
-    Task Update(int boothId, UpdateBoothDto boothDto);
+    Task Update(int boothId, UpdateBoothDto boothDto, 
+                    CancellationToken cancellationToken);
 
-    Task Delete(int boothId);
+    Task UpdateWage(int boothId, int wage, 
+                         Medal medal, CancellationToken cancellationToken);
+
+    Task Delete(int boothId, CancellationToken cancellationToken);
+
+    Task<bool> IsExistById(int id,
+                           CancellationToken cancellationToken);
+
+    Task<bool> IsExistByTitle(string title,
+                             CancellationToken cancellationToken);
+
 }
