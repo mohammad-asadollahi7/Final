@@ -1,8 +1,7 @@
-﻿
-using Domain.Core.Dtos.Cart;
+﻿using Domain.Core.Dtos.Cart;
 using Domain.Core.Enums;
 
-namespace Domain.Core.Contracts.AppServices;
+namespace Domain.Core.Contracts.Repos;
 
 public interface ICartRepository
 {
@@ -25,8 +24,8 @@ public interface ICartRepository
                   decimal discountedPrice,
                   CancellationToken cancellationToken);
 
-    Task AddAuctionOrder(int customerId,
-                         int productId, int proposedPrice,
+    Task AddAuctionOrder(int? customerId,
+                         int productId, decimal proposedPrice,
                          CancellationToken cancellationToken);
 
 

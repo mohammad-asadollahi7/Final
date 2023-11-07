@@ -10,12 +10,15 @@ public class ProductAppService : IProductAppService
 {
     private readonly IProductService _productService;
     private readonly ICategoryService _categoryService;
+    private readonly ICartService _cartService;
 
     public ProductAppService(IProductService productService,
-                             ICategoryService categoryService)
+                             ICategoryService categoryService,
+                             ICartService cartService)
     {
         _productService = productService;
         _categoryService = categoryService;
+        _cartService = cartService;
     }
 
     public async Task<List<ProductOutputDto>> GetNonAuctionsByCategoryId(int categoryId,
@@ -109,6 +112,10 @@ public class ProductAppService : IProductAppService
                                          createProduct.MinPrice,
                                          false,
                                          cancellationToken);
+
+        
+        _cartService.AddAuctionOrder(null, newProductId,
+                                        createProduct.MinPrice, cancellationToken);
 
         await _productService.AddQuantityRecord(newProductId,
                                                 createProduct.FirstQuantity,

@@ -1,4 +1,4 @@
-﻿using Domain.Core.Contracts.AppServices;
+﻿using Domain.Core.Contracts.Repos;
 using Domain.Core.Dtos.Cart;
 using Domain.Core.Dtos.Product;
 using Domain.Core.Entities;
@@ -140,8 +140,8 @@ public class CartRepository : ICartRepository
         return newCartId;
     }
 
-    public async Task AddAuctionOrder(int customerId, 
-                                      int productId, int proposedPrice, 
+    public async Task AddAuctionOrder(int? customerId, 
+                                      int productId, decimal proposedPrice, 
                                       CancellationToken cancellationToken)
     {
         var auctionOrder = new AuctionOrder()
