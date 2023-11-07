@@ -114,8 +114,11 @@ public class ProductAppService : IProductAppService
                                          cancellationToken);
 
         
-        _cartService.AddAuctionOrder(null, newProductId,
-                                        createProduct.MinPrice, cancellationToken);
+        await _cartService.AddAuctionOrder(null, 
+                                           newProductId,
+                                           0,
+                                           createProduct.MinPrice, 
+                                           cancellationToken);
 
         await _productService.AddQuantityRecord(newProductId,
                                                 createProduct.FirstQuantity,
