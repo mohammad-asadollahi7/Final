@@ -79,7 +79,19 @@ public class ProductRepository : IProductRepository
         return productDetailsDto;
     }
 
-    
+    public async Task<List<ProductOutputApprove>> GetProductsForApprove(CancellationToken cancellationToken)
+    {
+        return await _context.Products.Where(p => p.IsApproved == null)
+                               .Select(p => new ProductOutputApprove()
+                               { 
+                                   Id = p.Id,
+                                   PersianTitle = p.PersianTitle,
+                                   BoothTitle = p.Booth.Title,
+                                   PicturesPath = p.ProductPictures.Select(pp => pp.Picture.Name)
+                               }).ToListAsync(cancellationToken);
+    }
+
+
     public async Task<SellType> GetSellType(int productId, CancellationToken cancellationToken)
     {
         return  (SellType)(await _context.Products.Where(p => p.Id == productId)

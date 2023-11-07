@@ -18,6 +18,9 @@ public interface IProductAppService
     Task<ProductDetailsDto> GetNonAuctionProductById(int productId,
                                                      CancellationToken cancellationToken);
 
+    Task<List<ProductOutputApprove>> GetProductsForApprove(
+                                                        CancellationToken cancellationToken);
+
     Task CreateNonAuction(CreateNonAuctionProductDto createProduct,
                            CancellationToken cancellationToken);
 

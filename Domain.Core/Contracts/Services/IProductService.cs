@@ -17,6 +17,8 @@ public interface IProductService
     Task<List<ProductOutputDto>> GetNonAuctionsByCategoryId(CancellationToken cancellationToken,
                                                     params int[] ids);
 
+    Task<List<ProductOutputApprove>> GetProductsForApprove(CancellationToken cancellationToken);
+
     Task<SellType> GetSellType(int productId, CancellationToken cancellationToken);
 
     Task<int> Create(string persianTitle,

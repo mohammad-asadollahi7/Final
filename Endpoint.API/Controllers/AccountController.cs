@@ -45,7 +45,6 @@ public class AccountController : BaseController
                                                    model.Password,
                                                    model.Role,
                                                    cancellationToken);
-
         return Ok(token);
     }
 

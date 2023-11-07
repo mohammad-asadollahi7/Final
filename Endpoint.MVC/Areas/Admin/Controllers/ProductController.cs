@@ -16,12 +16,101 @@ public class ProductController : BaseController
     private readonly IHostingEnvironment _hostingEnvironment;
 
     public ProductController(IHttpClientFactory httpClientFactory,
-                             IHostingEnvironment hostingEnvironment) : 
+                             IHostingEnvironment hostingEnvironment) :
                                                 base(httpClientFactory)
-    { 
+    {
         _hostingEnvironment = hostingEnvironment;
     }
 
+    public IActionResult Index()
+    {
+        return View();
+    }
+
+
+    public async Task<IActionResult> GetProductsForApprove(CancellationToken cancellationToken)
+    {
+        var httpResponseMessage = await SendGetRequest($"Product/GetProductsForApprove",
+                                                                    cancellationToken);
+
+        if (!httpResponseMessage.IsSuccessStatusCode)
+            return RedirectToErrorPage(httpResponseMessage);
+
+
+        var products = await httpResponseMessage.Content
+                                              .ReadFromJsonAsync<List<ProductOutputApprove>>();
+        return View(products);
+    }
+
+
+    public async Task<IActionResult> GetProductById(int id)
+    {
+        //if auction
+
+        //else nonauction
+    }
+    
+
+    public async Task<IActionResult> ApproveProduct(int id, bool isApprove, 
+                                                    CancellationToken cancellationToken)
+    {
+
+    }
+
+    
+
+    public async Task<IActionResult> GetCommentsForApprove(CancellationToken cancellationToken)
+    {
+
+    }
+
+    public async Task<IActionResult> ApproveComment(int id, 
+                                        CancellationToken cancellationToken)
+    {
+
+    }
+
+    public async Task<IActionResult> GetCustomers(CancellationToken cancellationToken)
+    {
+
+    }
+
+    public async Task<IActionResult> GetSellers(CancellationToken cancellationToken)
+    {
+
+
+    }
+
+    public async Task<IActionResult> DeleteUser(int id,
+                                                CancellationToken cancellationToken)
+    {
+
+    }
+
+    public async Task<IActionResult> GetAuctionProducts(CancellationToken cancellationToken)
+    {
+
+    }
+
+    public async Task<IActionResult> GetNonAuctionProducts(CancellationToken cancellationToken)
+    {
+
+    }
+
+    public async Task<IActionResult> UpdateProduct(CancellationToken cancellationToken)
+    {
+
+    }
+
+    public async Task<IActionResult> DeleteProduct(int productId, CancellationToken cancellationToken)
+    {
+
+    }
+
+    public async Task<IActionResult> GetWages()
+    {
+
+    }
 
     public async Task<IActionResult> GetAllByCategoryId(CancellationToken cancellationToken,
                                                         int id = 3)
@@ -44,16 +133,17 @@ public class ProductController : BaseController
     }
 
 
-    [HttpGet("Create")]
-    public async Task<IActionResult> Create(CancellationToken cancellationToken)
+    [HttpGet("CreateNonAuction")] 
+    public async Task<IActionResult> CreateNonAuction(CancellationToken cancellationToken)
     {
-        var httpResponseMessage = await SendGetRequest("category/GetLeafCategories",
+        var httpResponseMessage = await SendGetRequest("CreateNonAuction/GetLeafCategories",
                                                         cancellationToken);
 
         if (!httpResponseMessage.IsSuccessStatusCode)
             return RedirectToErrorPage(httpResponseMessage);
 
-        var categoryTitles = await httpResponseMessage.Content.ReadFromJsonAsync<List<CategoryTitleDto>>();
+        var categoryTitles = await httpResponseMessage.Content
+                                             .ReadFromJsonAsync<List<CategoryTitleDto>>();
         return View(categoryTitles);
     }
 

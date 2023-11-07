@@ -48,6 +48,13 @@ public class ProductAppService : IProductAppService
         return productDto;
     }
 
+    public async Task<List<ProductOutputApprove>> GetProductsForApprove(
+                                                        CancellationToken cancellationToken)
+    {
+        return await _productService.GetProductsForApprove(cancellationToken);
+    }
+
+
     public async Task CreateNonAuction(CreateNonAuctionProductDto createProduct,
                                        CancellationToken cancellationToken)
     {

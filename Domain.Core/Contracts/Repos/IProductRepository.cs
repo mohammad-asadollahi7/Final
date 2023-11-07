@@ -16,6 +16,8 @@ public interface IProductRepository
     Task<List<ProductInventoryDto>> GetProductInventories(int productId,
                                                           CancellationToken cancellationToken);
 
+    Task<List<ProductOutputApprove>> GetProductsForApprove(CancellationToken cancellationToken);
+    
     Task<SellType> GetSellType(int productId, CancellationToken cancellationToken);
 
     Task<int> Create(string persianTitle,

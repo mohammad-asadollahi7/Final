@@ -1,0 +1,35 @@
+﻿@model List<Endpoint.MVC.Dtos.Products.ProductOutputApprove>
+
+
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">محصولات</h3>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body p-0">
+        <table class="table table-condensed">
+            <tr>
+                <th style="width: 10px">کد</th>
+                <th>عنوان</th>
+                <th>غرفه</th>
+                <th>تصویر</th>
+                <th>تایید</th>
+                <th>رد</th>
+            </tr>
+
+            @foreach (var product in Model)
+            {
+
+                <tr>
+                    <td>@product.Id</td>
+                    <td>@product.PersianTitle</td>
+                    <td>@product.BoothTitle</td>
+                    <td> <img src="~/img/>@product.PicturesPath.First()" /> </td>
+                    <td> <a class="btn btn-primary" href=""> </a> </td>
+                    <td> <a class="btn btn-primary" href=""></a> </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>    

@@ -52,6 +52,20 @@ public class ProductService : IProductService
         return product;
     }
 
+    public async Task<List<ProductOutputApprove>> GetProductsForApprove(
+                                                        CancellationToken cancellationToken)
+    {
+        var products = await _productRepository.GetProductsForApprove(cancellationToken);
+
+        if (products.Count() == 0)
+            throw new AppException(ExpMessage.HaveNotProduct,
+                                   ExpStatusCode.BadRequest);
+
+        return products;
+    }
+
+
+
     public async Task<SellType> GetSellType(int productId, CancellationToken cancellationToken)
     {
         return await _productRepository.GetSellType(productId, cancellationToken);
@@ -246,4 +260,5 @@ public class ProductService : IProductService
         await _productRepository.SaveChangesAsync(cancellationToken);
     }
 
+    
 }

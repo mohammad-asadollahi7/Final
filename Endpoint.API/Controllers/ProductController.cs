@@ -5,6 +5,7 @@ using Domain.Core.Enums;
 using Endpoint.API.CustomAttributes;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Runtime.CompilerServices;
 
 namespace Endpoint.API.Controllers;
 public class ProductController : BaseController
@@ -42,13 +43,24 @@ public class ProductController : BaseController
     public async Task<IActionResult> GetNonAuctionProductById(int productId,
                                                              CancellationToken cancellationToken)
     {
-        var product = await _productAppService.GetNonAuctionProductById(productId, cancellationToken);
+        var product = await _productAppService.GetNonAuctionProductById(productId, 
+                                                                        cancellationToken);
         return Ok(product);
     }
 
+
+    [HttpGet("GetProductsForApprove")]
+    [HaveAccess(Role.Admin)]
+    public async Task<IActionResult> GetProductsForApprove(
+                                                       CancellationToken cancellationToken)
+    {
+        var products = await _productAppService.GetProductsForApprove(cancellationToken);
+        return Ok(products);
+    }
+
+
     [HttpPost("CreateNonAuction")]
     [HaveAccess(Role.Seller)]
-    [ValidateAntiForgeryToken]
     public async Task<IActionResult> CreateNonAuction(CreateNonAuctionProductDto createProduct,
                                        CancellationToken cancellationToken)
     {
@@ -60,7 +72,6 @@ public class ProductController : BaseController
 
     [HttpPost("CreateAuction")]
     [HaveAccess(Role.Seller)]
-    [ValidateAntiForgeryToken]
     public async Task<IActionResult> CreateAuction(CreateAuctionProductDto createProduct,
                                                 CancellationToken cancellationToken)
     {

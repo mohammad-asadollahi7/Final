@@ -1,6 +1,4 @@
-﻿
-
-using Domain.Core.Contracts.Repos;
+﻿using Domain.Core.Contracts.Repos;
 using Domain.Core.Contracts.Services;
 using Domain.Core.Dtos.Categories;
 using Domain.Core.Dtos.Products;
