@@ -1,4 +1,11 @@
+using Domain.AppServices;
+using Domain.Core.Contracts.AppServices;
+using Domain.Core.Contracts.Repos;
+using Domain.Core.Contracts.Services;
 using Domain.Core.Entities;
+using Domain.Services;
+using Infra.DataAccess.Repos.Dapper;
+using Infra.DataAccess.Repos.EF;
 using Infra.Db.EF;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -24,6 +31,42 @@ builder.Services.AddDbContext<FinalContext>(options =>
 
 
 #region Register Application Services
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IProductAppService, ProductAppService>();
+
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IAccountAppService, AccountAppService>();
+
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
+//builder.Services.AddScoped<ICustomerAppService, CustomerAppService>();
+
+builder.Services.AddScoped<IAdminRepository, AdminRepository>();
+builder.Services.AddScoped<IAdminService, AdminService>();
+//builder.Services.AddScoped<IAdminAppService, AdminAppService>();
+
+builder.Services.AddScoped<ISellerRepository, SellerRepository>();
+builder.Services.AddScoped<ISellerService, SellerService>();
+//builder.Services.AddScoped<ISellerAppService, SellerAppService>();
+
+builder.Services.AddScoped<ICartRepository, CartRepository>();
+builder.Services.AddScoped<ICartService, CartService>();
+builder.Services.AddScoped<ICartAppService, CartAppService>();
+
+
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<ICategoryAppService, CategoryAppService>();
+
+
+builder.Services.AddScoped<IBoothRepository, BoothRepository>();
+builder.Services.AddScoped<IBoothService, BoothService>();
+builder.Services.AddScoped<IBoothAppService, BoothAppService>();
+
+
+builder.Services.AddScoped<IProductDapperRepository, ProductDapperRepository>();
 #endregion
 
 

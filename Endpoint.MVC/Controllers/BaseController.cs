@@ -9,7 +9,7 @@ public class BaseController : Controller
 {
 
     private readonly IHttpClientFactory _httpClientFactory;
-    public string BaseUrl { get; } = "";
+    public string BaseUrl { get; } = "http://localhost:5153/api/";
 
     public BaseController(IHttpClientFactory httpClientFactory) =>
                                                  _httpClientFactory = httpClientFactory;

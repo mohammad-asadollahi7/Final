@@ -8,10 +8,10 @@ using System.Data;
 
 namespace Infra.DataAccess.Repos.EF;
 
-public class AccountRespository : IAccountRepository
+public class AccountRepository : IAccountRepository
 {
     private readonly UserManager<ApplicationUser> _userManager;
-    public AccountRespository(UserManager<ApplicationUser> userManager)
+    public AccountRepository(UserManager<ApplicationUser> userManager)
     {
         _userManager = userManager;
     }

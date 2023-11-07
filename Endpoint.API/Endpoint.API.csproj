@@ -16,6 +16,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Domain.AppServices\Domain.AppServices.csproj" />
+    <ProjectReference Include="..\Domain.Services\Domain.Services.csproj" />
+    <ProjectReference Include="..\Infra.DataAccess.Repos.Dapper\Infra.DataAccess.Repos.Dapper.csproj" />
+    <ProjectReference Include="..\Infra.DataAccess.Repos.EF\Infra.DataAccess.Repos.EF.csproj" />
     <ProjectReference Include="..\Infra.Db.EF\Infra.Db.EF.csproj" />
   </ItemGroup>
 

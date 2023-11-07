@@ -20,7 +20,7 @@ public class ProductController : BaseController
     [HttpGet("GetNonAuctionsByCategoryId/{categoryId}")]
     [AllowAnonymous]
     public async Task<IActionResult> GetNonAuctionsByCategoryId(int categoryId,
-                                                              CancellationToken cancellationToken)
+                                                                 CancellationToken cancellationToken)
     {
         var products = await _productAppService.GetNonAuctionsByCategoryId(categoryId, cancellationToken);
         return Ok(products);
