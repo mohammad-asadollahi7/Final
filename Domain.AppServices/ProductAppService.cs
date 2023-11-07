@@ -22,22 +22,26 @@ public class ProductAppService : IProductAppService
     }
 
     public async Task<List<ProductOutputDto>> GetNonAuctionsByCategoryId(int categoryId,
-                                                                         CancellationToken cancellationToken)
+                                                                   CancellationToken cancellationToken)
     {
         await _categoryService.EnsureExistById(categoryId, cancellationToken);
-        var categoriesIds = await _categoryService.GetSubcategoriesIdsByCategoryId(categoryId, cancellationToken);
-        var products = await _productService.GetNonAuctionsByCategoryId(cancellationToken, categoriesIds.ToArray());
+        var categoriesIds = await _categoryService.GetSubcategoriesIdsByCategoryId(categoryId, 
+                                                                                      cancellationToken);
+        var products = await _productService.GetNonAuctionsByCategoryId(cancellationToken,
+                                                                            categoriesIds.ToArray());
         return products;
     }
 
-    public async Task<ProductDetailsDto> GetAuctionProductById(int productId, CancellationToken cancellationToken)
+    public async Task<ProductDetailsDto> GetAuctionProductById(int productId, 
+                                                            CancellationToken cancellationToken)
     {
         await _productService.EnsureExistById(productId, SellType.Auction, cancellationToken);
         var productDto = await _productService.GetAuctionProductById(productId, cancellationToken);
         return productDto;
     }
 
-    public async Task<ProductDetailsDto?> GetNonAuctionProductById(int productId, CancellationToken cancellationToken)
+    public async Task<ProductDetailsDto> GetNonAuctionProductById(int productId, 
+                                                            CancellationToken cancellationToken)
     {
         await _productService.EnsureExistById(productId, SellType.NonAuction, cancellationToken);
         var productDto = await _productService.GetNonAuctionProductById(productId, cancellationToken);

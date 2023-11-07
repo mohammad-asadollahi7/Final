@@ -15,7 +15,7 @@ public interface IProductAppService
     Task<ProductDetailsDto> GetAuctionProductById(int productId,
                                                    CancellationToken cancellationToken);
 
-    Task<ProductDetailsDto?> GetNonAuctionProductById(int productId,
+    Task<ProductDetailsDto> GetNonAuctionProductById(int productId,
                                                      CancellationToken cancellationToken);
 
     Task CreateNonAuction(CreateNonAuctionProductDto createProduct,
@@ -28,6 +28,9 @@ public interface IProductAppService
     Task UpdateNonAuction(int productId,
                          UpdateNonAuctionProductDto productDto,
                          CancellationToken cancellationToken);
+
+    Task UpdateAuction(int productId, UpdateAuctionProductDto productDto,
+                             CancellationToken cancellationToken);
 
     Task Remove(int productId,
                 CancellationToken cancellationToken);
