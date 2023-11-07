@@ -1,5 +1,4 @@
-﻿
-using Domain.Core.Contracts.Repos;
+﻿using Domain.Core.Contracts.Repos;
 using Domain.Core.Contracts.Services;
 using Domain.Core.Dtos.Cart;
 using Domain.Core.Enums;
@@ -47,17 +46,6 @@ public class CartService : ICartService
                                        discountedPrice, cancellationToken);
     }
 
-    public async Task ChangeCartStatus(int cartId,
-                                       CartStatus cartStatus,
-                                       CancellationToken cancellationToken)
-    {
-        var isChanged = await _cartRepository.ChangeCartStatus(cartId,
-                                                               cartStatus,
-                                                               cancellationToken);
-        if (!isChanged)
-            throw new AppException(ExpMessage.NotChanged,
-                                   ExpStatusCode.InternalServerError);
-    }
 
     public async Task<int> CreateByCustomerId(int customerId,
                                               CancellationToken cancellationToken)
@@ -117,4 +105,27 @@ public class CartService : ICartService
                                    ExpStatusCode.NotFound);
         return cartDto;
     }
+
+
+    public async Task CheckCartStatus(int cartId,
+                                      CartStatus initialCartStatus,
+                                      CancellationToken cancellationToken)
+    {
+        var cartStauts = await _cartRepository.GetCartStatus(cartId, cancellationToken);
+        if (cartStauts != initialCartStatus)
+            throw new AppException(ExpMessage.WrongCartStatus, ExpStatusCode.Conflict);
+    }
+
+
+    public async Task FinalizeCart(int cartId, CancellationToken cancellationToken)
+    {
+        await _cartRepository.FinalizeCart(cartId, cancellationToken);
+    }
+
+
+    public async Task CancelCart(int cartId, CancellationToken cancellationToken)
+    {
+        await _cartRepository.CancelCart(cartId, cancellationToken);
+    }
+
 }

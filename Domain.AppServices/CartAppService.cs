@@ -47,15 +47,6 @@ public class CartAppService : ICartAppService
                                            proposedPrice, cancellationToken);
     }
 
-
-    public async Task ChangeCartStatus(int cartId,
-                                       CartStatus cartStatus,
-                                       CancellationToken cancellationToken)
-    {
-        await _cartService.ChangeCartStatus(cartId, cartStatus, cancellationToken);
-    }
-
-
     public async Task DeleteOrder(int orderId,
                                   CancellationToken cancellationToken)
     {
@@ -82,5 +73,18 @@ public class CartAppService : ICartAppService
                                                          CancellationToken cancellationToken)
     {
         return await _cartService.GetDetailsByCartId(cartId, cancellationToken);
+    }
+
+    public async Task FinalizeCart(int cartId, CancellationToken cancellationToken)
+    {
+        await _cartService.CheckCartStatus(cartId, CartStatus.In_Progress, cancellationToken);
+        await _cartService.FinalizeCart(cartId, cancellationToken);
+    }
+
+
+    public async Task CancelCart(int cartId, CancellationToken cancellationToken)
+    {
+        await _cartService.CheckCartStatus(cartId, CartStatus.In_Progress, cancellationToken);
+        await _cartService.CancelCart(cartId, cancellationToken);
     }
 }

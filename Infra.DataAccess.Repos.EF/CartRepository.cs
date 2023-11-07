@@ -5,6 +5,7 @@ using Domain.Core.Entities;
 using Domain.Core.Enums;
 using Infra.Db.EF;
 using Microsoft.EntityFrameworkCore;
+using System.Threading;
 
 namespace Infra.DataAccess.Repos.EF;
 
@@ -77,19 +78,27 @@ public class CartRepository : ICartRepository
     }
 
 
-    public async Task<bool> ChangeCartStatus(int cartId,
-                                             CartStatus cartStatus,
-                                             CancellationToken cancellationToken)
+    public async Task<CartStatus> GetCartStatus(int cartId, CancellationToken cancellationToken)
+    {
+        return await _context.Carts.Where(c => c.Id == cartId)
+                                    .Select(c => c.Status).FirstOrDefaultAsync(cancellationToken);
+    }
+
+    public async Task FinalizeCart(int cartId, CancellationToken cancellationToken)
     {
         var cart = await _context.Carts.FirstOrDefaultAsync(c => c.Id == cartId,
                                                             cancellationToken);
-        cart.Status = cartStatus;
+        cart.Status = CartStatus.Delivered;
+        await _context.SaveChangesAsync(cancellationToken);
+    }
 
-        var affectedRows = await _context.SaveChangesAsync(cancellationToken);
-        if (affectedRows == 0)
-            return false;
 
-        return true;
+    public async Task CancelCart(int cartId, CancellationToken cancellationToken)
+    {
+        var cart = await _context.Carts.FirstOrDefaultAsync(c => c.Id == cartId,
+                                                            cancellationToken);
+        cart.Status = CartStatus.cancelled;
+        await _context.SaveChangesAsync(cancellationToken);
     }
 
 
@@ -140,8 +149,8 @@ public class CartRepository : ICartRepository
         return newCartId;
     }
 
-    public async Task AddAuctionOrder(int? customerId, 
-                                      int productId, decimal proposedPrice, 
+    public async Task AddAuctionOrder(int? customerId,
+                                      int productId, decimal proposedPrice,
                                       CancellationToken cancellationToken)
     {
         var auctionOrder = new AuctionOrder()

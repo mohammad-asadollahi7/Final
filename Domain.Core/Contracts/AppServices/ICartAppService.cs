@@ -1,4 +1,5 @@
-﻿using Domain.Core.Dtos.Cart;
+﻿using Domain.Core.Contracts.Services;
+using Domain.Core.Dtos.Cart;
 using Domain.Core.Enums;
 
 namespace Domain.Core.Contracts.AppServices;
@@ -30,9 +31,12 @@ public interface ICartAppService
     Task<CartDetailsDto> GetDetailsByCartId(int cartId,
                                             CancellationToken cancellationToken);
 
-    Task ChangeCartStatus(int cartId,
-                          CartStatus cartStatus,
-                          CancellationToken cancellationToken);
+    Task FinalizeCart(int cartId, CancellationToken cancellationToken);
+    
+
+
+    Task CancelCart(int cartId, CancellationToken cancellationToken);
+    
 }
 
 
