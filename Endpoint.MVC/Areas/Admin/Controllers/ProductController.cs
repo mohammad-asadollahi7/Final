@@ -1,9 +1,11 @@
 ﻿using Endpoint.MVC.Controllers;
 using Endpoint.MVC.Dtos.Categories;
+using Endpoint.MVC.Dtos.Enums;
 using Endpoint.MVC.Dtos.Pictures;
 using Endpoint.MVC.Dtos.Products;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Threading;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IWebHostEnvironment;
 
 
@@ -43,11 +45,25 @@ public class ProductController : BaseController
     }
 
 
-    public async Task<IActionResult> GetProductById(int id)
+    public async Task<IActionResult> GetProductById(int productId, SellType sellType,
+                                                     CancellationToken cancellationToken)
     {
-        //if auction
+        string url;
+        if (sellType == SellType.NonAuction)
+            url = $"Product/GetNonAuctionProductById/{productId}";
+        else
+            url = $"Product/GetAuctionProductById/{productId}";
 
-        //else nonauction
+
+        var httpResponseMessage = await SendGetRequest(url, cancellationToken);
+
+        if (!httpResponseMessage.IsSuccessStatusCode)
+            return RedirectToErrorPage(httpResponseMessage);
+
+
+        var products = await httpResponseMessage.Content
+                                         .ReadFromJsonAsync<List<ProductDetailsDto>>();
+        return View(products);
     }
     
 
