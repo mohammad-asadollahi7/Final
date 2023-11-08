@@ -11,8 +11,6 @@ public partial class Category
 
     public int? ParentId { get; set; }
 
-    public int CategoryPictureId { get; set; }
-
     public virtual ICollection<CustomAttributesTemplate> CustomAttributesTemplates { get; set; } = new List<CustomAttributesTemplate>();
 
     public virtual CategoryPicture CategoryPicture { get; set; } = null!;

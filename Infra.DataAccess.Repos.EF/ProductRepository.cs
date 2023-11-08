@@ -131,7 +131,7 @@ public class ProductRepository : IProductRepository
             EnglishTitle = englishTitle,
             Description = description,
             IsDeleted = false,
-            IsApproved = false,
+            IsApproved = null,
             BoothId = boothId,
             SellType = sellType,
         };

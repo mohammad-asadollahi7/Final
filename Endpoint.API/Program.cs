@@ -66,6 +66,11 @@ builder.Services.AddScoped<IBoothService, BoothService>();
 builder.Services.AddScoped<IBoothAppService, BoothAppService>();
 
 
+builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+builder.Services.AddScoped<ICommentService, CommentService>();
+builder.Services.AddScoped<ICommentAppService, CommentAppService>();
+
+
 builder.Services.AddScoped<IProductDapperRepository, ProductDapperRepository>();
 #endregion
 
