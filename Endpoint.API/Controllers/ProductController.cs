@@ -108,5 +108,15 @@ public class ProductController : BaseController
         await _productAppService.Remove(productId, cancellationToken);
         return Ok();
     }
+
+
+    [HttpPatch("ApproveProduct/{id}")]
+    [HaveAccess(Role.Admin)]
+    public async Task ApproveProduct(int id, bool isApproved,
+                                   CancellationToken cancellationToken)
+    {
+        await _productAppService.ApproveProduct(id, isApproved, cancellationToken);
+        return Ok();
+    }
 }
 

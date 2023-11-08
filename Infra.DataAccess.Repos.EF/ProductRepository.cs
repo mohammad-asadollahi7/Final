@@ -1,4 +1,5 @@
-﻿using Domain.Core.Contracts.Repos;
+﻿using Domain.Core.Contracts.AppServices;
+using Domain.Core.Contracts.Repos;
 using Domain.Core.Dtos.Pictures;
 using Domain.Core.Dtos.Product;
 using Domain.Core.Dtos.Products;
@@ -379,5 +380,12 @@ public class ProductRepository : IProductRepository
         await _context.SaveChangesAsync(cancellationToken);
     }
 
+    public async Task ApproveProduct(int id, bool isApproved,
+                                           CancellationToken cancellationToken)
+    {
+        var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == id, 
+                                                                    cancellationToken);
+        product.IsApproved = isApproved;
+    }
 }
 

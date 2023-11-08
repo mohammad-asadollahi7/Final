@@ -26,9 +26,9 @@ public class ProductAppService : IProductAppService
     {
         await _categoryService.EnsureExistById(categoryId, cancellationToken);
         var categoriesIds = await _categoryService.GetSubcategoriesIdsByCategoryId(categoryId, 
-                                                                                      cancellationToken);
+                                                                                cancellationToken);
         var products = await _productService.GetNonAuctionsByCategoryId(cancellationToken,
-                                                                            categoriesIds.ToArray());
+                                                                       categoriesIds.ToArray());
         return products;
     }
 
@@ -41,7 +41,7 @@ public class ProductAppService : IProductAppService
     }
 
     public async Task<ProductDetailsDto> GetNonAuctionProductById(int productId, 
-                                                            CancellationToken cancellationToken)
+                                                        CancellationToken cancellationToken)
     {
         await _productService.EnsureExistById(productId, SellType.NonAuction, cancellationToken);
         var productDto = await _productService.GetNonAuctionProductById(productId, cancellationToken);
@@ -152,7 +152,8 @@ public class ProductAppService : IProductAppService
         await _productService.Remove(productId, cancellationToken);
     }
 
-    public async Task UpdateNonAuction(int productId, UpdateNonAuctionProductDto productDto,
+    public async Task UpdateNonAuction(int productId, 
+                                       UpdateNonAuctionProductDto productDto,
                                        CancellationToken cancellationToken)
     {
         await _productService.UpdateNonAuctionProduct(productId,productDto,
@@ -168,5 +169,12 @@ public class ProductAppService : IProductAppService
                                                    false, cancellationToken);
 
         await _productService.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task ApproveProduct(int id, bool isApproved,
+                                CancellationToken cancellationToken)
+    {
+        await _productService.EnsureExistById(id, null, cancellationToken);
+        await _productService.ApproveProduct(id, isApproved, cancellationToken);
     }
 }

@@ -5,6 +5,7 @@ using Endpoint.MVC.Dtos.Pictures;
 using Endpoint.MVC.Dtos.Products;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System;
 using System.Threading;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IWebHostEnvironment;
 
@@ -46,7 +47,7 @@ public class ProductController : BaseController
 
 
     public async Task<IActionResult> GetProductById(int productId, SellType sellType,
-                                                     CancellationToken cancellationToken)
+                                                    CancellationToken cancellationToken)
     {
         string url;
         if (sellType == SellType.NonAuction)
@@ -70,10 +71,16 @@ public class ProductController : BaseController
     public async Task<IActionResult> ApproveProduct(int id, bool isApprove, 
                                                     CancellationToken cancellationToken)
     {
+        var httpResponseMessage = await SendPatchRequest($"Product/ApproveProduct/{id}", 
+                                                            cancellationToken);
 
+        if (!httpResponseMessage.IsSuccessStatusCode)
+            return RedirectToErrorPage(httpResponseMessage);
+
+        return RedirectToAction(nameof(GetProductsForApprove));
     }
 
-    
+
 
     public async Task<IActionResult> GetCommentsForApprove(CancellationToken cancellationToken)
     {

@@ -95,6 +95,9 @@ public interface IProductRepository
 
     Task<bool> IsExistById(int id, CancellationToken cancellationToken);
 
+
+    Task ApproveProduct(int id, bool isApproved,CancellationToken cancellationToken);
+
     Task SaveChangesAsync(CancellationToken cancellationToken);
     
 }

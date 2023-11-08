@@ -13,9 +13,7 @@ public class ProductDetailsDto
 
     public string Description { get; set; } = null!;
 
-    public double? CalculatedRate { get; set; }
-
-    public int DiscountPercent { get; set; }
+    public int? DiscountPercent { get; set; }
 
     public decimal Price { get; set; }
 

@@ -37,4 +37,7 @@ public interface IProductAppService
 
     Task Remove(int productId,
                 CancellationToken cancellationToken);
+
+    Task ApproveProduct(int id, bool isApproved,
+                        CancellationToken cancellationToken);
 }

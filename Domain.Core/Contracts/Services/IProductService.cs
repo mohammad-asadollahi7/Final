@@ -86,4 +86,7 @@ public interface IProductService
                                          CancellationToken cancellationToken);
 
     Task SaveChangesAsync(CancellationToken cancellationToken);
+
+    Task ApproveProduct(int id, bool isApproved,
+                                CancellationToken cancellationToken);
 }

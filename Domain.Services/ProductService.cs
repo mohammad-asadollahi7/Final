@@ -260,5 +260,9 @@ public class ProductService : IProductService
         await _productRepository.SaveChangesAsync(cancellationToken);
     }
 
-    
+    public async Task ApproveProduct(int id, bool isApproved, 
+                               CancellationToken cancellationToken)
+    {
+        await _productRepository.ApproveProduct(id, isApproved, cancellationToken);
+    }
 }
