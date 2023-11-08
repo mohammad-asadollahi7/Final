@@ -26,7 +26,7 @@ public interface ICartRepository
                   CancellationToken cancellationToken);
 
     Task AddAuctionOrder(int? customerId,
-                         int productId, decimal proposedPrice,
+                         int productId, decimal proposedPrice, bool isCommit,
                          CancellationToken cancellationToken);
 
     Task DeleteOrder(int orderId,

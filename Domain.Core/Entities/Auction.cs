@@ -16,5 +16,5 @@ public partial class Auction
 
     public bool IsActive { get; set; }
 
-    public virtual Product? Product { get; set; }
+    public virtual Product Product { get; set; } = null!;
 }

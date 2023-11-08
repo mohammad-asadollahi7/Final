@@ -151,6 +151,7 @@ public class CartRepository : ICartRepository
 
     public async Task AddAuctionOrder(int? customerId,
                                       int productId, decimal proposedPrice,
+                                      bool isCommit,
                                       CancellationToken cancellationToken)
     {
         var auctionOrder = new AuctionOrder()
@@ -161,6 +162,8 @@ public class CartRepository : ICartRepository
         };
 
         await _context.AuctionOrders.AddAsync(auctionOrder, cancellationToken);
-        await _context.SaveChangesAsync(cancellationToken);
+
+        if(isCommit)
+            await _context.SaveChangesAsync(cancellationToken);
     }
 }

@@ -107,6 +107,11 @@ public class FinalContext : IdentityDbContext<ApplicationUser, IdentityRole<int>
             entity.Property(e => e.FromDate).HasColumnType("datetime");
             entity.Property(e => e.MinPrice).HasColumnType("decimal(18, 0)");
             entity.Property(e => e.ToDate).HasColumnType("datetime");
+
+            entity.HasOne(d => d.Product).WithOne(p => p.Auction)
+               .HasForeignKey<Auction>(d => d.ProductId)
+               .OnDelete(DeleteBehavior.ClientSetNull)
+               .HasConstraintName("FK_Auction_Products");
         });
 
         modelBuilder.Entity<AuctionOrder>(entity =>
@@ -264,11 +269,6 @@ public class FinalContext : IdentityDbContext<ApplicationUser, IdentityRole<int>
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Products_Booths");
 
-            entity.HasOne(d => d.Auction).WithOne(p => p.Product)
-                .HasPrincipalKey<Auction>(p => p.ProductId)
-                .HasForeignKey<Product>(d => d.Id)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Products_Auction");
 
             entity.HasMany(d => d.Categories).WithMany(p => p.Products)
                 .UsingEntity<Dictionary<string, object>>(

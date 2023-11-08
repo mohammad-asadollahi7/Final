@@ -44,6 +44,7 @@ public interface ICartService
     Task AddAuctionOrder(int? customerId,
                          int productId, decimal lastSubmittedPrice, 
                          decimal proposedPrice,
+                         bool isCommit,
                          CancellationToken cancellationToken);
 
 }

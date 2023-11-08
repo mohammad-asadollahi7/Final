@@ -44,7 +44,7 @@ public class CartAppService : ICartAppService
         var product = await _productService.GetAuctionProductById(productId, cancellationToken);
 
         await _cartService.AddAuctionOrder(customerId, productId, product.Price,
-                                           proposedPrice, cancellationToken);
+                                           proposedPrice, true, cancellationToken);
     }
 
     public async Task DeleteOrder(int orderId,

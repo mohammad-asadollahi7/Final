@@ -129,6 +129,7 @@ public class ProductAppService : IProductAppService
                                            newProductId,
                                            0,
                                            createProduct.MinPrice, 
+                                           false,
                                            cancellationToken);
 
         await _productService.AddQuantityRecord(newProductId,
