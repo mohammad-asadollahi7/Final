@@ -1,0 +1,49 @@
+﻿@model List<Endpoint.MVC.Dtos.Comment.CommentDto>
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">نظرات</h3>
+
+                <div class="card-tools">
+                    <div class="input-group input-group-sm" style="width: 150px;">
+                        <input type="text" name="table_search" class="form-control float-right" placeholder="جستجو">
+
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body table-responsive p-0">
+                <table class="table table-hover">
+                    <tr>
+                        <th>عنوان</th>
+                        <th>نام کاربر</th>
+                        <th>محصول</th>
+                        <th>توضیحات</th>
+                        <th>تایید</th>
+                        <th>رد</th>
+                    </tr>
+                    @foreach (var comment in Model)
+                    {
+                        <tr>
+                            <td>@comment.Title</td>
+                            <td>@comment.CustomerName</td>
+                            <td>@comment.ProductTitle</td>
+                            <td>@comment.Description</td>
+                            <td><a asp-area="Admin" asp-action="ApproveComment" class="btn btn-primary" asp-route-id="@comment.Id" asp-route-isApproved="true"> <img src="~/icon/approve.png"> </a></td>
+                            <td><a asp-area="Admin" asp-action="ApproveComment" class="btn btn-primary" asp-route-id="@comment.Id" asp-route-isApproved="false"> <img src="~/icon/delete.png"> </a></td>
+                        </tr>
+
+                    }
+                </table>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </div>
+</div>

@@ -1,4 +1,5 @@
 ﻿using Domain.Core.Contracts.AppServices;
+using Domain.Core.Dtos.Comment;
 using Domain.Core.Dtos.Product;
 using Domain.Core.Dtos.Products;
 using Domain.Core.Enums;
@@ -11,10 +12,13 @@ namespace Endpoint.API.Controllers;
 public class ProductController : BaseController
 {
     private readonly IProductAppService _productAppService;
+    private readonly ICommentAppService _commentAppService;
 
-    public ProductController(IProductAppService productAppService)
+    public ProductController(IProductAppService productAppService,
+                             ICommentAppService commentAppService)
     {
         _productAppService = productAppService;
+        _commentAppService = commentAppService;
     }
 
 
@@ -52,7 +56,7 @@ public class ProductController : BaseController
     [HttpGet("GetProductsForApprove")]
     [HaveAccess(Role.Admin)]
     public async Task<IActionResult> GetProductsForApprove(
-                                                       CancellationToken cancellationToken)
+                                                    CancellationToken cancellationToken)
     {
         var products = await _productAppService.GetProductsForApprove(cancellationToken);
         return Ok(products);
@@ -110,13 +114,22 @@ public class ProductController : BaseController
     }
 
 
-    [HttpPatch("ApproveProduct/{id}")]
+    [HttpPatch("ApproveProduct/{id}/{isApproved}")]
     [HaveAccess(Role.Admin)]
-    public async Task ApproveProduct(int id, bool isApproved,
+    public async Task<IActionResult> ApproveProduct(int id, bool isApproved,
                                    CancellationToken cancellationToken)
     {
         await _productAppService.ApproveProduct(id, isApproved, cancellationToken);
         return Ok();
     }
+
+    [HttpGet("GetCommentsForApprove")]
+    [HaveAccess(Role.Admin)]
+    public async Task<IActionResult> GetCommentsForApprove(CancellationToken cancellationToken)
+    {
+        var comments = await _commentAppService.GetCommentsForApprove(cancellationToken);
+        return Ok(comments);
+    }
+
 }
 

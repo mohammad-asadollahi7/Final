@@ -1,11 +1,13 @@
 ﻿using Endpoint.MVC.Controllers;
 using Endpoint.MVC.Dtos.Categories;
+using Endpoint.MVC.Dtos.Comment;
 using Endpoint.MVC.Dtos.Enums;
 using Endpoint.MVC.Dtos.Pictures;
 using Endpoint.MVC.Dtos.Products;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
+using System.Diagnostics.Eventing.Reader;
 using System.Threading;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IWebHostEnvironment;
 
@@ -68,10 +70,10 @@ public class ProductController : BaseController
     }
     
 
-    public async Task<IActionResult> ApproveProduct(int id, bool isApprove, 
+    public async Task<IActionResult> ApproveProduct(int id, bool isApproved, 
                                                     CancellationToken cancellationToken)
     {
-        var httpResponseMessage = await SendPatchRequest($"Product/ApproveProduct/{id}", 
+        var httpResponseMessage = await SendPatchRequest($"Product/ApproveProduct/{id}/{isApproved}", 
                                                             cancellationToken);
 
         if (!httpResponseMessage.IsSuccessStatusCode)
@@ -84,11 +86,21 @@ public class ProductController : BaseController
 
     public async Task<IActionResult> GetCommentsForApprove(CancellationToken cancellationToken)
     {
+        var httpResponseMessage = await SendGetRequest("Product/GetCommentsForApprove", 
+                                                            cancellationToken);
+
+        if (!httpResponseMessage.IsSuccessStatusCode)
+            return RedirectToErrorPage(httpResponseMessage);
+
+
+        var comments = await httpResponseMessage.Content
+                                         .ReadFromJsonAsync<List<CommentDto>>();
+        return View(comments);
 
     }
 
-    public async Task<IActionResult> ApproveComment(int id, 
-                                        CancellationToken cancellationToken)
+    public async Task<IActionResult> ApproveComment(int id, bool isApproved,
+                                              CancellationToken cancellationToken)
     {
 
     }
