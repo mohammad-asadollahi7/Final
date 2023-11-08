@@ -31,7 +31,7 @@ public class CategoryRepository : ICategoryRepository
                                      Id = c.Id,
                                      Title = c.Title,
                                      ParentId = c.ParentId,
-                                     PictureName = c.Picture.Name,
+                                     PictureName = c.CategoryPicture.Picture.Name,
                                      SubCategories = _context.Categories
                                                      .Where(c => c.ParentId == categoryId)
                                                      .Select(sc => new SubCategoryDto()

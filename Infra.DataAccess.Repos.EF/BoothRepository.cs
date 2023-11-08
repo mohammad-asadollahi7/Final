@@ -1,5 +1,6 @@
 ﻿using Domain.Core.Contracts.Repos;
 using Domain.Core.Dtos.Booth;
+using Domain.Core.Dtos.Pictures;
 using Domain.Core.Dtos.Product;
 using Domain.Core.Entities;
 using Domain.Core.Enums;
@@ -13,7 +14,7 @@ public class BoothRepository : IBoothRepository
 {
     private readonly FinalContext _context;
     public BoothRepository(FinalContext context) => _context = context;
-    
+
 
     public async Task<BoothDto?> GetBoothBySellerId(int sellerId,
                                                     CancellationToken cancellationToken)
@@ -25,7 +26,11 @@ public class BoothRepository : IBoothRepository
                                                     Id = b.Id,
                                                     Description = b.Description,
                                                     Medal = b.Medal,
-                                                    Picture = b.Picture,
+                                                    PictureDto = new PictureDto()
+                                                    {
+                                                        Id = b.BoothPicture.Picture.Id,
+                                                        PictureName = b.BoothPicture.Picture.Name,
+                                                    },
                                                     Title = b.Title,
                                                     Wage = b.Wage
                                                 }).AsNoTracking()
@@ -33,7 +38,7 @@ public class BoothRepository : IBoothRepository
     }
 
 
-    public async Task<List<ProductOutputDto>> GetNonAuctionsByBoothTitle(string title, 
+    public async Task<List<ProductOutputDto>> GetNonAuctionsByBoothTitle(string title,
                                                             CancellationToken cancellationToken)
     {
         return await _context.Products.Where(p => p.Booth.Title == title)
@@ -67,20 +72,28 @@ public class BoothRepository : IBoothRepository
     }
 
 
-    public async Task Create(int sellerId, string title,
-                             string description, int wage,
-                             Medal medal, Picture picture,
+    public async Task Create(CreateBoothDto boothDto,
+                             int sellerId,
+                             int wage,
+                             Medal medal,
+                             bool isDeleted,
                              CancellationToken cancellationToken)
     {
         var booth = new Booth()
         {
-            Title = title,
-            Description = description,
+            Title = boothDto.Title,
+            Description = boothDto.Description,
             Wage = wage,
             Medal = medal,
-            Picture = picture,
+            BoothPicture = new BoothPicture()
+            {
+                Picture = new Picture()
+                {
+                    Name = boothDto.PictureDto.PictureName,
+                }
+            },
             SellerId = sellerId,
-            IsDeleted = false,
+            IsDeleted = isDeleted,
         };
 
         await _context.Booths.AddAsync(booth);
@@ -88,18 +101,25 @@ public class BoothRepository : IBoothRepository
     }
 
 
-    public async Task Update(int boothId, UpdateBoothDto boothDto, 
+    public async Task Update(int boothId, UpdateBoothDto boothDto,
                                 CancellationToken cancellationToken)
     {
-        var booth = await _context.Booths.SingleOrDefaultAsync(b => b.Id == boothId, 
+        var booth = await _context.Booths.SingleOrDefaultAsync(b => b.Id == boothId,
                                                                 cancellationToken);
-        booth.Picture = boothDto.Picture;
+        booth.BoothPicture = new BoothPicture()
+        {
+            Picture = new Picture()
+            {
+                Name = boothDto.PictureDto.PictureName,
+            }
+        }; 
+
         booth.Description = boothDto.Description;
         booth.Title = boothDto.Title;
-        await _context.SaveChangesAsync(cancellationToken);  
+        await _context.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task UpdateWage(int boothId, int wage, 
+    public async Task UpdateWage(int boothId, int wage,
                                   Medal medal, CancellationToken cancellationToken)
     {
         await _context.Booths.SingleOrDefaultAsync(b => b.Id == boothId);
@@ -117,7 +137,7 @@ public class BoothRepository : IBoothRepository
 
     public Task<bool> IsExistById(int id, CancellationToken cancellationToken)
     {
-        return _context.Booths.AnyAsync(b => b.Id == id && b.IsDeleted == false, 
+        return _context.Booths.AnyAsync(b => b.Id == id && b.IsDeleted == false,
                                         cancellationToken);
     }
 

@@ -87,8 +87,8 @@ public class ProductController : BaseController
     [HttpPut("UpdateNonAuction/{productId}")]
     //[HaveAccess(Role.Admin, Role.Seller)]
     public async Task<IActionResult> UpdateNonAuction(int productId,
-                                                        UpdateNonAuctionProductDto productDto,
-                                                        CancellationToken cancellationToken)
+                                                      UpdateNonAuctionProductDto productDto,
+                                                      CancellationToken cancellationToken)
     {
         await _productAppService.UpdateNonAuction(productId, productDto, cancellationToken); 
         return Ok();

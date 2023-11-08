@@ -14,4 +14,7 @@ public partial class Picture
     public virtual Category? Category { get; set; }
 
     public virtual ProductPicture? ProductPicture { get; set; }
+    public virtual BoothPicture? BoothPicture { get; set; }
+    public virtual CategoryPicture? CategoryPicture { get; set; }
+
 }

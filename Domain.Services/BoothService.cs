@@ -43,15 +43,14 @@ public class BoothService : IBoothService
     }
 
 
-    public async Task Create(int sellerId, string title, string description,
-                            Picture picture, CancellationToken cancellationToken)
+    public async Task Create(CreateBoothDto boothDto, int sellerId,
+                             CancellationToken cancellationToken)
     {
-        await _boothRepository.Create(sellerId,
-                                      title,
-                                      description,
+        await _boothRepository.Create(boothDto,
+                                      sellerId,
                                       20,
                                       Medal.Bronze,
-                                      picture,
+                                      false,
                                       cancellationToken);
     }
 

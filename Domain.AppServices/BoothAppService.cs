@@ -28,11 +28,10 @@ public class BoothAppService : IBoothAppService
     }
 
 
-    public async Task Create(int sellerId, string title, string description,
-                            Picture picture, CancellationToken cancellationToken)
+    public async Task Create(CreateBoothDto boothDto, int sellerId, 
+                                CancellationToken cancellationToken)
     {
-        await _boothService.Create(sellerId, title, 
-                                    description, picture, cancellationToken);   
+        await _boothService.Create(boothDto, sellerId, cancellationToken);   
     }
 
 

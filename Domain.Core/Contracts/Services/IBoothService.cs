@@ -12,10 +12,7 @@ public interface IBoothService
     Task<List<ProductOutputDto>> GetNonAuctionsByBoothTitle(string title, 
                                             CancellationToken cancellationToken);
 
-    Task Create(int sellerId,
-                string title,
-                string description,
-                Picture picture,
+    Task Create(CreateBoothDto boothDto, int sellerId,
                 CancellationToken cancellationToken);
 
     Task Update(int boothId, UpdateBoothDto boothDto,

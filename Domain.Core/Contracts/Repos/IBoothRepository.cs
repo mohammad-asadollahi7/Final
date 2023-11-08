@@ -15,12 +15,11 @@ public interface IBoothRepository
     Task<List<ProductInventoryDto>> GetInventoriesByBoothId(int boothId,
                                                             CancellationToken cancellationToken);
 
-    Task Create(int sellerId,
-                string title,
-                string description,
+    Task Create(CreateBoothDto boothDto,
+                int sellerId,
                 int wage,
                 Medal medal,
-                Picture picture, 
+                bool isDeleted,
                 CancellationToken cancellationToken);
 
     Task Update(int boothId, UpdateBoothDto boothDto, 

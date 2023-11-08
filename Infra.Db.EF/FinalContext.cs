@@ -49,11 +49,37 @@ public class FinalContext : IdentityDbContext<ApplicationUser, IdentityRole<int>
     public virtual DbSet<ProductPicture> ProductPictures { get; set; }
 
     public virtual DbSet<Seller> Sellers { get; set; }
+
+    public virtual DbSet<BoothPicture> BoothPicture { get; set; }
+    public virtual DbSet<CategoryPicture> CategoryPicture { get; set; }
    
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<BoothPicture>(entity =>
+        {
+            entity.HasIndex(p => p.BoothId).IsUnique();
+            entity.HasIndex(p => p.PictureId).IsUnique();
+            entity.HasOne(p => p.Booth).WithOne(p => p.BoothPicture)
+                                .HasForeignKey<BoothPicture>(p => p.BoothId)
+                                 .OnDelete(DeleteBehavior.ClientSetNull);
+            entity.HasOne(p => p.Picture).WithOne(p => p.BoothPicture)
+                                .HasForeignKey<BoothPicture>(p => p.PictureId)
+                                .OnDelete(DeleteBehavior.ClientSetNull);
+        });
+
+        modelBuilder.Entity<CategoryPicture>(entity =>
+        {
+            entity.HasIndex(p => p.CategoryId).IsUnique();
+            entity.HasIndex(p => p.PictureId).IsUnique();
+            entity.HasOne(p => p.Category).WithOne(p => p.CategoryPicture)
+                                .HasForeignKey<BoothPicture>(p => p.BoothId)
+                                 .OnDelete(DeleteBehavior.ClientSetNull);
+            entity.HasOne(p => p.Picture).WithOne(p => p.CategoryPicture)
+                                .HasForeignKey<BoothPicture>(p => p.PictureId)
+                                .OnDelete(DeleteBehavior.ClientSetNull);
+        });
 
         modelBuilder.Entity<Admin>(entity =>
         {
@@ -106,10 +132,6 @@ public class FinalContext : IdentityDbContext<ApplicationUser, IdentityRole<int>
                 .IsUnicode(false);
             entity.Property(e => e.Title).HasMaxLength(50);
 
-            entity.HasOne(d => d.Picture).WithOne(p => p.Booth)
-                .HasForeignKey<Booth>(d => d.Id)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Booths_Pictures");
 
             entity.HasOne(d => d.Seller).WithOne(p => p.Booth)
                         .HasForeignKey<Booth>(d => d.SellerId)
@@ -131,14 +153,11 @@ public class FinalContext : IdentityDbContext<ApplicationUser, IdentityRole<int>
 
         modelBuilder.Entity<Category>(entity =>
         {
-            entity.HasIndex(e => e.PictureId, "IX_Categories_PictureId").IsUnique();
+            entity.HasIndex(e => e.CategoryPictureId, "IX_Categories_PictureId").IsUnique();
 
             entity.Property(e => e.Title).HasMaxLength(50);
 
-            entity.HasOne(d => d.Picture).WithOne(p => p.Category)
-                .HasForeignKey<Category>(d => d.PictureId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Category_Pictures");
+           
         });
 
         modelBuilder.Entity<Comment>(entity =>

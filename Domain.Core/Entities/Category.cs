@@ -11,11 +11,11 @@ public partial class Category
 
     public int? ParentId { get; set; }
 
-    public int PictureId { get; set; }
+    public int CategoryPictureId { get; set; }
 
     public virtual ICollection<CustomAttributesTemplate> CustomAttributesTemplates { get; set; } = new List<CustomAttributesTemplate>();
 
-    public virtual Picture Picture { get; set; } = null!;
+    public virtual CategoryPicture CategoryPicture { get; set; } = null!;
 
     public virtual ICollection<Product> Products { get; set; } = new List<Product>();
 }

@@ -15,7 +15,7 @@ public partial class Booth
     public Medal Medal { get; set; }
     public bool IsDeleted { get; set; }
 
-    public virtual Picture Picture { get; set; } = null!;
+    public virtual BoothPicture BoothPicture { get; set; } = null!;
 
     public virtual ICollection<Product> Products { get; set; } = new List<Product>();
     public virtual ICollection<Wage> Wages { get; set; } = new List<Wage>();
