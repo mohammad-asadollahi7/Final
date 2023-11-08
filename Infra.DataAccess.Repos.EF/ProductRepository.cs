@@ -240,6 +240,7 @@ public class ProductRepository : IProductRepository
         List<Picture> pictures = new();
         List<ProductPicture> productPictures = new();
 
+       
         var newPicture = new Picture()
         {
             Name = pictureDto.PictureName,

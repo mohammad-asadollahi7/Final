@@ -74,10 +74,10 @@ public class FinalContext : IdentityDbContext<ApplicationUser, IdentityRole<int>
             entity.HasIndex(p => p.CategoryId).IsUnique();
             entity.HasIndex(p => p.PictureId).IsUnique();
             entity.HasOne(p => p.Category).WithOne(p => p.CategoryPicture)
-                                .HasForeignKey<BoothPicture>(p => p.BoothId)
+                                .HasForeignKey<CategoryPicture>(p => p.CategoryId)
                                  .OnDelete(DeleteBehavior.ClientSetNull);
             entity.HasOne(p => p.Picture).WithOne(p => p.CategoryPicture)
-                                .HasForeignKey<BoothPicture>(p => p.PictureId)
+                                .HasForeignKey<CategoryPicture>(p => p.PictureId)
                                 .OnDelete(DeleteBehavior.ClientSetNull);
         });
 
@@ -153,8 +153,6 @@ public class FinalContext : IdentityDbContext<ApplicationUser, IdentityRole<int>
 
         modelBuilder.Entity<Category>(entity =>
         {
-            entity.HasIndex(e => e.CategoryPictureId, "IX_Categories_PictureId").IsUnique();
-
             entity.Property(e => e.Title).HasMaxLength(50);
 
            

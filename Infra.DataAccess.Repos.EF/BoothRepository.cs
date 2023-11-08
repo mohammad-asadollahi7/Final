@@ -79,24 +79,26 @@ public class BoothRepository : IBoothRepository
                              bool isDeleted,
                              CancellationToken cancellationToken)
     {
-        var booth = new Booth()
+        var newBooth = new Booth()
         {
             Title = boothDto.Title,
             Description = boothDto.Description,
             Wage = wage,
             Medal = medal,
-            BoothPicture = new BoothPicture()
-            {
-                Picture = new Picture()
-                {
-                    Name = boothDto.PictureDto.PictureName,
-                }
-            },
             SellerId = sellerId,
             IsDeleted = isDeleted,
         };
 
-        await _context.Booths.AddAsync(booth);
+        var newPicture = new Picture()
+        {
+            Name = boothDto.PictureName
+        };
+        newBooth.BoothPicture = new BoothPicture()
+        {
+            Picture = newPicture
+        };
+
+        await _context.Booths.AddAsync(newBooth);
         await _context.SaveChangesAsync(cancellationToken);
     }
 
