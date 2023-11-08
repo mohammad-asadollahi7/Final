@@ -106,16 +106,12 @@ public class BoothRepository : IBoothRepository
     public async Task Update(int boothId, UpdateBoothDto boothDto,
                                 CancellationToken cancellationToken)
     {
-        var booth = await _context.Booths.SingleOrDefaultAsync(b => b.Id == boothId,
-                                                                cancellationToken);
-        booth.BoothPicture = new BoothPicture()
-        {
-            Picture = new Picture()
-            {
-                Name = boothDto.PictureDto.PictureName,
-            }
-        }; 
+        var booth = await _context.Booths.Where(b => b.Id == boothId)
+                            .Include(b => b.BoothPicture)
+                            .ThenInclude(b => b.Picture)
+                            .FirstOrDefaultAsync(cancellationToken);
 
+        booth.BoothPicture.Picture.Name = boothDto.PictureName; 
         booth.Description = boothDto.Description;
         booth.Title = boothDto.Title;
         await _context.SaveChangesAsync(cancellationToken);

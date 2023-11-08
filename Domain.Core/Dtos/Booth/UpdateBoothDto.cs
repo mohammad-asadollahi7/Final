@@ -11,5 +11,5 @@ public class UpdateBoothDto
     public string Title { get; set; } = null!;
 
     public string Description { get; set; }
-    public virtual PictureDto PictureDto { get; set; } = null!;
+    public string PictureName { get; set; } = null!;
 }
