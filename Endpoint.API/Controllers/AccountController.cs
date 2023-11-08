@@ -23,6 +23,7 @@ public class AccountController : BaseController
     {
         var newUser = new ApplicationUser()
         {
+            FullName = model.FName + " " + model.LName,
             UserName = model.Username,
             Email = model.Email,
             PhoneNumber = model.PhoneNumber,

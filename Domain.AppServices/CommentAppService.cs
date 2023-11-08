@@ -13,8 +13,16 @@ public class CommentAppService : ICommentAppService
     {
         _commentService = commentService;
     }
+
     public async Task<List<CommentDto>> GetCommentsForApprove(CancellationToken cancellationToken)
     {
         return await _commentService.GetCommentsForApprove(cancellationToken);
     }
+
+    public async Task ApproveComment(int id, bool isApproved, CancellationToken cancellationToken)
+    {
+        await _commentService.EnsureExistById(id, cancellationToken);
+        await _commentService.ApproveComment(id, isApproved, cancellationToken);
+    }
+
 }

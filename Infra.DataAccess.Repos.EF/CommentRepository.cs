@@ -11,7 +11,6 @@ public class CommentRepository : ICommentRepository
     private readonly FinalContext _context;
 
     public CommentRepository(FinalContext context) => _context = context;
-   
 
     public async Task<List<CommentDto>> GetCommentsForApprove(CancellationToken cancellationToken)
     {
@@ -26,5 +25,19 @@ public class CommentRepository : ICommentRepository
                                           CustomerName = c.Customer.ApplicationUser.FullName,
                                           ProductTitle = c.Product.PersianTitle,
                                       }).AsNoTracking().ToListAsync(cancellationToken);
+    }
+
+    public async Task ApproveComment(int id, bool isApproved, 
+                                CancellationToken cancellationToken)
+    {
+        var comment = await _context.Comments.FirstOrDefaultAsync(c => c.Id == id,
+                                                                cancellationToken);
+        comment.IsApproved = isApproved;
+        await _context.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task<bool> IsExistById(int id, CancellationToken cancellationToken)
+    {
+        return await _context.Comments.AnyAsync(c => c.Id == id);
     }
 }

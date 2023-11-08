@@ -16,6 +16,7 @@ public class AccountAppService : IAccountAppService
                                     Role role,
                                     CancellationToken cancellationToken)
     {
+        _accountService.EnsureRoleExist(role);
         var user = await _accountService.GetApplicationUserByUsername(username);
         await _accountService.EnsurePassword(user, password);
         var roleNames = await _accountService.GetRoleNamesByUser(user);
@@ -32,11 +33,15 @@ public class AccountAppService : IAccountAppService
                                CancellationToken cancellationToken)
     {
         await _accountService.EnsureUniquePhoneNumber(user.PhoneNumber, cancellationToken);
-        await _accountService.Register(user, password, role);
+        _accountService.EnsureRoleExist(role);
+        await _accountService.Register(user, password, role, cancellationToken);
         var sumbittedApplicationUser = await _accountService.GetApplicationUserByEmail(user.Email);
+
         await _accountService.CreateRoleByUserId(sumbittedApplicationUser.Id,
                                                  role,
                                                  cancellationToken);
+
+        await _accountService.SaveChangesAsync(cancellationToken);
 
     }
 }

@@ -21,4 +21,16 @@ public class CommentService : ICommentService
 
         return comments;    
     }
+
+    public async Task ApproveComment(int id, bool isApproved, CancellationToken cancellationToken)
+    {
+        await _commentRepository.ApproveComment(id, isApproved, cancellationToken);   
+    }
+
+    public async Task EnsureExistById(int id, CancellationToken cancellationToken)
+    {
+        var isExist = await _commentRepository.IsExistById(id, cancellationToken);
+        if (!isExist)
+            throw new AppException(ExpMessage.HaveNotComment, ExpStatusCode.NotFound);
+    }
 }

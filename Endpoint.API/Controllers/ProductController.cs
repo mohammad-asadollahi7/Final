@@ -54,7 +54,7 @@ public class ProductController : BaseController
 
 
     [HttpGet("GetProductsForApprove")]
-    [HaveAccess(Role.Admin)]
+    //[HaveAccess(Role.Admin)]
     public async Task<IActionResult> GetProductsForApprove(
                                                     CancellationToken cancellationToken)
     {
@@ -64,7 +64,7 @@ public class ProductController : BaseController
 
 
     [HttpPost("CreateNonAuction")]
-    [HaveAccess(Role.Seller)]
+    //[HaveAccess(Role.Seller)]
     public async Task<IActionResult> CreateNonAuction(CreateNonAuctionProductDto createProduct,
                                        CancellationToken cancellationToken)
     {
@@ -75,7 +75,7 @@ public class ProductController : BaseController
 
 
     [HttpPost("CreateAuction")]
-    [HaveAccess(Role.Seller)]
+    //[HaveAccess(Role.Seller)]
     public async Task<IActionResult> CreateAuction(CreateAuctionProductDto createProduct,
                                                 CancellationToken cancellationToken)
     {
@@ -85,7 +85,7 @@ public class ProductController : BaseController
 
 
     [HttpPut("UpdateNonAuction/{productId}")]
-    [HaveAccess(Role.Admin, Role.Seller)]
+    //[HaveAccess(Role.Admin, Role.Seller)]
     public async Task<IActionResult> UpdateNonAuction(int productId,
                                                         UpdateNonAuctionProductDto productDto,
                                                         CancellationToken cancellationToken)
@@ -95,7 +95,7 @@ public class ProductController : BaseController
     }
 
     [HttpPut("UpdateAuction/{productId}")]
-    [HaveAccess(Role.Admin, Role.Seller)]
+    //[HaveAccess(Role.Admin, Role.Seller)]
     public async Task UpdateAuction(int productId, UpdateAuctionProductDto productDto,
                                      CancellationToken cancellationToken)
     {
@@ -105,7 +105,7 @@ public class ProductController : BaseController
 
 
     [HttpDelete("Remove/{productId}")]
-    [HaveAccess(Role.Admin, Role.Seller)]
+   // [HaveAccess(Role.Admin, Role.Seller)]
     public async Task<IActionResult> Remove(int productId,
                                             CancellationToken cancellationToken)
     {
@@ -115,7 +115,7 @@ public class ProductController : BaseController
 
 
     [HttpPatch("ApproveProduct/{id}/{isApproved}")]
-    [HaveAccess(Role.Admin)]
+    //[HaveAccess(Role.Admin)]
     public async Task<IActionResult> ApproveProduct(int id, bool isApproved,
                                    CancellationToken cancellationToken)
     {
@@ -124,11 +124,20 @@ public class ProductController : BaseController
     }
 
     [HttpGet("GetCommentsForApprove")]
-    [HaveAccess(Role.Admin)]
+   // [HaveAccess(Role.Admin)]
     public async Task<IActionResult> GetCommentsForApprove(CancellationToken cancellationToken)
     {
         var comments = await _commentAppService.GetCommentsForApprove(cancellationToken);
         return Ok(comments);
+    }
+
+
+    [HttpGet("ApproveComment/{id}/{isApproved}")]
+    //[HaveAccess(Role.Admin)]
+    public async Task ApproveComment(int id, bool isApproved, 
+                                     CancellationToken cancellationToken)
+    {
+        await _commentAppService.ApproveComment(id, isApproved, cancellationToken); 
     }
 
 }

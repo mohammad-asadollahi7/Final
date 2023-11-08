@@ -1,14 +1,15 @@
-﻿
-using Domain.Core.Entities;
+﻿using Domain.Core.Entities;
 using Domain.Core.Enums;
+using Microsoft.AspNetCore.DataProtection.KeyManagement.Internal;
 
 namespace Domain.Core.Contracts.Services;
 
 public interface IAccountService
 {
     Task Register(ApplicationUser user,
-                  string password,
-                  Role role);
+                         string password,
+                         Role role,
+                         CancellationToken cancellationToken);
     Task EnsureUniquePhoneNumber(string phoneNumber,
                                  CancellationToken cancellationToken);
 
@@ -19,9 +20,8 @@ public interface IAccountService
     Task EnsurePassword(ApplicationUser user,
                         string password);
 
-    Task CreateRoleByUserId(int userId,
-                                       Role role,
-                                       CancellationToken cancellationToken);
+    Task CreateRoleByUserId(int userId, Role role,
+                            CancellationToken cancellationToken);
 
 
     Task<string> GenerateJWTToken(ApplicationUser user,
@@ -32,4 +32,7 @@ public interface IAccountService
 
     void EnsureRoleValidity(string currentUserRoleName,
                             string databaseRoleName);
+
+    Task SaveChangesAsync(CancellationToken cancellationToken);
+    void EnsureRoleExist(Role role);
 }

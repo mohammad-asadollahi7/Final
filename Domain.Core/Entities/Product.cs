@@ -27,6 +27,7 @@ public partial class Product
     public virtual Booth Booth { get; set; } = null!;
 
     public virtual ICollection<CustomAttributes> CustomAttributes { get; set; } = new List<CustomAttributes>();
+    public virtual ICollection<Wage> Wages { get; set; } = new List<Wage>();
 
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
     public virtual Auction? Auction { get; set; }

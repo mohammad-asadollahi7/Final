@@ -11,7 +11,8 @@ public class AdminService : IAdminService
     public AdminService(IAdminRepository adminRepository) => _adminRepository = adminRepository;
 
 
-    public async Task AddByApplicationUserId(int userId, CancellationToken cancellationToken)
+    public async Task AddByApplicationUserId(int userId, 
+                                            CancellationToken cancellationToken)
     {
         await _adminRepository.AddByApplicationUserId(userId, cancellationToken);
     }

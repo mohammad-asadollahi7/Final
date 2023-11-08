@@ -6,6 +6,7 @@ using Domain.Core.Exceptions;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.Data;
+using System.Diagnostics.Eventing.Reader;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -80,11 +81,13 @@ public class AccountService : IAccountService
 
 
     public async Task Register(ApplicationUser user,
-                               string password,
-                               Role role)
+                                      string password,
+                                      Role role,
+                                      CancellationToken cancellationToken)
     {
-        var identityResult = await _accountRepository.Register(user, password, role);
-
+        var identityResult = await _accountRepository.Register(user, password, role, cancellationToken);
+        
+        
         if (!identityResult.Succeeded)
             throw new AppException(ExpMessage.InsuccessRegister,
                                    ExpStatusCode.InternalServerError);
@@ -169,5 +172,17 @@ public class AccountService : IAccountService
         if (currentUserRole.ToLower() != databaseRole.ToLower())
             throw new AppException(string.Format(ExpMessage.NotFoundUserId, "نقش", currentUserRole),
                                    ExpStatusCode.NotFound);
+    }
+
+    public async Task SaveChangesAsync(CancellationToken cancellationToken)
+    {
+        await _accountRepository.SaveChangesAsync(cancellationToken);
+    }
+
+
+    public void EnsureRoleExist(Role role)
+    {
+        if (role != Role.Customer && role != Role.Admin && role != Role.Seller)
+            throw new AppException(ExpMessage.NotFoundRole, ExpStatusCode.NotFound);
     }
 }

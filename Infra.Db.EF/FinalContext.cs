@@ -49,6 +49,7 @@ public class FinalContext : IdentityDbContext<ApplicationUser, IdentityRole<int>
     public virtual DbSet<ProductPicture> ProductPictures { get; set; }
 
     public virtual DbSet<Seller> Sellers { get; set; }
+   
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -61,6 +62,16 @@ public class FinalContext : IdentityDbContext<ApplicationUser, IdentityRole<int>
             entity.HasOne(d => d.ApplicationUser).WithOne(p => p.Admin).HasForeignKey<Admin>(d => d.ApplicationUserId);
         });
 
+        modelBuilder.Entity<Wage>(entity =>
+        {
+            entity.HasOne(w => w.Booth).WithMany(b => b.Wages)
+                                .HasForeignKey(w => w.BoothId);
+
+            entity.HasOne(w => w.Product).WithMany(b => b.Wages)
+                                   .HasForeignKey(w => w.ProductId);
+
+
+        });
 
         modelBuilder.Entity<Auction>(entity =>
         {

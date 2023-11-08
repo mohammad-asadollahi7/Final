@@ -10,7 +10,8 @@ public interface IAccountRepository
 {
     Task<IdentityResult> Register(ApplicationUser user,
                                   string password,
-                                  Role role);
+                                  Role role, 
+                                  CancellationToken cancellationToken);
 
     Task<ApplicationUser?> GetApplicationUserByUsername(string username);
 
@@ -20,4 +21,6 @@ public interface IAccountRepository
 
     Task<bool> CheckPassword(ApplicationUser user,
                              string password);
+
+    Task SaveChangesAsync(CancellationToken cancellationToken);
 }

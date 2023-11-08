@@ -5,18 +5,25 @@ using Infra.Db.EF;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
+using System.Threading;
 
 namespace Infra.DataAccess.Repos.EF;
 
 public class AccountRepository : IAccountRepository
 {
     private readonly UserManager<ApplicationUser> _userManager;
-    public AccountRepository(UserManager<ApplicationUser> userManager)
+    private readonly FinalContext _context;
+
+    public AccountRepository(UserManager<ApplicationUser> userManager,
+                             FinalContext context)
     {
         _userManager = userManager;
+        _context = context;
     }
+
     public async Task<IdentityResult> Register(ApplicationUser user,
-                                               string password, Role role)
+                                               string password, Role role,
+                                               CancellationToken cancellationToken)
     {
         var identityResult = await _userManager.CreateAsync(user, password);
         await _userManager.AddToRoleAsync(user, role.ToString());
@@ -45,4 +52,12 @@ public class AccountRepository : IAccountRepository
         var roleNames = await _userManager.GetRolesAsync(user);
         return roleNames.ToList();
     }
+
+    public async Task SaveChangesAsync(CancellationToken cancellationToken)
+    {
+        await _context.SaveChangesAsync(cancellationToken);
+    }
+
+    
+
 }

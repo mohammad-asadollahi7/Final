@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
 using System.Diagnostics.Eventing.Reader;
+using System.Net.Http;
 using System.Threading;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IWebHostEnvironment;
 
@@ -102,50 +103,56 @@ public class ProductController : BaseController
     public async Task<IActionResult> ApproveComment(int id, bool isApproved,
                                               CancellationToken cancellationToken)
     {
+        var httpResponseMessage = await SendPatchRequest($"ApproveComment/{id}/{isApproved}", 
+                                                            cancellationToken);
 
+        if (!httpResponseMessage.IsSuccessStatusCode)
+            return RedirectToErrorPage(httpResponseMessage);
+
+        return RedirectToAction(nameof(GetCommentsForApprove));
     }
 
-    public async Task<IActionResult> GetCustomers(CancellationToken cancellationToken)
-    {
+    //public async Task<IActionResult> GetCustomers(CancellationToken cancellationToken)
+    //{
 
-    }
+    //}
 
-    public async Task<IActionResult> GetSellers(CancellationToken cancellationToken)
-    {
+    //public async Task<IActionResult> GetSellers(CancellationToken cancellationToken)
+    //{
 
 
-    }
+    //}
 
-    public async Task<IActionResult> DeleteUser(int id,
-                                                CancellationToken cancellationToken)
-    {
+    //public async Task<IActionResult> DeleteUser(int id,
+    //                                            CancellationToken cancellationToken)
+    //{
 
-    }
+    //}
 
-    public async Task<IActionResult> GetAuctionProducts(CancellationToken cancellationToken)
-    {
+    //public async Task<IActionResult> GetAuctionProducts(CancellationToken cancellationToken)
+    //{
 
-    }
+    //}
 
-    public async Task<IActionResult> GetNonAuctionProducts(CancellationToken cancellationToken)
-    {
+    //public async Task<IActionResult> GetNonAuctionProducts(CancellationToken cancellationToken)
+    //{
 
-    }
+    //}
 
-    public async Task<IActionResult> UpdateProduct(CancellationToken cancellationToken)
-    {
+    //public async Task<IActionResult> UpdateProduct(CancellationToken cancellationToken)
+    //{
 
-    }
+    //}
 
-    public async Task<IActionResult> DeleteProduct(int productId, CancellationToken cancellationToken)
-    {
+    //public async Task<IActionResult> DeleteProduct(int productId, CancellationToken cancellationToken)
+    //{
 
-    }
+    //}
 
-    public async Task<IActionResult> GetWages()
-    {
+    //public async Task<IActionResult> GetWages()
+    //{
 
-    }
+    //}
 
     public async Task<IActionResult> GetAllByCategoryId(CancellationToken cancellationToken,
                                                         int id = 3)
