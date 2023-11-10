@@ -31,9 +31,9 @@ public class ProductService : IProductService
         return products;
     }
 
-    public async Task<ProductDetailsDto?> GetNonAuctionProductById(int productId, CancellationToken cancellationToken)
+    public async Task<ProductDetailsDto?> GetNonAuctionProductById(int productId, bool? isApproved, CancellationToken cancellationToken)
     {
-        var product = await _productRepository.GetNonAuctionProductById(productId, cancellationToken);
+        var product = await _productRepository.GetNonAuctionProductById(productId, isApproved, cancellationToken);
 
         if (product == null)
             throw new AppException(string.Format(ExpMessage.NotChangedProduct, "پیدا"),
@@ -42,9 +42,9 @@ public class ProductService : IProductService
     }
 
 
-    public async Task<ProductDetailsDto?> GetAuctionProductById(int productId, CancellationToken cancellationToken)
+    public async Task<ProductDetailsDto?> GetAuctionProductById(int productId, bool? isApproved, CancellationToken cancellationToken)
     {
-        var product = await _productRepository.GetAuctionProductById(productId, cancellationToken);
+        var product = await _productRepository.GetAuctionProductById(productId, isApproved, cancellationToken);
 
         if (product == null)
             throw new AppException(string.Format(ExpMessage.NotChangedProduct, "پیدا"),
@@ -238,15 +238,15 @@ public class ProductService : IProductService
 
 
 
-    public async Task EnsureExistById(int productId,
+    public async Task EnsureExistById(int productId, bool? isApproved,
                                       SellType? sellType,
                                       CancellationToken cancellationToken)
     {
         bool isExist;
         if (sellType is not null)
-            isExist = await _productRepository.IsExistById(productId, sellType ?? 0, cancellationToken);
+            isExist = await _productRepository.IsExistById(productId, isApproved, sellType ?? 0, cancellationToken);
         else
-            isExist = await _productRepository.IsExistById(productId, cancellationToken);
+            isExist = await _productRepository.IsExistById(productId, isApproved, cancellationToken);
 
 
         if (!isExist)

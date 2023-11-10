@@ -14,9 +14,9 @@ public class CommentAppService : ICommentAppService
         _commentService = commentService;
     }
 
-    public async Task<List<CommentDto>> GetCommentsForApprove(CancellationToken cancellationToken)
+    public async Task<List<CommentDto>> GetCommentsForApprove(bool? isApproved, CancellationToken cancellationToken)
     {
-        return await _commentService.GetCommentsForApprove(cancellationToken);
+        return await _commentService.GetCommentsForApprove(isApproved, cancellationToken);
     }
 
     public async Task ApproveComment(int id, bool isApproved, CancellationToken cancellationToken)

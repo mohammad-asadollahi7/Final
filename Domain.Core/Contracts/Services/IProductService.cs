@@ -8,10 +8,10 @@ namespace Domain.Core.Contracts.Services;
 
 public interface IProductService
 {
-    Task<ProductDetailsDto?> GetNonAuctionProductById(int productId,
+    Task<ProductDetailsDto?> GetNonAuctionProductById(int productId, bool? isApproved,
                                                      CancellationToken cancellationToken);
 
-    Task<ProductDetailsDto?> GetAuctionProductById(int productId,
+    Task<ProductDetailsDto?> GetAuctionProductById(int productId, bool? isApproved,
                                                    CancellationToken cancellationToken);
 
     Task<List<ProductOutputDto>> GetNonAuctionsByCategoryId(CancellationToken cancellationToken,
@@ -77,7 +77,7 @@ public interface IProductService
                 CancellationToken cancellationToken);
 
 
-    Task EnsureExistById(int productId,
+    Task EnsureExistById(int productId, bool? isApproved,
                          SellType? sellType,
                          CancellationToken cancellationToken);
 

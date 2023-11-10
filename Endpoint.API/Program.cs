@@ -4,6 +4,7 @@ using Domain.Core.Contracts.Repos;
 using Domain.Core.Contracts.Services;
 using Domain.Core.Entities;
 using Domain.Services;
+using Endpoint.API.Middlewares;
 using Infra.DataAccess.Repos.Dapper;
 using Infra.DataAccess.Repos.EF;
 using Infra.Db.EF;
@@ -201,7 +202,7 @@ if (app.Environment.IsDevelopment())
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
     });
 }
-
+app.UseExceptionMiddleware();
 
 app.UseCors();
 

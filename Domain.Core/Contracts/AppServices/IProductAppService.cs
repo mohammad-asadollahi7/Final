@@ -12,10 +12,10 @@ public interface IProductAppService
     Task<List<ProductOutputDto>> GetNonAuctionsByCategoryId(int categoryId,
                                                     CancellationToken cancellationToken);
 
-    Task<ProductDetailsDto> GetAuctionProductById(int productId,
+    Task<ProductDetailsDto> GetAuctionProductById(int productId, bool? isApproved,
                                                    CancellationToken cancellationToken);
 
-    Task<ProductDetailsDto> GetNonAuctionProductById(int productId,
+    Task<ProductDetailsDto> GetNonAuctionProductById(int productId, bool? isApproved,
                                                      CancellationToken cancellationToken);
 
     Task<List<ProductOutputApprove>> GetProductsForApprove(

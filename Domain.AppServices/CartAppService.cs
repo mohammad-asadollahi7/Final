@@ -27,7 +27,7 @@ public class CartAppService : ICartAppService
         var cartId = await _cartService.CreateByCustomerId(customerId,
                                                            cancellationToken);
 
-        var product = await _productService.GetNonAuctionProductById(productId, cancellationToken);
+        var product = await _productService.GetNonAuctionProductById(productId, true, cancellationToken);
 
         await _cartService.AddOrder(cartId,
                                     productId,
@@ -41,7 +41,7 @@ public class CartAppService : ICartAppService
                                       int productId, decimal proposedPrice,
                                       CancellationToken cancellationToken)
     {
-        var product = await _productService.GetAuctionProductById(productId, cancellationToken);
+        var product = await _productService.GetAuctionProductById(productId, true, cancellationToken);
 
         await _cartService.AddAuctionOrder(customerId, productId, product.Price,
                                            proposedPrice, true, cancellationToken);

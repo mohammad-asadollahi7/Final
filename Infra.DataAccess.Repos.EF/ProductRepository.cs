@@ -16,17 +16,18 @@ public class ProductRepository : IProductRepository
 
     public ProductRepository(FinalContext context) => _context = context;
 
-    public async Task<ProductDetailsDto?> GetNonAuctionProductById(int productId,
+    public async Task<ProductDetailsDto?> GetNonAuctionProductById(int productId, bool? isApproved,
                                                                    CancellationToken cancellationToken)
     {
         var productDetailsDto = await _context.Products.Where(p => p.Id == productId && p.SellType == SellType.NonAuction 
-                                                              && p.IsDeleted == false && p.IsApproved == true)
+                                                              && p.IsDeleted == false && p.IsApproved == isApproved)
                                                    .Select(p => new ProductDetailsDto()
                                                    {
                                                        Id = p.Id,
                                                        PersianTitle = p.PersianTitle,
                                                        EnglishTitle = p.EnglishTitle,
                                                        Description = p.Description,
+                                                       SellType = p.SellType,
                                                        Price = p.NonAuctionPrice.Price,
                                                        DiscountPercent = p.NonAuctionPrice.Discount,
                                                        BoothId = p.BoothId,
@@ -49,16 +50,17 @@ public class ProductRepository : IProductRepository
     }
 
 
-    public async Task<ProductDetailsDto?> GetAuctionProductById(int productId,
+    public async Task<ProductDetailsDto?> GetAuctionProductById(int productId, bool? isApproved,
                                                                 CancellationToken cancellationToken)
     {
         var productDetailsDto = await _context.Products.Where(p => p.Id == productId && p.SellType == SellType.Auction
-                                                              && p.IsDeleted == false && p.IsApproved == true)
+                                                              && p.IsDeleted == false && p.IsApproved == isApproved)
                                                   .Select(p => new ProductDetailsDto()
                                                   {
                                                       Id = p.Id,
                                                       PersianTitle = p.PersianTitle,
                                                       EnglishTitle = p.EnglishTitle,
+                                                      SellType = p.SellType,
                                                       Description = p.Description,
                                                       Price = p.AuctionOrders.Select(a => a.Price).Max(),
                                                       BoothId = p.BoothId,
@@ -87,6 +89,7 @@ public class ProductRepository : IProductRepository
                                { 
                                    Id = p.Id,
                                    PersianTitle = p.PersianTitle,
+                                   SellType = p.SellType,
                                    BoothTitle = p.Booth.Title,
                                    PicturesPath = p.ProductPictures.Select(pp => pp.Picture.Name)
                                }).ToListAsync(cancellationToken);
@@ -356,22 +359,22 @@ public class ProductRepository : IProductRepository
 
 
 
-    public async Task<bool> IsExistById(int id,
+    public async Task<bool> IsExistById(int id, bool? isApproved,
                                         SellType sellType,
                                         CancellationToken cancellationToken)
     {
         return await _context.Products.AnyAsync(p => p.Id == id &&
                                         p.SellType == sellType &&
-                                        p.IsApproved == true &&
+                                        p.IsApproved == isApproved &&
                                         p.IsDeleted == false, 
                                         cancellationToken);
     }
 
-    public async Task<bool> IsExistById(int id,
+    public async Task<bool> IsExistById(int id, bool? isApproved,
                                         CancellationToken cancellationToken)
     {
         return await _context.Products.AnyAsync(p => p.Id == id && p.IsDeleted == false
-                                            && p.IsApproved == true,
+                                            && p.IsApproved == isApproved,
                                             cancellationToken);
     }
 
@@ -387,6 +390,7 @@ public class ProductRepository : IProductRepository
         var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == id, 
                                                                     cancellationToken);
         product.IsApproved = isApproved;
+        await _context.SaveChangesAsync(cancellationToken);
     }
 }
 

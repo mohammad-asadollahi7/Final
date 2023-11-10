@@ -10,7 +10,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="~/Admin/plugins/font-awesome/css/font-awesome.min.css" />
-       
+
+    @await RenderSectionAsync("GetProductByIdCss", required: false)
+
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
@@ -37,7 +39,6 @@
 </head>
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
-        @RenderBody()
 
         <!-- Navbar -->
         <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
@@ -526,7 +527,7 @@
                                 <div class="icon">
                                     <i class="ion ion-bag"></i>
                                 </div>
-                                <a href="#" class="small-box-footer">اطلاعات بیشتر <i class="fa fa-arrow-circle-left"></i></a>
+                                <a asp-area="admin" asp-action="GetProductsForApprove" class="small-box-footer">نمایش <i class="fa fa-arrow-circle-left"></i></a>
                             </div>
                         </div>
                         <!-- ./col -->
@@ -541,7 +542,7 @@
                                 <div class="icon">
                                     <i class="ion ion-stats-bars"></i>
                                 </div>
-                                <a href="#" class="small-box-footer">اطلاعات بیشتر <i class="fa fa-arrow-circle-left"></i></a>
+                                <a asp-area="admin" asp-action="GetCommentsForApprove" class="small-box-footer">نمایش <i class="fa fa-arrow-circle-left"></i></a>
                             </div>
                         </div>
                         <!-- ./col -->
@@ -578,6 +579,8 @@
                     </div>
                     <!-- /.row -->
                     <!-- Main row -->
+                    @RenderBody()
+
                     <div class="row">
                         <!-- Left col -->
                         <section class="col-lg-7 connectedSortable">
@@ -935,5 +938,7 @@
     <script src="~/Admin/dist/js/pages/dashboard.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="~/Admin/dist/js/demo.js"></script>
+    @await RenderSectionAsync("GetProductByIdScript", required: false)
+
 </body>
 </html>

@@ -13,9 +13,10 @@ public class CommentService : ICommentService
     {
         _commentRepository = commentRepository;
     }
-    public async Task<List<CommentDto>> GetCommentsForApprove(CancellationToken cancellationToken)
+    public async Task<List<CommentDto>> GetCommentsForApprove(bool? isApproved, CancellationToken cancellationToken)
     {
-        var comments = await _commentRepository.GetCommentsForApprove(cancellationToken);
+        var comments = await _commentRepository.GetCommentsForApprove(isApproved, 
+                                                                    cancellationToken);
         if (comments.Count() == 0)
             throw new AppException(ExpMessage.HaveNotComment, ExpStatusCode.NotFound);
 

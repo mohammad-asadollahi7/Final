@@ -27,10 +27,10 @@
     'bg-gray-light'
   ]
 
-  $container.append(
-    '<h5>تنظیمات قالب</h5><hr class="mb-2"/>'
-    + '<h6>رنگ‌های نوار ناوبری</h6>'
-  )
+  //$container.append(
+  //  '<h5>تنظیمات قالب</h5><hr class="mb-2"/>'
+  //  + '<h6>رنگ‌های نوار ناوبری</h6>'
+  //)
 
   var $navbar_variants        = $('<div />', {
     'class': 'd-flex'

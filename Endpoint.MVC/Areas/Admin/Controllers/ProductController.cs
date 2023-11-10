@@ -50,7 +50,7 @@ public class ProductController : BaseController
 
 
     public async Task<IActionResult> GetProductById(int productId, SellType sellType,
-                                                    CancellationToken cancellationToken)
+                                                           CancellationToken cancellationToken)
     {
         string url;
         if (sellType == SellType.NonAuction)
@@ -65,9 +65,9 @@ public class ProductController : BaseController
             return RedirectToErrorPage(httpResponseMessage);
 
 
-        var products = await httpResponseMessage.Content
-                                         .ReadFromJsonAsync<List<ProductDetailsDto>>();
-        return View(products);
+        var product = await httpResponseMessage.Content
+                                         .ReadFromJsonAsync<ProductDetailsDto>();
+        return View(product);
     }
     
 
@@ -101,9 +101,9 @@ public class ProductController : BaseController
     }
 
     public async Task<IActionResult> ApproveComment(int id, bool isApproved,
-                                              CancellationToken cancellationToken)
+                                                  CancellationToken cancellationToken)
     {
-        var httpResponseMessage = await SendPatchRequest($"ApproveComment/{id}/{isApproved}", 
+        var httpResponseMessage = await SendPatchRequest($"Product/ApproveComment/{id}?isApproved={isApproved}", 
                                                             cancellationToken);
 
         if (!httpResponseMessage.IsSuccessStatusCode)

@@ -165,7 +165,8 @@ public class FinalContext : IdentityDbContext<ApplicationUser, IdentityRole<int>
 
         modelBuilder.Entity<Comment>(entity =>
         {
-            entity.HasNoKey();
+            entity.HasKey(e => e.Id).HasName("PK_Comments_1");
+
 
             entity.Property(e => e.Description).HasMaxLength(255);
             entity.Property(e => e.Id).ValueGeneratedOnAdd();

@@ -5,7 +5,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">نظرات</h3>
+                <h3 class="card-title"> نظرات در انتظار تایید</h3>
 
                 <div class="card-tools">
                     <div class="input-group input-group-sm" style="width: 150px;">
@@ -35,8 +35,8 @@
                             <td>@comment.CustomerName</td>
                             <td>@comment.ProductTitle</td>
                             <td>@comment.Description</td>
-                            <td><a asp-area="Admin" asp-action="ApproveComment" class="btn btn-primary" asp-route-id="@comment.Id" asp-route-isApproved="true"> <img src="~/icon/approve.png"> </a></td>
-                            <td><a asp-area="Admin" asp-action="ApproveComment" class="btn btn-primary" asp-route-id="@comment.Id" asp-route-isApproved="false"> <img src="~/icon/delete.png"> </a></td>
+                            <td><a asp-area="Admin" asp-action="ApproveComment" class="btn" asp-route-id="@comment.Id" asp-route-isApproved="true"> <img src="~/icon/approve.png"> </a></td>
+                            <td><a asp-area="Admin" asp-action="ApproveComment" class="btn" asp-route-id="@comment.Id" asp-route-isApproved="false"> <img src="~/icon/delete.png"> </a></td>
                         </tr>
 
                     }

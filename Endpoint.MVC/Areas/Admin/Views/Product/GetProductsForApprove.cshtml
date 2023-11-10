@@ -4,18 +4,17 @@
 
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title">محصولات</h3>
+        <h3 class="card-title">محصولات در انتظار تایید</h3>
     </div>
     <!-- /.card-header -->
     <div class="card-body p-0">
         <table class="table table-condensed">
             <tr>
-                <th style="width: 10px">کد</th>
-                <th>عنوان</th>
+                <th>کد</th>
+                <th>عنوان محصول</th>
                 <th>غرفه</th>
                 <th>تصویر</th>
-                <th>تایید</th>
-                <th>رد</th>
+                <th>جزئیات بیشتر</th>
             </tr>
 
             @foreach (var product in Model)
@@ -25,9 +24,8 @@
                     <td>@product.Id</td>
                     <td>@product.PersianTitle</td>
                     <td>@product.BoothTitle</td>
-                    <td> <img src="~/img/>@product.PicturesPath.First()" /> </td>
-                    <td> <a class="btn btn-primary" href=""> </a> </td>
-                    <td> <a class="btn btn-primary" href=""></a> </td>
+                    <td> <img style="width:35px;" src="~/img/@product.PicturesPath.First()" /> </td>
+                    <td> <a class="btn" asp-area="admin" asp-action="GetProductById" asp-route-productId="@product.Id" asp-route-sellType="@product.SellType"> <img src="~/icon/details.png">  </a> </td>
                 </tr>
             }
         </table>

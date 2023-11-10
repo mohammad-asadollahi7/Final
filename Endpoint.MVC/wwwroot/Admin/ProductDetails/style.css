@@ -15,24 +15,24 @@ html, body {
 
 /* Columns */
 .left-column {
-  width: 65%;
+  width: 55%;
   position: relative;
 }
 
 .right-column {
-  width: 35%;
-  margin-top: 60px;
+  width: 45%;
+  margin-top: 30px;
 }
 
 
 /* Left Column */
 .left-column img {
-  width: 100%;
-  position: absolute;
+  max-width: 50%;
+/*  position: absolute;
   left: 0;
   top: 0;
   opacity: 0;
-  transition: all 0.3s ease;
+  transition: all 0.3s ease;*/
 }
 
 .left-column img.active {
@@ -177,7 +177,7 @@ html, body {
 }
 
 .product-price span {
-  font-size: 26px;
+  font-size: 1.5rem;
   font-weight: 300;
   color: #43474D;
   margin-right: 20px;

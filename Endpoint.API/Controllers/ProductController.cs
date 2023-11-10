@@ -33,21 +33,19 @@ public class ProductController : BaseController
 
 
     [HttpGet("GetAuctionProductById/{productId}")]
-    [AllowAnonymous]
-    public async Task<IActionResult> GetAuctionProductById(int productId,
+    public async Task<IActionResult> GetAuctionProductById(int productId,[FromQuery] bool? isApproved,
                                                            CancellationToken cancellationToken)
     {
-        var product = await _productAppService.GetAuctionProductById(productId, cancellationToken);
+        var product = await _productAppService.GetAuctionProductById(productId, isApproved, cancellationToken);
         return Ok(product);
     }
 
 
     [HttpGet("GetNonAuctionProductById/{productId}")]
-    [AllowAnonymous]
-    public async Task<IActionResult> GetNonAuctionProductById(int productId,
+    public async Task<IActionResult> GetNonAuctionProductById(int productId,[FromQuery] bool? isApproved,
                                                              CancellationToken cancellationToken)
     {
-        var product = await _productAppService.GetNonAuctionProductById(productId, 
+        var product = await _productAppService.GetNonAuctionProductById(productId, isApproved,
                                                                         cancellationToken);
         return Ok(product);
     }
@@ -125,16 +123,17 @@ public class ProductController : BaseController
 
     [HttpGet("GetCommentsForApprove")]
    // [HaveAccess(Role.Admin)]
-    public async Task<IActionResult> GetCommentsForApprove(CancellationToken cancellationToken)
+    public async Task<IActionResult> GetCommentsForApprove([FromQuery] bool? isApproved, 
+                                                    CancellationToken cancellationToken)
     {
-        var comments = await _commentAppService.GetCommentsForApprove(cancellationToken);
+        var comments = await _commentAppService.GetCommentsForApprove(isApproved, cancellationToken);
         return Ok(comments);
     }
 
 
-    [HttpGet("ApproveComment/{id}/{isApproved}")]
+    [HttpPatch("ApproveComment/{id}")]
     //[HaveAccess(Role.Admin)]
-    public async Task ApproveComment(int id, bool isApproved, 
+    public async Task ApproveComment(int id, [FromQuery] bool isApproved, 
                                      CancellationToken cancellationToken)
     {
         await _commentAppService.ApproveComment(id, isApproved, cancellationToken); 

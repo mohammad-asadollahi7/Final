@@ -7,10 +7,10 @@ namespace Domain.Core.Contracts.Repos;
 
 public interface IProductRepository
 {
-    Task<ProductDetailsDto?> GetNonAuctionProductById(int productId,
+    Task<ProductDetailsDto?> GetNonAuctionProductById(int productId, bool? isApproved,
                                                       CancellationToken cancellationToken);
 
-    Task<ProductDetailsDto?> GetAuctionProductById(int productId,
+    Task<ProductDetailsDto?> GetAuctionProductById(int productId, bool? isApproved,
                                                    CancellationToken cancellationToken);
 
     Task<List<ProductInventoryDto>> GetProductInventories(int productId,
@@ -89,11 +89,11 @@ public interface IProductRepository
                          CancellationToken cancellationToken);
 
 
-    Task<bool> IsExistById(int id,
+    Task<bool> IsExistById(int id, bool? isApproved,
                            SellType sellType,
                            CancellationToken cancellationToken);
 
-    Task<bool> IsExistById(int id, CancellationToken cancellationToken);
+    Task<bool> IsExistById(int id, bool? isApproved, CancellationToken cancellationToken);
 
 
     Task ApproveProduct(int id, bool isApproved,CancellationToken cancellationToken);

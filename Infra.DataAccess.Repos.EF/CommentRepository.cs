@@ -1,5 +1,4 @@
-﻿
-using Domain.Core.Contracts.Repos;
+﻿using Domain.Core.Contracts.Repos;
 using Domain.Core.Dtos.Comment;
 using Infra.Db.EF;
 using Microsoft.EntityFrameworkCore;
@@ -12,9 +11,10 @@ public class CommentRepository : ICommentRepository
 
     public CommentRepository(FinalContext context) => _context = context;
 
-    public async Task<List<CommentDto>> GetCommentsForApprove(CancellationToken cancellationToken)
+    public async Task<List<CommentDto>> GetCommentsForApprove(bool? isApproved, 
+                                            CancellationToken cancellationToken)
     {
-        return await _context.Comments.Where(c => c.IsApproved == null)
+        return await _context.Comments.Where(c => c.IsApproved == isApproved)
                                       .Select(c => new CommentDto()
                                       {
                                           Id = c.Id,
@@ -27,13 +27,12 @@ public class CommentRepository : ICommentRepository
                                       }).AsNoTracking().ToListAsync(cancellationToken);
     }
 
-    public async Task ApproveComment(int id, bool isApproved, 
+    public async Task ApproveComment(int id, bool isApproved,
                                 CancellationToken cancellationToken)
     {
-        var comment = await _context.Comments.FirstOrDefaultAsync(c => c.Id == id,
-                                                                cancellationToken);
+        var comment = await _context.Comments.FirstAsync(c => c.Id == id, cancellationToken);
         comment.IsApproved = isApproved;
-        await _context.SaveChangesAsync(cancellationToken);
+        var f = await _context.SaveChangesAsync(cancellationToken);
     }
 
     public async Task<bool> IsExistById(int id, CancellationToken cancellationToken)

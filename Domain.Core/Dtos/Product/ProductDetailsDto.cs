@@ -16,6 +16,7 @@ public class ProductDetailsDto
     public decimal Price { get; set; }
 
     public int? DiscountPercent { get; set; }
+    public SellType SellType { get; set; }
 
     public int BoothId { get; set; }
 
