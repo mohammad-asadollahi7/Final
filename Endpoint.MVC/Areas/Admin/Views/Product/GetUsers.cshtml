@@ -1,0 +1,51 @@
+﻿@using Endpoint.MVC.ExtensionMethods;
+
+
+@model List<Endpoint.MVC.Dtos.UserOutputDto>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">کابران فعال سایت</h3>
+
+                <div class="card-tools">
+                    <div class="input-group input-group-sm" style="width: 150px;">
+                        <input type="text" name="table_search" class="form-control float-right" placeholder="جستجو">
+
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body table-responsive p-0">
+                <table class="table table-hover">
+                    <tr>
+                        <th>نام و نام خانوادگی</th>
+                        <th>نام کاربری</th>
+                        <th>ایمیل</th>
+                        <th>شماره موبایل</th>
+                        <th>نقش</th>
+                        <th>حذف کاربر</th>
+                    </tr>
+                    @foreach (var user in Model)
+                    {
+                        <tr>
+                            <td>@user.FullName</td>
+                            <td>@user.Username</td>
+                            <td>@user.Email</td>
+                            <td>@user.PhoneNumber</td>
+                            <td>@user.Role.GetDisplayName()</td>
+                            <td><a asp-area="Admin" asp-action="DeleteUser" class="btn" asp-route-id="@user.Id"> <img src="~/icon/delete.png"> </a></td>
+                        </tr>
+
+                    }
+                </table>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </div>
+</div>

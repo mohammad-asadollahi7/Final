@@ -1,5 +1,5 @@
-﻿
-using Domain.Core.Contracts.Services;
+﻿using Domain.Core.Contracts.Services;
+using Domain.Core.Dtos;
 using Domain.Core.Entities;
 using Domain.Core.Enums;
 
@@ -17,5 +17,8 @@ public interface IAccountAppService
                   string password,
                   Role role,
                   CancellationToken cancellationToken);
+
+    Task<List<UserOutputDto>> GetUsers(CancellationToken cancellationToken);
+
 
 }

@@ -1,4 +1,5 @@
 ﻿using Endpoint.MVC.Controllers;
+using Endpoint.MVC.Dtos;
 using Endpoint.MVC.Dtos.Categories;
 using Endpoint.MVC.Dtos.Comment;
 using Endpoint.MVC.Dtos.Enums;
@@ -112,22 +113,27 @@ public class ProductController : BaseController
         return RedirectToAction(nameof(GetCommentsForApprove));
     }
 
-    //public async Task<IActionResult> GetCustomers(CancellationToken cancellationToken)
-    //{
+    public async Task<IActionResult> GetUsers(CancellationToken cancellationToken)
+    {
+        var httpResponseMessage = await SendGetRequest("Account/GetUsers",
+                                                       cancellationToken);
 
-    //}
-
-    //public async Task<IActionResult> GetSellers(CancellationToken cancellationToken)
-    //{
+        if (!httpResponseMessage.IsSuccessStatusCode)
+            return RedirectToErrorPage(httpResponseMessage);
 
 
-    //}
+        var users = await httpResponseMessage.Content
+                                         .ReadFromJsonAsync<List<UserOutputDto>>();
+        return View(users);
+        
+    }
 
-    //public async Task<IActionResult> DeleteUser(int id,
-    //                                            CancellationToken cancellationToken)
-    //{
 
-    //}
+    public async Task<IActionResult> DeleteUser(int id,CancellationToken cancellationToken)
+    {
+        return View();
+
+    }
 
     //public async Task<IActionResult> GetAuctionProducts(CancellationToken cancellationToken)
     //{

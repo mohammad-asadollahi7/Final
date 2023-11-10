@@ -1,4 +1,5 @@
 ﻿
+using Domain.Core.Dtos;
 using Domain.Core.Entities;
 using Domain.Core.Enums;
 using Microsoft.AspNetCore.Identity;
@@ -23,4 +24,6 @@ public interface IAccountRepository
                              string password);
 
     Task SaveChangesAsync(CancellationToken cancellationToken);
+
+    Task<List<UserOutputDto>> GetUsers(CancellationToken cancellationToken);
 }

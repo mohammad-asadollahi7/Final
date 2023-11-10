@@ -1,4 +1,5 @@
 ﻿using Domain.Core.Contracts.AppServices;
+using Domain.Core.Dtos;
 using Domain.Core.Entities;
 using Endpoint.API.Dtos;
 using Microsoft.AspNetCore.Authorization;
@@ -48,5 +49,15 @@ public class AccountController : BaseController
                                                    cancellationToken);
         return Ok(token);
     }
+
+
+    [HttpGet("GetUsers")]
+    //[HaveAccess(Role.Admin)]
+    public async Task<IActionResult> GetUsers(CancellationToken cancellationToken)
+    {
+        var users = await _accountAppService.GetUsers(cancellationToken);
+        return Ok(users);
+    }
+
 
 }

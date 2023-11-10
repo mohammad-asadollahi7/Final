@@ -1,4 +1,5 @@
 ﻿using Domain.Core.Contracts.Repos;
+using Domain.Core.Dtos;
 using Domain.Core.Entities;
 using Domain.Core.Enums;
 using Infra.Db.EF;
@@ -58,6 +59,31 @@ public class AccountRepository : IAccountRepository
         await _context.SaveChangesAsync(cancellationToken);
     }
 
-    
+    public async Task<List<UserOutputDto>> GetUsers(CancellationToken cancellationToken)
+    {
+        var users = await _userManager.Users.Where(u => u.Admin == null)
+                                              .Include(u => u.Customer)
+                                              .Include(u => u.Seller).ToListAsync(cancellationToken);
 
+        List<UserOutputDto> usersDto = new();
+        foreach (var user in users)
+        {
+            var userDto = new UserOutputDto()
+            {
+                Id = user.Id,
+                FullName = user.FullName,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                Username = user.UserName,
+            };
+
+            if (user.Customer is not null)
+                userDto.Role = Role.Customer;
+            else
+                userDto.Role = Role.Seller;
+            usersDto.Add(userDto);
+        }
+
+        return usersDto;
+    }
 }

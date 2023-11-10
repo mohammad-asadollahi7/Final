@@ -1,5 +1,6 @@
 ﻿using Domain.Core.Contracts.Repos;
 using Domain.Core.Contracts.Services;
+using Domain.Core.Dtos;
 using Domain.Core.Entities;
 using Domain.Core.Enums;
 using Domain.Core.Exceptions;
@@ -184,5 +185,10 @@ public class AccountService : IAccountService
     {
         if (role != Role.Customer && role != Role.Admin && role != Role.Seller)
             throw new AppException(ExpMessage.NotFoundRole, ExpStatusCode.NotFound);
+    }
+
+    public async Task<List<UserOutputDto>> GetUsers(CancellationToken cancellationToken)
+    {
+        return await _accountRepository.GetUsers(cancellationToken);
     }
 }

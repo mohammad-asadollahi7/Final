@@ -1,4 +1,5 @@
-﻿using Domain.Core.Entities;
+﻿using Domain.Core.Dtos;
+using Domain.Core.Entities;
 using Domain.Core.Enums;
 using Microsoft.AspNetCore.DataProtection.KeyManagement.Internal;
 
@@ -35,4 +36,6 @@ public interface IAccountService
 
     Task SaveChangesAsync(CancellationToken cancellationToken);
     void EnsureRoleExist(Role role);
+    Task<List<UserOutputDto>> GetUsers(CancellationToken cancellationToken);
+
 }
