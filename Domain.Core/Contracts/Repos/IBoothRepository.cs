@@ -7,8 +7,9 @@ namespace Domain.Core.Contracts.Repos;
 
 public interface IBoothRepository
 {
-    Task<BoothDto?> GetBoothBySellerId(int sellerId, CancellationToken cancellationToken);
+    Task<BoothDto?> GetBySellerId(int sellerId, CancellationToken cancellationToken);
 
+    Task<BoothDto?> GetById(int boothId, CancellationToken cancellationToken);
     Task<List<ProductOutputDto>> GetNonAuctionsByBoothTitle(string title, 
                                           CancellationToken cancellationToken);
 
@@ -35,5 +36,6 @@ public interface IBoothRepository
 
     Task<bool> IsExistByTitle(string title,
                              CancellationToken cancellationToken);
+    Task<BoothDto?> GetByTitle(string title, CancellationToken cancellationToken); 
 
 }

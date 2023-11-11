@@ -16,7 +16,7 @@ public class BoothRepository : IBoothRepository
     public BoothRepository(FinalContext context) => _context = context;
 
 
-    public async Task<BoothDto?> GetBoothBySellerId(int sellerId,
+    public async Task<BoothDto?> GetBySellerId(int sellerId,
                                                     CancellationToken cancellationToken)
     {
         return await _context.Booths.Where(b => b.SellerId == sellerId
@@ -26,11 +26,7 @@ public class BoothRepository : IBoothRepository
                                                     Id = b.Id,
                                                     Description = b.Description,
                                                     Medal = b.Medal,
-                                                    PictureDto = new PictureDto()
-                                                    {
-                                                        Id = b.BoothPicture.Picture.Id,
-                                                        PictureName = b.BoothPicture.Picture.Name,
-                                                    },
+                                                    PictureName = b.BoothPicture.Picture.Name,
                                                     Title = b.Title,
                                                     Wage = b.Wage
                                                 }).AsNoTracking()
@@ -144,5 +140,35 @@ public class BoothRepository : IBoothRepository
         return await _context.Booths.AnyAsync(b => b.Title.ToLower() == title.ToLower()
                                               && b.IsDeleted == false,
                                               cancellationToken);
+    }
+
+    public async Task<BoothDto?> GetById(int boothId, CancellationToken cancellationToken)
+    {
+         return await _context.Booths.Where(b => b.Id == boothId)
+                                    .Select(b => new BoothDto()
+         {
+             Id = b.Id,
+             Description = b.Description,   
+             PictureName = b.BoothPicture.Picture.Name,
+             Medal = b.Medal,
+             Title = b.Title,
+             Wage = b.Wage
+         }).SingleOrDefaultAsync(cancellationToken);
+    }
+
+    public async Task<BoothDto?> GetByTitle(string title, 
+                                    CancellationToken cancellationToken)
+    {
+        return await _context.Booths
+                        .Where(b => b.Title.ToLower() == title.ToLower())
+                        .Select(b => new BoothDto()
+                        {
+                            Id = b.Id,
+                            Description = b.Description,
+                            PictureName = b.BoothPicture.Picture.Name,
+                            Medal = b.Medal,
+                            Title = b.Title,
+                            Wage = b.Wage
+                        }).FirstOrDefaultAsync(cancellationToken);
     }
 }

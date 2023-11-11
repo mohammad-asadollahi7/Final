@@ -19,11 +19,11 @@ public class BoothController : BaseController
     }
 
 
-    [HttpGet("GetBoothBySellerId")]
+    [HttpGet("GetBySellerId")]
     //[HaveAccess(Role.Seller)]
     public async Task<IActionResult> GetBoothBySellerId(CancellationToken cancellationToken)
     {
-        var booth = await _boothAppService.GetBoothBySellerId(CurrentUserId, 
+        var booth = await _boothAppService.GetBySellerId(CurrentUserId, 
                                                          cancellationToken);
         return Ok(booth); 
     }
@@ -42,26 +42,47 @@ public class BoothController : BaseController
 
     [HttpPost("Create")]
     //[HaveAccess(Role.Customer)]
-    public async Task Create(CreateBoothDto boothDto,
-                             CancellationToken cancellationToken)
+    public async Task<IActionResult> Create(CreateBoothDto boothDto,
+                                             CancellationToken cancellationToken)
     {
         await _boothAppService.Create(boothDto, CurrentUserId, cancellationToken);
+        return Ok();
     }
 
 
     [HttpPut("Update/boothId")]
     //[HaveAccess(Role.Seller)]
-    public async Task Update(int boothId, UpdateBoothDto boothDto,
-                               CancellationToken cancellationToken)
+    public async Task<IActionResult> Update(int boothId, UpdateBoothDto boothDto,
+                                              CancellationToken cancellationToken)
     {
         await _boothAppService.Update(boothId, boothDto, cancellationToken);
+        return Ok();
     }
 
     [HttpDelete("Delete/boothId")]
     //[HaveAccess(Role.Seller, Role.Admin)]
-    public async Task Delete(int boothId, CancellationToken cancellationToken)
+    public async Task<IActionResult> Delete(int boothId, CancellationToken cancellationToken)
     {
         await _boothAppService.Delete(boothId, cancellationToken);
+        return Ok();    
     }
 
+    [HttpGet("GetById/{boothId}")]
+    //[HaveAccess(Role.Admin, Role.Customer)]
+    public async Task<IActionResult> GetById(int boothId, 
+                                             CancellationToken cancellationToken)
+    {
+        var booth = await _boothAppService.GetById(boothId, cancellationToken);
+        return Ok(booth);
+    }
+
+
+    public async Task<IActionResult> GetByTitle(string title,
+                                              CancellationToken cancellationToken)
+    {
+        var booth = await _boothAppService.GetByTitle(title, cancellationToken);
+        return Ok(booth);
+    }
+
+   
 }

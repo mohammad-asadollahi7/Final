@@ -14,7 +14,7 @@ public class BoothAppService : IBoothAppService
     {
         _boothService = boothService;
     }
-    public async Task<BoothDto> GetBoothBySellerId(int sellerId,
+    public async Task<BoothDto> GetBySellerId(int sellerId,
                                        CancellationToken cancellationToken)
     {
         return await _boothService.GetBoothBySellerId(sellerId, cancellationToken);
@@ -46,6 +46,17 @@ public class BoothAppService : IBoothAppService
     {
         await _boothService.EnsureExistById(boothId, cancellationToken);
         await _boothService.Delete(boothId, cancellationToken);
+    }
+
+    public async Task<BoothDto> GetById(int boothId, CancellationToken cancellationToken)
+    {
+        return await _boothService.GetById(boothId, cancellationToken);
+    }
+
+    public async Task<BoothDto> GetByTitle(string title,
+                                           CancellationToken cancellationToken)
+    {
+        return await _boothService.GetByTitle(title, cancellationToken);
     }
 
 }

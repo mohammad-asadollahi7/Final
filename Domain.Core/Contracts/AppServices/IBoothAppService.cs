@@ -7,7 +7,7 @@ namespace Domain.Core.Contracts.AppServices;
 
 public interface IBoothAppService
 {
-    Task<BoothDto> GetBoothBySellerId(int sellerId, CancellationToken cancellationToken);
+    Task<BoothDto> GetBySellerId(int sellerId, CancellationToken cancellationToken);
 
     Task<List<ProductOutputDto>> GetNonAuctionsByBoothTitle(string title,
                                             CancellationToken cancellationToken);
@@ -19,4 +19,10 @@ public interface IBoothAppService
                     CancellationToken cancellationToken);
 
     Task Delete(int boothId, CancellationToken cancellationToken);
+    Task<BoothDto> GetById(int boothId, 
+                           CancellationToken cancellationToken);
+    Task<BoothDto> GetByTitle(string title,
+                              CancellationToken cancellationToken);
+
+
 }

@@ -22,7 +22,7 @@ public class BoothService : IBoothService
     public async Task<BoothDto> GetBoothBySellerId(int sellerId,
                                        CancellationToken cancellationToken)
     {
-        var booth = await _boothRepository.GetBoothBySellerId(sellerId, cancellationToken);
+        var booth = await _boothRepository.GetBySellerId(sellerId, cancellationToken);
         if (booth == null)
             throw new AppException(ExpMessage.NotFoundBooth,
                                     ExpStatusCode.NotFound);
@@ -122,5 +122,26 @@ public class BoothService : IBoothService
         if (!isExist)
             throw new AppException(ExpMessage.NotFoundBooth,
                                     ExpStatusCode.NotFound);
+    }
+
+    public async Task<BoothDto> GetById(int boothId, CancellationToken cancellationToken)
+    {
+        var booth = await _boothRepository.GetById(boothId, cancellationToken);
+        if (booth == null)
+            throw new AppException(ExpMessage.NotFoundBooth,
+                                    ExpStatusCode.NotFound);
+
+        return booth;
+    }
+
+    public async Task<BoothDto> GetByTitle(string title,
+                                            CancellationToken cancellationToken)            
+    {
+        var booth = await _boothRepository.GetByTitle(title, cancellationToken);
+        if (booth == null)
+            throw new AppException(ExpMessage.NotFoundBooth,
+                                    ExpStatusCode.NotFound);
+
+        return booth;
     }
 }

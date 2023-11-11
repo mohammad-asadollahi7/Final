@@ -14,6 +14,6 @@ public class BoothDto
     public int Wage { get; set; }
 
     public Medal Medal { get; set; }
-    public virtual PictureDto PictureDto { get; set; } = null!;
+    public string PictureName { get; set; } = null!;
 
 }

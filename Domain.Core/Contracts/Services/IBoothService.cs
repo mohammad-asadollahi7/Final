@@ -26,5 +26,9 @@ public interface IBoothService
 
     Task EnsureExistByTitle(string title, 
                                 CancellationToken cancellationToken);
-    
+     Task<BoothDto> GetById(int boothId, 
+                                CancellationToken cancellationToken);
+     Task<BoothDto> GetByTitle(string title,
+                               CancellationToken cancellationToken);
+
 }
