@@ -77,6 +77,8 @@ public class BoothController : BaseController
     }
 
 
+    [HttpGet("GetByTitle/{title}")]
+    //[HaveAccess(Role.Admin, Role.Customer)]
     public async Task<IActionResult> GetByTitle(string title,
                                               CancellationToken cancellationToken)
     {
