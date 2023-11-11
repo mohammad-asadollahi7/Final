@@ -6,8 +6,6 @@ using Domain.Core.Enums;
 using Domain.Core.Exceptions;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using System.Data;
-using System.Diagnostics.Eventing.Reader;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -20,22 +18,22 @@ public class AccountService : IAccountService
     private readonly IAdminService _adminService;
     private readonly ICustomerService _customerService;
     private readonly ISellerService _sellerService;
-    private readonly ICustomerRepository _customerRepository;
     private readonly IOptionsSnapshot<JWTConfiguration> _JWTConfigs;
+    private readonly ICustomerRepository _customerRepository;
 
     public AccountService(IAccountRepository accountRepository,
                           IAdminService adminService,
                           ICustomerService customerService,
                           ISellerService sellerService,
-                          ICustomerRepository customerRepository,
+                          ICustomerRepository customerRepository,   
                           IOptionsSnapshot<JWTConfiguration> JWTConfigs)
     {
         _accountRepository = accountRepository;
         _adminService = adminService;
         _customerService = customerService;
         _sellerService = sellerService;
-        _customerRepository = customerRepository;
         _JWTConfigs = JWTConfigs;
+        _customerRepository = customerRepository;
     }
 
     public async Task EnsurePassword(ApplicationUser user,
@@ -51,7 +49,8 @@ public class AccountService : IAccountService
     public async Task EnsureUniquePhoneNumber(string phoneNumber,
                                               CancellationToken cancellationToken)
     {
-        var customer = await _customerRepository.GetCustomerByPhoneNumber(phoneNumber, cancellationToken);
+        var customer = await _customerRepository.GetCustomerByPhoneNumber
+                                                  (phoneNumber, cancellationToken);
                                                 
         if (customer is not null)
             throw new AppException(string.Format(ExpMessage.RegisterdUser, phoneNumber),
@@ -86,7 +85,8 @@ public class AccountService : IAccountService
                                       Role role,
                                       CancellationToken cancellationToken)
     {
-        var identityResult = await _accountRepository.Register(user, password, role, cancellationToken);
+        var identityResult = await _accountRepository.Register(user, password, 
+                                                        role, cancellationToken);
         
         
         if (!identityResult.Succeeded)
@@ -191,4 +191,23 @@ public class AccountService : IAccountService
     {
         return await _accountRepository.GetUsers(cancellationToken);
     }
+
+    public async Task DeleteUser(int userId, Role role, 
+                                 CancellationToken cancellationToken)
+    {
+        if (role == Role.Seller)
+            await _sellerService.DeleteSellerByUserId(userId, cancellationToken);
+        else if (role == Role.Customer)
+            await _customerService.DeleteCustomerByUserId(userId, cancellationToken);
+
+        await _accountRepository.DeleteUser(userId, cancellationToken);
+    }
+
+    public async Task EnsureUserExist(int userId, CancellationToken cancellationToken)
+    {
+        var isExist = await _accountRepository.IsUserExistById(userId, cancellationToken);
+        if (!isExist)
+            throw new AppException(ExpMessage.NotFoundUser, ExpStatusCode.NotFound);
+    }
+
 }

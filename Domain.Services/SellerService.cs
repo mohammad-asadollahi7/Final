@@ -26,4 +26,9 @@ public class SellerService : ISellerService
                                    ExpStatusCode.NotFound);
         return sellerId ?? 0;
     }
+
+    public async Task DeleteSellerByUserId(int userId, CancellationToken cancellationToken)
+    {
+        await _sellerRepository.DeleteSellerByUserId(userId, cancellationToken);
+    }
 }

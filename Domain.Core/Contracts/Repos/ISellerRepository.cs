@@ -9,4 +9,5 @@ public interface ISellerRepository
 
     Task<int?> GetSellerIdByUserId(int userId,
                                   CancellationToken cancellationToken);
+    Task DeleteSellerByUserId(int userId, CancellationToken cancellationToken);
 }

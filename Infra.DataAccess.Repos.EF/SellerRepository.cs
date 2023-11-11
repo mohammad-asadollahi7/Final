@@ -24,9 +24,17 @@ public class SellerRepository : ISellerRepository
         await _context.SaveChangesAsync(cancellationToken);
     }
 
+    public async Task DeleteSellerByUserId(int userId, CancellationToken cancellationToken)
+    {
+        var seller = await _context.Sellers.FirstAsync(s => s.ApplicationUserId == userId, 
+                                                        cancellationToken);
+        _context.Sellers.Remove(seller);
+        await _context.SaveChangesAsync(cancellationToken);
+    }
+
     public async Task<int?> GetSellerIdByUserId(int userId, CancellationToken cancellationToken)
     {
         return await _context.Sellers.Where(a => a.ApplicationUserId == userId)
-                                           .Select(a => a.Id).FirstOrDefaultAsync(cancellationToken);
+                                    .Select(a => a.Id).FirstOrDefaultAsync(cancellationToken);
     }
 }

@@ -1,6 +1,7 @@
 ﻿
 using Domain.Core.Contracts.Repos;
 using Domain.Core.Contracts.Services;
+using Domain.Core.Entities;
 using Domain.Core.Exceptions;
 
 namespace Domain.Services;
@@ -15,6 +16,21 @@ public class CustomerService : ICustomerService
                                              CancellationToken cancellationToken)
     {
         await _customerRepository.AddByApplicationUserId(applicationUserId, cancellationToken);
+    }
+
+    public async Task DeleteCustomerByUserId(int userId, 
+                                        CancellationToken cancellationToken)
+    {
+       await _customerRepository.DeleteCustomerByUserId(userId, cancellationToken);
+    }
+
+    public async Task<Customer> GetCustomerByPhoneNumber(string PhoneNumber, CancellationToken cancellationToken)
+    {
+        var customer = await _customerRepository.GetCustomerByPhoneNumber(PhoneNumber, cancellationToken);
+        if(customer is null)
+                throw new AppException(ExpMessage.NotFoundUserId,
+                                       ExpStatusCode.NotFound);
+        return customer;
     }
 
     public async Task<int> GetCustomerIdByUserId(int applicationUserId,

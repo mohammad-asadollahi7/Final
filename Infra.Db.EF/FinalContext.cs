@@ -326,7 +326,7 @@ public class FinalContext : IdentityDbContext<ApplicationUser, IdentityRole<int>
         {
             entity.HasIndex(e => e.ApplicationUserId, "IX_Sellers").IsUnique();
 
-
+            entity.HasKey(e => e.Id);
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
             entity.HasOne(d => d.ApplicationUser).WithOne(p => p.Seller)

@@ -7,4 +7,6 @@ public interface ISellerService
                                 CancellationToken cancellationToken);
     Task<int> GetSellerIdByUserId(int userId,
                                   CancellationToken cancellationToken);
+    Task DeleteSellerByUserId(int userId, CancellationToken cancellationToken);
+
 }

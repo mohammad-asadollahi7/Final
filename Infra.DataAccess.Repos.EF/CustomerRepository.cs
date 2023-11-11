@@ -24,6 +24,15 @@ public class CustomerRepository : ICustomerRepository
         await _context.SaveChangesAsync(cancellationToken);
     }
 
+    public async Task DeleteCustomerByUserId(int userId, 
+                                    CancellationToken cancellationToken)
+    {
+        var customer = await _context.Customers.FirstAsync(c => c.ApplicationUserId == userId,
+                                                    cancellationToken);
+        _context.Remove(customer);
+        await _context.SaveChangesAsync(cancellationToken);
+    }
+
     public async Task<Customer?> GetCustomerByPhoneNumber(string PhoneNumber, CancellationToken cancellationToken)
     {
         return await _context.Customers.FirstOrDefaultAsync(c =>

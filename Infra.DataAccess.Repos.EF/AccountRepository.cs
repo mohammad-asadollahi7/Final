@@ -86,4 +86,18 @@ public class AccountRepository : IAccountRepository
 
         return usersDto;
     }
+
+    public async Task DeleteUser(int userId, CancellationToken cancellationToken)
+    { 
+        var user = await _userManager.Users.FirstAsync(u => u.Id == userId);
+        _context.Remove(user);
+        await _context.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task<bool> IsUserExistById(int userId, CancellationToken cancellationToken)
+    {
+        return await _userManager.Users.AnyAsync(u => u.Id == userId, cancellationToken);
+    }
+
+
 }

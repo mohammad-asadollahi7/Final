@@ -51,4 +51,11 @@ public class AccountAppService : IAccountAppService
     {
         return await _accountService.GetUsers(cancellationToken);
     }
+
+    public async Task DeleteUser(int userId, Role role,
+                               CancellationToken cancellationToken)
+    {
+        await _accountService.EnsureUserExist(userId, cancellationToken);
+        await _accountService.DeleteUser(userId, role, cancellationToken);
+    }
 }

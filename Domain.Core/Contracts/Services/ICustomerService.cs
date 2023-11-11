@@ -1,4 +1,6 @@
-﻿namespace Domain.Core.Contracts.Services;
+﻿using Domain.Core.Entities;
+
+namespace Domain.Core.Contracts.Services;
 
 public interface ICustomerService
 {
@@ -7,4 +9,10 @@ public interface ICustomerService
 
     Task<int> GetCustomerIdByUserId(int applicationUserId,
                                     CancellationToken cancellationToken);
+
+    Task DeleteCustomerByUserId(int userId, 
+                                CancellationToken cancellationToken);
+
+    Task<Customer> GetCustomerByPhoneNumber(string PhoneNumber,
+                                             CancellationToken cancellationToken);
 }

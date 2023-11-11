@@ -1,6 +1,7 @@
 ﻿using Domain.Core.Contracts.AppServices;
 using Domain.Core.Dtos;
 using Domain.Core.Entities;
+using Domain.Core.Enums;
 using Endpoint.API.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -59,5 +60,12 @@ public class AccountController : BaseController
         return Ok(users);
     }
 
-
+    [HttpDelete("DeleteUser/{userId}")]
+    //[HaveAccess(Role.Admin)]
+    public async Task<IActionResult> DeleteUser(int userId, Role role,
+                                            CancellationToken cancellationToken)
+    {
+         await _accountAppService.DeleteUser(userId, role, cancellationToken);
+        return Ok();
+    }
 }

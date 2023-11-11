@@ -37,5 +37,8 @@ public interface IAccountService
     Task SaveChangesAsync(CancellationToken cancellationToken);
     void EnsureRoleExist(Role role);
     Task<List<UserOutputDto>> GetUsers(CancellationToken cancellationToken);
+    Task DeleteUser(int userId, Role role, CancellationToken cancellationToken);
+    Task EnsureUserExist(int userId, CancellationToken cancellationToken);
 
 }
+

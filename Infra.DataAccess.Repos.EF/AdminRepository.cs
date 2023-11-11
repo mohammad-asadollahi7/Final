@@ -29,6 +29,6 @@ public class AdminRepository : IAdminRepository
     public async Task<int?> GetAdminIdByUserId(int userId, CancellationToken cancellationToken)
     {
         return await _context.Admins.Where(a => a.ApplicationUserId == userId)
-                                          .Select(a => a.Id).FirstOrDefaultAsync(cancellationToken);
+                                 .Select(a => a.Id).FirstOrDefaultAsync(cancellationToken);
     }
 }

@@ -26,4 +26,8 @@ public interface IAccountRepository
     Task SaveChangesAsync(CancellationToken cancellationToken);
 
     Task<List<UserOutputDto>> GetUsers(CancellationToken cancellationToken);
+
+    Task DeleteUser(int userId, CancellationToken cancellationToken);
+
+    Task<bool> IsUserExistById(int userId, CancellationToken cancellationToken);
 }

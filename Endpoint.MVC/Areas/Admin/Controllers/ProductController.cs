@@ -113,27 +113,7 @@ public class ProductController : BaseController
         return RedirectToAction(nameof(GetCommentsForApprove));
     }
 
-    public async Task<IActionResult> GetUsers(CancellationToken cancellationToken)
-    {
-        var httpResponseMessage = await SendGetRequest("Account/GetUsers",
-                                                       cancellationToken);
-
-        if (!httpResponseMessage.IsSuccessStatusCode)
-            return RedirectToErrorPage(httpResponseMessage);
-
-
-        var users = await httpResponseMessage.Content
-                                         .ReadFromJsonAsync<List<UserOutputDto>>();
-        return View(users);
-        
-    }
-
-
-    public async Task<IActionResult> DeleteUser(int id,CancellationToken cancellationToken)
-    {
-        return View();
-
-    }
+    
 
     //public async Task<IActionResult> GetAuctionProducts(CancellationToken cancellationToken)
     //{
