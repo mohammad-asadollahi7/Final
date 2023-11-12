@@ -1,4 +1,5 @@
-﻿@model List<Endpoint.MVC.Dtos.Products.WageDto>
+﻿@using Endpoint.MVC.ExtensionMethods;
+@model List<Endpoint.MVC.Dtos.Products.WageDto>
 
 
 <div class="row">
@@ -21,7 +22,7 @@
                     {
                         <tr>
                             <td>@comment.Wages</td>
-                            <td>@comment.Date</td>
+                            <td>@comment.Date.ToPersian()</td>
                             <td>@comment.ProductTitle</td>
                             <td>@comment.BoothTitle</td>
                         </tr>
