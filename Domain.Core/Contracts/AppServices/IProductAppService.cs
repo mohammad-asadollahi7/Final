@@ -1,6 +1,4 @@
-﻿
-
-using Domain.Core.Contracts.Repos;
+﻿using Domain.Core.Contracts.Repos;
 using Domain.Core.Dtos.Product;
 using Domain.Core.Dtos.Products;
 using Domain.Core.Exceptions;
@@ -14,7 +12,7 @@ public interface IProductAppService
     Task<List<ProductOutputDto>> GetNonAuctionsByCategoryId(int categoryId,
                                                     CancellationToken cancellationToken);
 
-    Task<ProductDetailsDto> GetAuctionProductById(int productId, bool? isApproved,
+    Task<AuctionDetailsDto> GetAuctionProductById(int productId, bool? isApproved,
                                                    CancellationToken cancellationToken);
 
     Task<ProductDetailsDto> GetNonAuctionProductById(int productId, bool? isApproved,
@@ -34,7 +32,7 @@ public interface IProductAppService
                          UpdateNonAuctionProductDto productDto,
                          CancellationToken cancellationToken);
 
-    Task UpdateAuction(int productId, UpdateAuctionProductDto productDto,
+    Task UpdateAuction(int productId, AuctionDetailsDto productDto,
                              CancellationToken cancellationToken);
 
     Task Remove(int productId,

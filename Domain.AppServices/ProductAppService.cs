@@ -32,7 +32,7 @@ public class ProductAppService : IProductAppService
         return products;
     }
 
-    public async Task<ProductDetailsDto> GetAuctionProductById(int productId, bool? isApproved,
+    public async Task<AuctionDetailsDto> GetAuctionProductById(int productId, bool? isApproved,
                                                             CancellationToken cancellationToken)
     {
         await _productService.EnsureExistById(productId, isApproved, SellType.Auction, cancellationToken);
@@ -163,7 +163,7 @@ public class ProductAppService : IProductAppService
         await _productService.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task UpdateAuction(int productId, UpdateAuctionProductDto productDto,
+    public async Task UpdateAuction(int productId, AuctionDetailsDto productDto,
                                        CancellationToken cancellationToken)
     {
         await _productService.UpdateAuctionProduct(productId, productDto,

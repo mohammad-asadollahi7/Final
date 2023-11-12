@@ -52,27 +52,25 @@ public class ProductRepository : IProductRepository
     }
 
 
-    public async Task<ProductDetailsDto?> GetAuctionProductById(int productId, bool? isApproved,
+    public async Task<AuctionDetailsDto?> GetAuctionProductById(int productId, bool? isApproved,
                                                                 CancellationToken cancellationToken)
     {
         var productDetailsDto = await _context.Products.Where(p => p.Id == productId && p.SellType == SellType.Auction
                                                               && p.IsDeleted == false && p.IsApproved == isApproved)
-                                                  .Select(p => new ProductDetailsDto()
+                                                  .Select(p => new AuctionDetailsDto()
                                                   {
                                                       Id = p.Id,
                                                       PersianTitle = p.PersianTitle,
                                                       EnglishTitle = p.EnglishTitle,
                                                       SellType = p.SellType,
+                                                      FromDate = p.Auction.FromDate,
+                                                      ToDate = p.Auction.ToDate,
                                                       CategoryId = p.Categories.First().Id,
                                                       Description = p.Description,
-                                                      Price = p.AuctionOrders.Select(a => a.Price).Max(),
-                                                      BoothId = p.BoothId,
-                                                      ProductPictureDto = p.ProductPictures.Select(p => p.Picture)
-                                                                                           .Select(p => new ProductPictureDto()
-                                                                                           {
-                                                                                               Id = p.Id,
-                                                                                               Name = p.Name,
-                                                                                           }),
+                                                      MinPrice = p.Auction.MinPrice,
+                                                      BoothTitle = p.Booth.Title,
+                                                      PictureName = p.ProductPictures.Select(p => p.Picture)
+                                                                                           .Select(p => p.ProductPicture.Picture.Name).First(),
                                                       CustomAttributes = p.CustomAttributes.Select(c => new CustomAttributeDto()
                                                       {
                                                           Id = c.Id,

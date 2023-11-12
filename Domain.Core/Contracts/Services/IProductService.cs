@@ -11,7 +11,7 @@ public interface IProductService
     Task<ProductDetailsDto?> GetNonAuctionProductById(int productId, bool? isApproved,
                                                      CancellationToken cancellationToken);
 
-    Task<ProductDetailsDto?> GetAuctionProductById(int productId, bool? isApproved,
+    Task<AuctionDetailsDto?> GetAuctionProductById(int productId, bool? isApproved,
                                                    CancellationToken cancellationToken);
 
     Task<List<ProductOutputDto>> GetNonAuctionsByCategoryId(CancellationToken cancellationToken,
@@ -62,7 +62,7 @@ public interface IProductService
                            bool isCommit);
 
     Task UpdateAuctionProduct(int productId,
-                               UpdateAuctionProductDto productDto,
+                               AuctionDetailsDto productDto,
                                bool isCommit,
                                CancellationToken cancellationToken);
 

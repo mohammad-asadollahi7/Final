@@ -11,7 +11,7 @@ public interface IProductRepository
     Task<ProductDetailsDto?> GetNonAuctionProductById(int productId, bool? isApproved,
                                                       CancellationToken cancellationToken);
 
-    Task<ProductDetailsDto?> GetAuctionProductById(int productId, bool? isApproved,
+    Task<AuctionDetailsDto?> GetAuctionProductById(int productId, bool? isApproved,
                                                    CancellationToken cancellationToken);
 
     Task<List<ProductInventoryDto>> GetProductInventories(int productId,

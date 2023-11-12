@@ -93,7 +93,7 @@ public class ProductController : BaseController
 
     [HttpPut("UpdateAuction/{productId}")]
     //[HaveAccess(Role.Admin, Role.Seller)]
-    public async Task UpdateAuction(int productId, UpdateAuctionProductDto productDto,
+    public async Task UpdateAuction(int productId, AuctionDetailsDto productDto,
                                      CancellationToken cancellationToken)
     {
         await _productAppService.UpdateAuction(productId, productDto, cancellationToken);

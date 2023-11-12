@@ -43,7 +43,7 @@ public class CartAppService : ICartAppService
     {
         var product = await _productService.GetAuctionProductById(productId, true, cancellationToken);
 
-        await _cartService.AddAuctionOrder(customerId, productId, product.Price,
+        await _cartService.AddAuctionOrder(customerId, productId, product.MinPrice,
                                            proposedPrice, true, cancellationToken);
     }
 

@@ -44,7 +44,7 @@ public class ProductService : IProductService
     }
 
 
-    public async Task<ProductDetailsDto?> GetAuctionProductById(int productId, bool? isApproved, CancellationToken cancellationToken)
+    public async Task<AuctionDetailsDto?> GetAuctionProductById(int productId, bool? isApproved, CancellationToken cancellationToken)
     {
         var product = await _productRepository.GetAuctionProductById(productId, isApproved, cancellationToken);
 
@@ -164,7 +164,7 @@ public class ProductService : IProductService
 
 
     public async Task UpdateAuctionProduct(int productId,
-                                           UpdateAuctionProductDto productDto,
+                                           AuctionDetailsDto productDto,
                                            bool isCommit,   
                                            CancellationToken cancellationToken)
     {
@@ -172,7 +172,7 @@ public class ProductService : IProductService
                                         productDto.PersianTitle,
                                         productDto.EnglishTitle,
                                         productDto.Description,
-                                        productDto.CustomAttributes,
+                                        productDto.CustomAttributes.ToList(),
                                         isCommit,
                                         cancellationToken);
 

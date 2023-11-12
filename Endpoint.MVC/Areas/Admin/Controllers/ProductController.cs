@@ -63,8 +63,8 @@ public class ProductController : AdminBaseController
     }
 
 
-    public async Task<IActionResult> GetProductById(int productId, SellType sellType, 
-                                                CancellationToken cancellationToken, 
+    public async Task<IActionResult> GetProductById(int productId, SellType sellType,
+                                                CancellationToken cancellationToken,
                                                 bool? isApproved = null)
     {
         string url;
@@ -84,7 +84,22 @@ public class ProductController : AdminBaseController
                                          .ReadFromJsonAsync<ProductDetailsDto>();
         return View(product);
     }
-    
+
+    public async Task<IActionResult> GetAuctionById(int id, CancellationToken cancellationToken)
+    {
+
+        var httpResponseMessage = await SendGetRequest($"Product/GetAuctionProductById/{id}?isApproved=true",
+                                                                            cancellationToken);
+
+        if (!httpResponseMessage.IsSuccessStatusCode)
+            return RedirectToErrorPage(httpResponseMessage);
+
+
+        var product = await httpResponseMessage.Content
+                                         .ReadFromJsonAsync<AuctionDetailsDto>();
+        return View(product);
+    }
+
 
     public async Task<IActionResult> GetNonAuctionById(int id, CancellationToken cancellationToken)
     {
@@ -243,26 +258,16 @@ public class ProductController : AdminBaseController
 
 
         var productDetails = await httpResponseMessage.Content
-                                             .ReadFromJsonAsync<ProductDetailsDto>();
-        var updateProductDto = new UpdateProductDto()
-        {
-            Id = productDetails.Id,
-            CustomAttributes = productDetails.CustomAttributes,
-            Description = productDetails.Description,
-            EnglishTitle = productDetails.EnglishTitle,
-            PersianTitle = productDetails.PersianTitle,
-            Price = productDetails.Price,
-            BoothTitle = productDetails.BoothTitle,
-            CategoryId = productDetails.CategoryId
-        };
-        return View(updateProductDto);
+                                             .ReadFromJsonAsync<AuctionDetailsDto>();
+        
+        return View(productDetails);
     }
 
 
 
     [HttpPost("UpdatesAuction")]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> UpdatesAuction(UpdateProductDto updateProductDto,
+    public async Task<IActionResult> UpdatesAuction(AuctionDetailsDto updateProductDto,
                                             CancellationToken cancellationToken)
     {
         var httpResponseMessage = await SendPutRequest($"Product/UpdateAuction/{updateProductDto.Id}",
@@ -271,7 +276,7 @@ public class ProductController : AdminBaseController
         if (!httpResponseMessage.IsSuccessStatusCode)
             return RedirectToErrorPage(httpResponseMessage);
 
-        return RedirectToAction();
+        return RedirectToAction("GetAuctions");
     }
 
 

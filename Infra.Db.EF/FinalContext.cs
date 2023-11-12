@@ -104,6 +104,7 @@ public class FinalContext : IdentityDbContext<ApplicationUser, IdentityRole<int>
 
         modelBuilder.Entity<Auction>(entity =>
         {
+            entity.HasKey(e => e.Id).HasName("Pk_Auction");
             entity.ToTable("Auction");
             entity.HasIndex(e => e.ProductId, "IX_Auction").IsUnique();
 
