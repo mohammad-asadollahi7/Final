@@ -139,5 +139,13 @@ public class ProductController : BaseController
         await _commentAppService.ApproveComment(id, isApproved, cancellationToken); 
     }
 
+
+    [HttpGet("GetWages")]
+    //[HaveAccess(Role.Admin)]
+    public async Task<IActionResult> GetWages(CancellationToken cancellationToken)
+    {
+        var wages = await _productAppService.GetWages(cancellationToken);
+        return Ok(wages);
+    }
 }
 

@@ -36,6 +36,6 @@ public interface IBoothRepository
 
     Task<bool> IsExistByTitle(string title,
                              CancellationToken cancellationToken);
-    Task<BoothDto?> GetByTitle(string title, CancellationToken cancellationToken); 
+    Task<BoothDto?> GetByTitle(string title, CancellationToken cancellationToken);
 
 }

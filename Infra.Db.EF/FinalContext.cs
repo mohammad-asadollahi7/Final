@@ -52,7 +52,8 @@ public class FinalContext : IdentityDbContext<ApplicationUser, IdentityRole<int>
 
     public virtual DbSet<BoothPicture> BoothPicture { get; set; }
     public virtual DbSet<CategoryPicture> CategoryPicture { get; set; }
-   
+    public virtual DbSet<Wage> Wages { get; set; }
+
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -90,6 +91,8 @@ public class FinalContext : IdentityDbContext<ApplicationUser, IdentityRole<int>
 
         modelBuilder.Entity<Wage>(entity =>
         {
+            entity.HasKey(w => w.Id).HasName("PK_Wages");
+
             entity.HasOne(w => w.Booth).WithMany(b => b.Wages)
                                 .HasForeignKey(w => w.BoothId);
 

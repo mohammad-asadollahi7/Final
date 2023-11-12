@@ -5,6 +5,8 @@ using Domain.Core.Dtos.Product;
 using Domain.Core.Dtos.Products;
 using Domain.Core.Enums;
 using Domain.Core.Exceptions;
+using Microsoft.AspNetCore.Mvc;
+using System.Security.Cryptography.Xml;
 
 namespace Domain.Services;
 
@@ -264,5 +266,15 @@ public class ProductService : IProductService
                                CancellationToken cancellationToken)
     {
         await _productRepository.ApproveProduct(id, isApproved, cancellationToken);
+    }
+
+    public async Task<List<WageDto>> GetWages(CancellationToken cancellationToken)
+    {
+        var wages = await _productRepository.GetWages(cancellationToken);
+        if (wages.Count == 0)
+            throw new AppException(ExpMessage.NotFoundWage, ExpStatusCode.NotFound);
+
+        return wages;   
+            
     }
 }

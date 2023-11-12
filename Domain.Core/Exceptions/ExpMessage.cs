@@ -29,5 +29,6 @@ public static class ExpMessage
     public static string NotFoundRole { get; } = "چنین نقشی پیدا نشد";
     public static string LowPrice { get; } = "قیمت از بالاترین قیمت مزایده پایین تر است";
     public static string WrongCartStatus { get; } = "وضعیت سبد خرید انتخابی قابل تغییر نیست";
+    public static string NotFoundWage { get; } = "کارمزدی  پیدا نشد";
 
 }

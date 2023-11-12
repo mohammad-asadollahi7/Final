@@ -393,5 +393,18 @@ public class ProductRepository : IProductRepository
         product.IsApproved = isApproved;
         await _context.SaveChangesAsync(cancellationToken);
     }
+
+    public async Task<List<WageDto>> GetWages(CancellationToken cancellationToken)
+    {
+        return await _context.Wages.Select(w => new WageDto()
+                                 {
+                                     Id = w.Id,
+                                     BoothTitle = w.Booth.Title,
+                                     Date = w.Date,
+                                     ProductTitle = w.Product.PersianTitle,
+                                     Wages = w.Wages
+                                 }).ToListAsync(cancellationToken);
+       
+    }
 }
 

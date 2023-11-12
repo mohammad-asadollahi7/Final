@@ -34,7 +34,20 @@ public class ProductController : BaseController
         return View();
     }
 
+    public async Task<IActionResult> GetWages(CancellationToken cancellationToken)
+    {
+        var httpResponseMessage = await SendGetRequest($"Product/GetWages",
+                                                        cancellationToken);
 
+        if (!httpResponseMessage.IsSuccessStatusCode)
+            return RedirectToErrorPage(httpResponseMessage);
+
+
+        var wages = await httpResponseMessage.Content
+                                              .ReadFromJsonAsync<List<WageDto>>();
+        return View(wages);
+    }
+    
     public async Task<IActionResult> GetProductsForApprove(CancellationToken cancellationToken)
     {
         var httpResponseMessage = await SendGetRequest($"Product/GetProductsForApprove",

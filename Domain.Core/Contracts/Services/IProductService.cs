@@ -89,4 +89,6 @@ public interface IProductService
 
     Task ApproveProduct(int id, bool isApproved,
                                 CancellationToken cancellationToken);
+
+    Task<List<WageDto>> GetWages(CancellationToken cancellationToken);
 }

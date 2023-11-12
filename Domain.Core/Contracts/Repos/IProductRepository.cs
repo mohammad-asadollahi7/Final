@@ -99,5 +99,7 @@ public interface IProductRepository
     Task ApproveProduct(int id, bool isApproved,CancellationToken cancellationToken);
 
     Task SaveChangesAsync(CancellationToken cancellationToken);
+
+    Task<List<WageDto>> GetWages(CancellationToken cancellationToken);
     
 }

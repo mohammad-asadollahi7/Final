@@ -178,4 +178,9 @@ public class ProductAppService : IProductAppService
         await _productService.EnsureExistById(id, null, null, cancellationToken);
         await _productService.ApproveProduct(id, isApproved, cancellationToken);
     }
+
+    public async Task<List<WageDto>> GetWages(CancellationToken cancellationToken)
+    {
+       return await _productService.GetWages(cancellationToken);
+    }
 }
