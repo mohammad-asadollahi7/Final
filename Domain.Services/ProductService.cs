@@ -287,4 +287,14 @@ public class ProductService : IProductService
     {
        return await _productRepository.GetWageNumbers(cancellationToken);
     }
+
+    public async Task<List<ProductOutputDto>> GetAuctions(bool? isApproved,
+                                            CancellationToken cancellationToken)
+    {
+        var products = await _productRepository.GetAuctions(isApproved, cancellationToken);
+        if (products.Count() == 0)
+            throw new AppException(ExpMessage.HaveNotProduct, ExpStatusCode.NotFound);
+
+        return products;
+    }
 }

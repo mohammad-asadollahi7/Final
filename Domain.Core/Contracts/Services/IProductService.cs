@@ -94,6 +94,8 @@ public interface IProductService
 
     Task<int> GetNumberOfProductsForApprove(CancellationToken cancellationToken);
     Task<int> GetWageNumbers(CancellationToken cancellationToken);
+    Task<List<ProductOutputDto>> GetAuctions(bool? isApproved,
+                                            CancellationToken cancellationToken);
 
 
 }

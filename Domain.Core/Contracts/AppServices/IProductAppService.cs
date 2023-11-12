@@ -46,6 +46,10 @@ public interface IProductAppService
     Task<List<WageDto>> GetWages(CancellationToken cancellationToken);
 
     Task<int> GetNumberOfProductsForApprove(CancellationToken cancellationToken);
-    
+
+    Task<List<ProductOutputDto>> GetAuctions(bool? isApproved,
+                                            CancellationToken cancellationToken);
+
+
 
 }

@@ -193,4 +193,10 @@ public class ProductAppService : IProductAppService
     {
         return await _productService.GetWageNumbers(cancellationToken);
     }
+
+    public async Task<List<ProductOutputDto>> GetAuctions(bool? isApproved,
+                                            CancellationToken cancellationToken)
+    {
+        return await _productService.GetAuctions(isApproved, cancellationToken);
+    }
 }

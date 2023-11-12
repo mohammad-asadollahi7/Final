@@ -32,7 +32,7 @@ public class ProductController : BaseController
 
 
     [HttpGet("GetAuctionProductById/{productId}")]
-    public async Task<IActionResult> GetAuctionProductById(int productId,[FromQuery] bool? isApproved,
+    public async Task<IActionResult> GetAuctionProductById(int productId, [FromQuery] bool? isApproved,
                                                            CancellationToken cancellationToken)
     {
         var product = await _productAppService.GetAuctionProductById(productId, isApproved, cancellationToken);
@@ -172,6 +172,17 @@ public class ProductController : BaseController
     {
         var numberOfWages = await _productAppService.GetWageNumbers(cancellationToken);
         return Ok(numberOfWages);
+    }
+
+
+
+    [HttpGet("GetAuctions")]
+    //[HaveAccess(Role.Admin, Role.Customer)]
+    public async Task<IActionResult> GetAuctions(CancellationToken cancellationToken,
+                                                [FromQuery] bool? isApproved)
+    {
+        var products = await _productAppService.GetAuctions(isApproved, cancellationToken);
+        return Ok(products);
     }
 }
 

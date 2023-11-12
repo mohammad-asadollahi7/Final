@@ -7,6 +7,7 @@ namespace Domain.Core.Contracts.Repos;
 
 public interface IProductRepository
 {
+    Task<List<ProductOutputDto>> GetAuctions(bool? isApproved, CancellationToken cancellationToken);
     Task<ProductDetailsDto?> GetNonAuctionProductById(int productId, bool? isApproved,
                                                       CancellationToken cancellationToken);
 

@@ -418,5 +418,22 @@ public class ProductRepository : IProductRepository
     {
         return await _context.Wages.CountAsync(cancellationToken);
     }
+
+    public async Task<List<ProductOutputDto>> GetAuctions(bool? isApproved,
+                                            CancellationToken cancellationToken)
+    {
+        return await _context.Products.Where(p => p.IsDeleted == false
+                                && p.IsApproved == isApproved
+                                && p.SellType == SellType.Auction)
+                                .Select(p => new ProductOutputDto()
+                                {
+                                    Id = p.Id,
+                                    BoothTitle = p.Booth.Title,
+                                    MainPicturePath = p.ProductPictures.Select(p => p.Picture.Name).First(),
+                                    PersianTitle = p.PersianTitle,
+                                    Price = p.AuctionOrders.Select(p => p.Price).Max(),
+                                    SellType = SellType.Auction,
+                                }).ToListAsync(cancellationToken);
+    }
 }
 
