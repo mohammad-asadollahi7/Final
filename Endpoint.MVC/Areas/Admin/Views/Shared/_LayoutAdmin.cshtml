@@ -272,7 +272,7 @@
                                     <p>محصولات در انتظار تایید</p>
                                 </div>
                                 <div class="icon">
-                                    <i  class="ion ion-bag"></i>
+                                    <i class="ion ion-bag"></i>
                                 </div>
                                 <a asp-area="admin" asp-action="GetProductsForApprove" class="small-box-footer">نمایش <i class="fa fa-arrow-circle-left"></i></a>
                             </div>
@@ -282,7 +282,7 @@
                             <!-- small box -->
                             <div class="small-box bg-success">
                                 <div class="inner">
-                                    <h3><sup style="font-size: 20px"></sup></h3>
+                                    <h4 id="comment_number"></h4>
 
                                     <p>نظرات در انتظار تایید</p>
                                 </div>
@@ -399,17 +399,13 @@
                     alert(JSON.stringify(error.responseText));
                 }
             })
-        };
-
-
-        window.onload = function () {
             $.ajax({
 
-                url: `http://localhost:5153/api/Product/`,
+                url: `http://localhost:5153/api/Product/GetNumberOfCommentsForApprove`,
                 type: 'get',
                 dataType: 'json',
                 success: function (response) {
-                    var num_tag = document.getElementById('product_number');
+                    var num_tag = document.getElementById('comment_number');
                     num_tag.innerHTML = response;
                 },
                 error: function (error) {
@@ -417,7 +413,9 @@
                     alert(JSON.stringify(error.responseText));
                 }
             })
+
         };
+
 
 
 

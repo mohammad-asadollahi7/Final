@@ -156,5 +156,14 @@ public class ProductController : BaseController
         var number = await _productAppService.GetNumberOfProductsForApprove(cancellationToken);
         return Ok(number);
     }
+
+
+    [HttpGet("GetNumberOfCommentsForApprove")]
+    //[HaveAccess(Role.Admin)]
+    public async Task<IActionResult> GetNumberOfCommentsForApprove(CancellationToken cancellationToken)
+    {
+        var number = await _commentAppService.GetNumberOfCommentsForApprove(cancellationToken);
+        return Ok(number);
+    }
 }
 

@@ -9,5 +9,6 @@ public interface ICommentAppService
 
     Task ApproveComment(int id, bool isApproved, CancellationToken cancellationToken);
 
+    Task<int> GetNumberOfCommentsForApprove(CancellationToken cancellationToken);
 
 }

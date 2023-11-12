@@ -39,4 +39,9 @@ public class CommentRepository : ICommentRepository
     {
         return await _context.Comments.AnyAsync(c => c.Id == id);
     }
+
+    public async Task<int> GetNumberOfCommentsForApprove(CancellationToken cancellationToken)
+    {
+        return await _context.Comments.Where(c => c.IsApproved == null).CountAsync(cancellationToken);
+    }
 }

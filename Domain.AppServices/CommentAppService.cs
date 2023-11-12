@@ -25,4 +25,8 @@ public class CommentAppService : ICommentAppService
         await _commentService.ApproveComment(id, isApproved, cancellationToken);
     }
 
+    public async Task<int> GetNumberOfCommentsForApprove(CancellationToken cancellationToken)
+    {
+        return await _commentService.GetNumberOfCommentsForApprove(cancellationToken);
+    }
 }

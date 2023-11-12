@@ -34,4 +34,9 @@ public class CommentService : ICommentService
         if (!isExist)
             throw new AppException(ExpMessage.HaveNotComment, ExpStatusCode.NotFound);
     }
+
+    public async Task<int> GetNumberOfCommentsForApprove(CancellationToken cancellationToken)
+    {
+        return await _commentRepository.GetNumberOfCommentsForApprove(cancellationToken);
+    }
 }
