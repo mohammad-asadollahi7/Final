@@ -87,7 +87,7 @@
 </main>
 <div class="m-2 text-center">
     <a class="btn btn-primary" asp-area="admin" asp-action="updateAuctionById" asp-controller="product" asp-route-id="@Model.Id">بروزرسانی</a>
-    <a class="btn btn-danger" asp-area="admin" asp-action="delete" asp-controller="booth" asp-route-productId="@Model.Id" asp-route-title="@Model.BoothTitle">حذف</a>
+    <a class="btn btn-danger" asp-area="admin" asp-action="deleteAuction" asp-controller="product" asp-route-productId="@Model.Id">حذف</a>
 </div>
 
 

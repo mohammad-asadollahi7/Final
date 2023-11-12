@@ -276,9 +276,19 @@ public class ProductController : AdminBaseController
         if (!httpResponseMessage.IsSuccessStatusCode)
             return RedirectToErrorPage(httpResponseMessage);
 
-        return RedirectToAction("GetAuctions");
+        return RedirectToAction(nameof(GetAuctions));
     }
 
+    public async Task<IActionResult> DeleteAuction(int productId,
+                                                  CancellationToken cancellationToken)
+    {
+        var httpResponseMessage = await SendDeleteRequest($"product/remove/{productId}",
+                                                          cancellationToken);
+        if (!httpResponseMessage.IsSuccessStatusCode)
+            return RedirectToErrorPage(httpResponseMessage);
+
+        return RedirectToAction(nameof(GetAuctions));
+    }
 
 
 
