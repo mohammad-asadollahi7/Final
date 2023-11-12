@@ -3,10 +3,10 @@
 
 <div class="container border rounded-2 p-2 my-2">
 
-    <form method="post" asp-area="admin" asp-controller="product" asp-action="update" class="form">
+    <form method="post" asp-area="admin" asp-controller="product" asp-action="updates" class="form">
         
         <input type="hidden" class="form-control" asp-for="@Model.Id" />
-        <input type="hidden" class="form-control" asp-for="@Model.BoothTitle" />
+        <input type="hidden" class="form-control" asp-for="@Model.CategoryId" />
 
         <label class="form-label">عنوان فارسی</label>
         <input type="text" required class="form-control" asp-for="@Model.PersianTitle" />

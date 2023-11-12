@@ -204,10 +204,10 @@ public class ProductController : AdminBaseController
 
 
 
-    [HttpPost("Update")]
+    [HttpPost("Updates")]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Update(UpdateProductDto updateProductDto,
-                                                     CancellationToken cancellationToken)
+    public async Task<IActionResult> Updates(UpdateProductDto updateProductDto,
+                                            CancellationToken cancellationToken)
     {
         var httpResponseMessage = await SendPutRequest($"Product/UpdateNonAuction/{updateProductDto.Id}",
                                                       JsonConvert.SerializeObject(updateProductDto),
