@@ -28,6 +28,7 @@ public class ProductRepository : IProductRepository
                                                        EnglishTitle = p.EnglishTitle,
                                                        Description = p.Description,
                                                        SellType = p.SellType,
+                                                       BoothTitle = p.Booth.Title,
                                                        Price = p.NonAuctionPrice.Price,
                                                        DiscountPercent = p.NonAuctionPrice.Discount,
                                                        BoothId = p.BoothId,

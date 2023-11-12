@@ -50,8 +50,9 @@ public class ProductController : BaseController
     }
 
 
-    public async Task<IActionResult> GetProductById(int productId, SellType sellType,
-                                                           CancellationToken cancellationToken)
+    public async Task<IActionResult> GetProductById(int productId, SellType sellType, 
+                                                CancellationToken cancellationToken, 
+                                                bool? isApproved = null)
     {
         string url;
         if (sellType == SellType.NonAuction)
@@ -113,27 +114,20 @@ public class ProductController : BaseController
         return RedirectToAction(nameof(GetCommentsForApprove));
     }
 
-    
 
-    //public async Task<IActionResult> GetAuctionProducts(CancellationToken cancellationToken)
-    //{
+    public async Task<IActionResult> Delete(int productId,
+                                            CancellationToken cancellationToken)
+    {
+        var httpResponseMessage = await SendDeleteRequest($"product/remove/{productId}",
+                                                          cancellationToken);
+        if (!httpResponseMessage.IsSuccessStatusCode)
+            return RedirectToErrorPage(httpResponseMessage);
 
-    //}
+        return RedirectToAction("");
+    }
 
-    //public async Task<IActionResult> GetNonAuctionProducts(CancellationToken cancellationToken)
-    //{
+   
 
-    //}
-
-    //public async Task<IActionResult> UpdateProduct(CancellationToken cancellationToken)
-    //{
-
-    //}
-
-    //public async Task<IActionResult> DeleteProduct(int productId, CancellationToken cancellationToken)
-    //{
-
-    //}
 
     //public async Task<IActionResult> GetWages()
     //{
@@ -214,56 +208,47 @@ public class ProductController : BaseController
 
 
 
-    [HttpGet("Update/{productId}")]
-    public async Task<IActionResult> Update(int productId,
-                                            CancellationToken cancellationToken)
-    {
-        var httpResponseMessage = await SendGetRequest($"Product/GetById/{productId}",
-                                                        cancellationToken);
-        if (!httpResponseMessage.IsSuccessStatusCode)
-            return RedirectToErrorPage(httpResponseMessage);
+    //[HttpGet("Update/{productId}")]
+    //public async Task<IActionResult> Update(int productId,
+    //                                        CancellationToken cancellationToken)
+    //{
+    //    var httpResponseMessage = await SendGetRequest($"Product/GetById/{productId}",
+    //                                                    cancellationToken);
+    //    if (!httpResponseMessage.IsSuccessStatusCode)
+    //        return RedirectToErrorPage(httpResponseMessage);
 
-        var product = await httpResponseMessage.Content.ReadFromJsonAsync<ProductDetailsDto>();
-        var updateProductDto = new UpdateProductDto()
-        {
-            Id = product.Id,
-            Description = product.Description,
-            PersianTitle = product.PersianTitle,
-            EnglishTitle = product.EnglishTitle,
-            CustomAttributes = product.CustomAttributes
-        };
-
-
-        return View(updateProductDto);
-    }
+    //    var product = await httpResponseMessage.Content.ReadFromJsonAsync<ProductDetailsDto>();
+    //    var updateProductDto = new UpdateProductDto()
+    //    {
+    //        Id = product.Id,
+    //        Description = product.Description,
+    //        PersianTitle = product.PersianTitle,
+    //        EnglishTitle = product.EnglishTitle,
+    //        CustomAttributes = product.CustomAttributes
+    //    };
 
 
-    [HttpPost("Update/{productId}")]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Update(int productId,
-                                            UpdateProductDto productDto,
-                                            CancellationToken cancellationToken)
-    {
-        var httpResponseMessage = await SendPutRequest($"Product/Update/{productId}",
-                                                       JsonConvert.SerializeObject(productDto),
-                                                       cancellationToken);
-        if (!httpResponseMessage.IsSuccessStatusCode)
-            return RedirectToErrorPage(httpResponseMessage);
-
-        return RedirectToAction("GetAllByCategoryId");
-    }
+    //    return View(updateProductDto);
+    //}
 
 
-    public async Task<IActionResult> Delete(int productId,
-                                            CancellationToken cancellationToken)
-    {
-        var httpResponseMessage = await SendDeleteRequest($"product/remove/{productId}",
-                                                          cancellationToken);
-        if (!httpResponseMessage.IsSuccessStatusCode)
-            return RedirectToErrorPage(httpResponseMessage);
+    //[HttpPost("Update/{productId}")]
+    //[ValidateAntiForgeryToken]
+    //public async Task<IActionResult> Update(int productId,
+    //                                        UpdateProductDto productDto,
+    //                                        CancellationToken cancellationToken)
+    //{
+    //    var httpResponseMessage = await SendPutRequest($"Product/Update/{productId}",
+    //                                                   JsonConvert.SerializeObject(productDto),
+    //                                                   cancellationToken);
+    //    if (!httpResponseMessage.IsSuccessStatusCode)
+    //        return RedirectToErrorPage(httpResponseMessage);
 
-        return RedirectToAction("GetAllByCategoryId");
-    }
+    //    return RedirectToAction("GetAllByCategoryId");
+    //}
+
+
+  
 
 }
 

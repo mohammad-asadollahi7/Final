@@ -16,6 +16,7 @@ public class ProductDetailsDto
     public int? DiscountPercent { get; set; }
 
     public decimal Price { get; set; }
+    public string BoothTitle { get; set; }
 
     public List<CustomAttributeDto> CustomAttributes { get; set; }
 

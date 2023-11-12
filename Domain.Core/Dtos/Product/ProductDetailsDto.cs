@@ -1,5 +1,6 @@
 ﻿using Domain.Core.Dtos.Products;
 using Domain.Core.Enums;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Domain.Core.Dtos.Product;
 
@@ -17,6 +18,7 @@ public class ProductDetailsDto
 
     public int? DiscountPercent { get; set; }
     public SellType SellType { get; set; }
+    public string BoothTitle { get; set; }
 
     public int BoothId { get; set; }
 

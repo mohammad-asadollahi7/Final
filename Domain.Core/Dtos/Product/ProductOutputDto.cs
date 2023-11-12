@@ -1,4 +1,6 @@
 ﻿
+using Domain.Core.Enums;
+
 namespace Domain.Core.Dtos.Product;
 
 public class ProductOutputDto
@@ -10,6 +12,7 @@ public class ProductOutputDto
     public decimal Price { get; set; }
 
     public int DiscountPercent { get; set; }
+    public SellType SellType { get; set; }
 
     public string BoothTitle { get; set; }
 

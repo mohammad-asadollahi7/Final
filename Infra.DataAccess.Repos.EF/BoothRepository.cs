@@ -37,7 +37,9 @@ public class BoothRepository : IBoothRepository
     public async Task<List<ProductOutputDto>> GetNonAuctionsByBoothTitle(string title,
                                                             CancellationToken cancellationToken)
     {
-        return await _context.Products.Where(p => p.Booth.Title == title)
+        return await _context.Products.Where(p => p.Booth.Title == title 
+                                        && p.SellType == SellType.NonAuction
+                                        && p.IsDeleted == false)
                                          .Select(p => new ProductOutputDto()
                                          {
                                              Id = p.Id,
@@ -45,6 +47,7 @@ public class BoothRepository : IBoothRepository
                                              DiscountPercent = p.NonAuctionPrice.Discount,
                                              Price = p.NonAuctionPrice.Price,
                                              BoothTitle = p.Booth.Title,
+                                             SellType = p.SellType,
                                              MainPicturePath = p.ProductPictures
                                                                .Select(p => p.Picture.Name).First(),
                                          }).AsNoTracking()

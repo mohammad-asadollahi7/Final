@@ -1,0 +1,129 @@
+﻿body {
+}
+.paragraph-style {
+    height: 3.5rem;
+    overflow: hidden;
+    padding: 5px;
+    text-align: justify;
+    margin: 10px 5px;
+    font-size: 95%;
+    cursor: pointer;
+}
+
+    .paragraph-style:hover {
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 3px;
+        background-color: lightcyan;
+    }
+
+.paragraph-style2 {
+    overflow: auto;
+    text-align: justify;
+    margin: 10px 5px;
+    font-size: 95%;
+}
+
+.picture-style {
+    width: 13rem;
+    height: 10rem;
+}
+
+.detail-pic-style {
+    width: 22rem;
+    height: 18rem;
+}
+
+.title {
+    font-size: 14px;
+}
+
+
+.cursor-pointer:hover {
+    -webkit-box-shadow: 0 0 5px;
+    box-shadow: 0 0 5px;
+}
+
+.max-width {
+    width: 15rem;
+    height: 17rem;
+}
+
+.remove-dafault, .remove-dafault:hover {
+    text-decoration: none !important;
+    text-decoration-color: none !important;
+    color: inherit;
+    font-family: inherit;
+}
+
+.bg-color {
+    background-color: lightgrey;
+    border-radius: 5px;
+}
+
+
+ol, ul {
+    list-style-type: none;
+    padding: 0px 10px 0px 0px;
+}
+
+#popup-window {
+    position: fixed;
+    max-width: 40rem;
+    height: 35rem;
+    overflow: auto;
+    background: white;
+    border: 1px solid black;
+    padding: 10px;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+    display: none;
+}
+
+
+
+
+
+.my-buttom {
+    background-color: rgb(211, 191, 191);
+    flex: 100%;
+    margin: 0.25rem;
+}
+
+.icons {
+    border: none;
+    background-color: white;
+    padding: 0;
+}
+
+.link {
+    text-decoration: none;
+    color: rgba(103, 103, 144, 0.9);
+}
+
+.main {
+    min-width: 300px;
+    max-width: 400px;
+    margin: 2rem auto 0;
+}
+
+
+.small-pic {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 5px;
+}
+
+
+@media(max-width:700px) {
+    .hide {
+        display: none;
+    }
+}
+
+.mt {
+    margin-top: 5rem;
+}
