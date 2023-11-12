@@ -9,6 +9,8 @@ namespace Domain.Core.Contracts.AppServices;
 
 public interface IProductAppService
 {
+    Task<int> GetWageNumbers(CancellationToken cancellationToken);
+
     Task<List<ProductOutputDto>> GetNonAuctionsByCategoryId(int categoryId,
                                                     CancellationToken cancellationToken);
 

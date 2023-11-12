@@ -165,5 +165,14 @@ public class ProductController : BaseController
         var number = await _commentAppService.GetNumberOfCommentsForApprove(cancellationToken);
         return Ok(number);
     }
+
+
+    [HttpGet("GetWageNumbers")]
+    //[HaveAccess(Role.Admin)]
+    public async Task<IActionResult> GetWageNumbers(CancellationToken cancellationToken)
+    {
+        var numberOfWages = await _productAppService.GetWageNumbers(cancellationToken);
+        return Ok(numberOfWages);
+    }
 }
 

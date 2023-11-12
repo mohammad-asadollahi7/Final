@@ -282,4 +282,9 @@ public class ProductService : IProductService
     {
         return await _productRepository.GetNumberOfProductsForApprove(cancellationToken);
     }
+
+    public async Task<int> GetWageNumbers(CancellationToken cancellationToken)
+    {
+       return await _productRepository.GetWageNumbers(cancellationToken);
+    }
 }

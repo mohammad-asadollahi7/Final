@@ -312,7 +312,7 @@
                             <!-- small box -->
                             <div class="small-box bg-danger">
                                 <div class="inner">
-                                    <h3></h3>
+                                    <h4 id="wage_number"></h4>
 
                                     <p>مشاهده کارمزدها</p>
                                 </div>
@@ -430,12 +430,29 @@
                 }
             })
 
+
+
+            $.ajax({
+
+                url: `http://localhost:5153/api/Product/GetWageNumbers`,
+                type: 'get',
+                dataType: 'json',
+                success: function (response) {
+                    var num_tag = document.getElementById('wage_number');
+                    num_tag.innerHTML = response;
+                },
+                error: function (error) {
+
+                    alert(JSON.stringify(error.responseText));
+                }
+            })
+
         };
 
 
 
 
-
+        
 
 
 

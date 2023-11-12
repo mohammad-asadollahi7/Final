@@ -411,5 +411,10 @@ public class ProductRepository : IProductRepository
     {
         return await _context.Products.Where(p => p.IsApproved == null).CountAsync(cancellationToken);
     }
+
+    public async Task<int> GetWageNumbers(CancellationToken cancellationToken)
+    {
+        return await _context.Wages.CountAsync(cancellationToken);
+    }
 }
 
