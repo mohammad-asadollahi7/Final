@@ -21,7 +21,6 @@ public class ProductController : BaseController
         _commentAppService = commentAppService;
     }
 
-
     [HttpGet("GetNonAuctionsByCategoryId/{categoryId}")]
     [AllowAnonymous]
     public async Task<IActionResult> GetNonAuctionsByCategoryId(int categoryId,

@@ -95,6 +95,8 @@ public class BoothController : AdminBaseController
             Price = productDetails.Price,
             Discount = productDetails.DiscountPercent??0,
             BoothTitle = productDetails.BoothTitle,
+            CategoryId = productDetails.CategoryId,
+            
         };
         return View(updateProductDto);
     }
@@ -113,7 +115,7 @@ public class BoothController : AdminBaseController
             return RedirectToErrorPage(httpResponseMessage);
 
         return RedirectToAction(nameof(GetNonAuctionProducts), 
-                                new { title = updateProductDto.BoothTitle });
+                                new { title = updateProductDto.CategoryId });
     }
 
 }

@@ -10,6 +10,7 @@ public class UpdateProductDto
 
     public string Description { get; set; }
     public  string BoothTitle { get; set; }
+    public int CategoryId { get; set; }
     public int Discount { get; set; }
     public decimal Price { get; set; }
     public List<CustomAttributeDto> CustomAttributes { get; set; }
