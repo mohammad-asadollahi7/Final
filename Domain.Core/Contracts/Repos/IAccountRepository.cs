@@ -27,6 +27,7 @@ public interface IAccountRepository
 
     Task<List<UserOutputDto>> GetUsers(CancellationToken cancellationToken);
 
+    Task<int> GetUsersNumber(CancellationToken cancellationToken);
     Task DeleteUser(int userId, CancellationToken cancellationToken);
 
     Task<bool> IsUserExistById(int userId, CancellationToken cancellationToken);

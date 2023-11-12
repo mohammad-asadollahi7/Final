@@ -18,7 +18,7 @@ namespace Endpoint.MVC.Areas.Admin.Controllers;
 
 
 [Area("Admin")]
-public class ProductController : BaseController
+public class ProductController : AdminBaseController
 {
     private readonly IHostingEnvironment _hostingEnvironment;
 

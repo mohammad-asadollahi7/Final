@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Endpoint.MVC.Areas.Admin.Controllers;
 
 [Area("Admin")]
-public class AccountController : BaseController
+public class AccountController : AdminBaseController
 {
     public AccountController(IHttpClientFactory httpClientFactory) 
                                             : base(httpClientFactory)

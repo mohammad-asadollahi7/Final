@@ -289,7 +289,7 @@
                                 <div class="icon">
                                     <i class="ion ion-stats-bars"></i>
                                 </div>
-                                <a asp-area="admin" asp-action="GetCommentsForApprove" class="small-box-footer">نمایش <i class="fa fa-arrow-circle-left"></i></a>
+                                <a asp-area="admin" asp-controller="product" asp-action="GetCommentsForApprove" class="small-box-footer">نمایش <i class="fa fa-arrow-circle-left"></i></a>
                             </div>
                         </div>
                         <!-- ./col -->
@@ -297,7 +297,7 @@
                             <!-- small box -->
                             <div class="small-box bg-warning">
                                 <div class="inner">
-                                    <h3></h3>
+                                    <h4 id="user_number"></h4>
 
                                     <p>کاربران ثبت شده</p>
                                 </div>
@@ -399,6 +399,7 @@
                     alert(JSON.stringify(error.responseText));
                 }
             })
+
             $.ajax({
 
                 url: `http://localhost:5153/api/Product/GetNumberOfCommentsForApprove`,
@@ -406,6 +407,21 @@
                 dataType: 'json',
                 success: function (response) {
                     var num_tag = document.getElementById('comment_number');
+                    num_tag.innerHTML = response;
+                },
+                error: function (error) {
+
+                    alert(JSON.stringify(error.responseText));
+                }
+            })
+
+              $.ajax({
+
+                url: `http://localhost:5153/api/Account/GetUsersNumber`,
+                type: 'get',
+                dataType: 'json',
+                success: function (response) {
+                    var num_tag = document.getElementById('user_number');
                     num_tag.innerHTML = response;
                 },
                 error: function (error) {

@@ -10,7 +10,8 @@ namespace Domain.AppServices;
 public class AccountAppService : IAccountAppService
 {
     private readonly IAccountService _accountService;
-    public AccountAppService(IAccountService accountService) => _accountService = accountService;
+    public AccountAppService(IAccountService accountService) =>
+                                _accountService = accountService;
 
     public async Task<string> Login(string username,
                                     string password,
@@ -57,5 +58,10 @@ public class AccountAppService : IAccountAppService
     {
         await _accountService.EnsureUserExist(userId, cancellationToken);
         await _accountService.DeleteUser(userId, role, cancellationToken);
+    }
+
+    public async Task<int> GetUsersNumber(CancellationToken cancellationToken)
+    {
+        return await _accountService.GetUsersNumber(cancellationToken);
     }
 }

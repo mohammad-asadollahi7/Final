@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 namespace Endpoint.MVC.Areas.Admin.Controllers;
 
 [Area("Admin")]
-public class BoothController : BaseController
+public class BoothController : AdminBaseController
 {
     public BoothController(IHttpClientFactory httpClientFactory) 
                             : base(httpClientFactory){ }

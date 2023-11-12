@@ -99,5 +99,8 @@ public class AccountRepository : IAccountRepository
         return await _userManager.Users.AnyAsync(u => u.Id == userId, cancellationToken);
     }
 
-
+    public async Task<int> GetUsersNumber(CancellationToken cancellationToken)
+    {
+       return await _userManager.Users.Where(u => u.Admin == null).CountAsync(cancellationToken);
+    }
 }

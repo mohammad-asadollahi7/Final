@@ -210,4 +210,9 @@ public class AccountService : IAccountService
             throw new AppException(ExpMessage.NotFoundUser, ExpStatusCode.NotFound);
     }
 
+    public async Task<int> GetUsersNumber(CancellationToken cancellationToken)
+    {
+        return await _accountRepository.GetUsersNumber(cancellationToken);
+    }
+
 }

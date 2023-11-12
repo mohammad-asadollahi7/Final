@@ -68,4 +68,13 @@ public class AccountController : BaseController
          await _accountAppService.DeleteUser(userId, role, cancellationToken);
         return Ok();
     }
+
+
+    [HttpGet("GetUsersNumber")]
+    //[HaveAccess(Role.Admin)]
+    public async Task<IActionResult> GetUsersNumber(CancellationToken cancellationToken)
+    {
+        var numberOfUsers = await _accountAppService.GetUsersNumber(cancellationToken);
+        return Ok(numberOfUsers);
+    }
 }

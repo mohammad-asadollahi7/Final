@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Endpoint.MVC.Areas.Admin.Controllers;
 
-public class HomeController : BaseController
+public class HomeController : AdminBaseController
 {
     public HomeController(IHttpClientFactory httpClientFactory)
         : base(httpClientFactory)

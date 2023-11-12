@@ -23,4 +23,7 @@ public interface IAccountAppService
     Task DeleteUser(int userId, Role role,
                       CancellationToken cancellationToken);
 
+    Task<int> GetUsersNumber(CancellationToken cancellationToken);
+
+
 }
