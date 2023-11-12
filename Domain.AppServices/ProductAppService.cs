@@ -183,4 +183,9 @@ public class ProductAppService : IProductAppService
     {
        return await _productService.GetWages(cancellationToken);
     }
+
+    public async Task<int> GetNumberOfProductsForApprove(CancellationToken cancellationToken)
+    {
+        return await _productService.GetNumberOfProductsForApprove(cancellationToken);
+    }
 }

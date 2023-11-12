@@ -91,4 +91,7 @@ public interface IProductService
                                 CancellationToken cancellationToken);
 
     Task<List<WageDto>> GetWages(CancellationToken cancellationToken);
+
+    Task<int> GetNumberOfProductsForApprove(CancellationToken cancellationToken);
+
 }

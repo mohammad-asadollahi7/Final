@@ -22,13 +22,5 @@ namespace Endpoint.MVC.Controllers
         {
             return View();
         }
-
-
-        [HttpGet("Error")]
-        public IActionResult Error()
-        {
-            ViewData["ErrorMessage"] = TempData["ErrorMessage"];
-            return View();
-        }
     }
 }

@@ -406,5 +406,10 @@ public class ProductRepository : IProductRepository
                                  }).ToListAsync(cancellationToken);
        
     }
+
+    public async Task<int> GetNumberOfProductsForApprove(CancellationToken cancellationToken)
+    {
+        return await _context.Products.Where(p => p.IsApproved == null).CountAsync(cancellationToken);
+    }
 }
 
