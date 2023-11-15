@@ -61,7 +61,8 @@ public class BoothController : BaseController
 
     [HttpDelete("Delete/boothId")]
     //[HaveAccess(Role.Seller, Role.Admin)]
-    public async Task<IActionResult> Delete(int boothId, CancellationToken cancellationToken)
+    public async Task<IActionResult> Delete(int boothId, 
+                                        CancellationToken cancellationToken)
     {
         await _boothAppService.Delete(boothId, cancellationToken);
         return Ok();    
@@ -86,5 +87,16 @@ public class BoothController : BaseController
         return Ok(booth);
     }
 
-   
+
+    [HttpGet("GetNonAuctionsBySellerId")]
+    //[HaveAccess(Role.Seller)]
+    public async Task<IActionResult> GetNonAuctionsBySellerId(CancellationToken cancellationToken)
+    {
+        var products = await _boothAppService.GetNonAuctionsBySellerId(CurrentUserId, 
+                                                                       cancellationToken);
+        return Ok(products);
+    }
+
+
+
 }

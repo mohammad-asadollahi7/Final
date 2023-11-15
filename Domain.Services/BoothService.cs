@@ -144,4 +144,15 @@ public class BoothService : IBoothService
 
         return booth;
     }
+
+    public async Task<List<ProductOutputDto>> GetNonAuctionsBySellerId(int id, 
+                                            CancellationToken cancellationToken)
+    {
+        var products = await _boothRepository.GetNonAuctionsBySellerId(id, cancellationToken);
+        if(products.Count() == 0)
+            throw new AppException(ExpMessage.HaveNotProduct,
+                                  ExpStatusCode.NotFound);
+
+        return products;
+    }
 }

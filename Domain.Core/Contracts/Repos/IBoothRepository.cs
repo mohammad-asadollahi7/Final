@@ -38,4 +38,6 @@ public interface IBoothRepository
                              CancellationToken cancellationToken);
     Task<BoothDto?> GetByTitle(string title, CancellationToken cancellationToken);
 
+    Task<List<ProductOutputDto>> GetNonAuctionsBySellerId(int id, CancellationToken cancellationToken);
+
 }

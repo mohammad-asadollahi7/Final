@@ -1,0 +1,33 @@
+﻿@model List<Endpoint.MVC.Dtos.Products.ProductOutputDto>
+
+
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">محصولات غرفه</h3>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body p-0">
+        <table class="table table-condensed">
+            <tr>
+                <th>کد</th>
+                <th>عنوان محصول</th>
+                <th>قیمت</th>
+                <th>تصویر</th>
+                <th>جزئیات بیشتر</th>
+            </tr>
+
+            @foreach (var product in Model)
+            {
+
+                <tr>
+                    <td>@product.Id</td>
+                    <td>@product.PersianTitle</td>
+                    <td>@product.Price</td>
+                    <td> <img style="width:35px;" src="~/img/@product.PicturesPath" /> </td>
+                    <td> <a class="btn" asp-area="seller" asp-action="" asp-route-productId="@product.Id" asp-route-sellType="@product.SellType"> <img src="~/icon/details.png">  </a> </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>    

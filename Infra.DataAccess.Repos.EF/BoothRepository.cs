@@ -37,7 +37,7 @@ public class BoothRepository : IBoothRepository
     public async Task<List<ProductOutputDto>> GetNonAuctionsByBoothTitle(string title,
                                                             CancellationToken cancellationToken)
     {
-        return await _context.Products.Where(p => p.Booth.Title == title 
+        return await _context.Products.Where(p => p.Booth.Title == title
                                         && p.SellType == SellType.NonAuction
                                         && p.IsDeleted == false)
                                          .Select(p => new ProductOutputDto()
@@ -48,8 +48,7 @@ public class BoothRepository : IBoothRepository
                                              Price = p.NonAuctionPrice.Price,
                                              BoothTitle = p.Booth.Title,
                                              SellType = p.SellType,
-                                             MainPicturePath = p.ProductPictures
-                                                               .Select(p => p.Picture.Name).First(),
+                                             PicturesPath = p.ProductPictures.Select(p => p.Picture.Name).First(),
                                          }).AsNoTracking()
                                          .ToListAsync(cancellationToken);
     }
@@ -110,7 +109,7 @@ public class BoothRepository : IBoothRepository
                             .ThenInclude(b => b.Picture)
                             .FirstOrDefaultAsync(cancellationToken);
 
-        booth.BoothPicture.Picture.Name = boothDto.PictureName; 
+        booth.BoothPicture.Picture.Name = boothDto.PictureName;
         booth.Description = boothDto.Description;
         booth.Title = boothDto.Title;
         await _context.SaveChangesAsync(cancellationToken);
@@ -147,19 +146,19 @@ public class BoothRepository : IBoothRepository
 
     public async Task<BoothDto?> GetById(int boothId, CancellationToken cancellationToken)
     {
-         return await _context.Booths.Where(b => b.Id == boothId)
-                                    .Select(b => new BoothDto()
-         {
-             Id = b.Id,
-             Description = b.Description,   
-             PictureName = b.BoothPicture.Picture.Name,
-             Medal = b.Medal,
-             Title = b.Title,
-             Wage = b.Wage
-         }).SingleOrDefaultAsync(cancellationToken);
+        return await _context.Booths.Where(b => b.Id == boothId)
+                                   .Select(b => new BoothDto()
+                                   {
+                                       Id = b.Id,
+                                       Description = b.Description,
+                                       PictureName = b.BoothPicture.Picture.Name,
+                                       Medal = b.Medal,
+                                       Title = b.Title,
+                                       Wage = b.Wage
+                                   }).SingleOrDefaultAsync(cancellationToken);
     }
 
-    public async Task<BoothDto?> GetByTitle(string title, 
+    public async Task<BoothDto?> GetByTitle(string title,
                                     CancellationToken cancellationToken)
     {
         return await _context.Booths
@@ -173,5 +172,23 @@ public class BoothRepository : IBoothRepository
                             Title = b.Title,
                             Wage = b.Wage
                         }).FirstOrDefaultAsync(cancellationToken);
+    }
+
+    public async Task<List<ProductOutputDto>> GetNonAuctionsBySellerId(int id,
+                                                        CancellationToken cancellationToken)
+    {
+       return await _context.Products.Where(p => p.IsDeleted == false && p.IsApproved == true
+                                        && p.Booth.Seller.Id == id && p.SellType == SellType.NonAuction)
+                                        .Select(p => new ProductOutputDto()
+                                        {
+                                            Id = p.Id,
+                                            DiscountPercent = p.NonAuctionPrice.Discount,
+                                            BoothTitle = p.Booth.Title,
+                                            PersianTitle = p.PersianTitle,
+                                            Price = p.NonAuctionPrice.Price,
+                                            SellType = SellType.NonAuction,
+                                            PicturesPath = p.ProductPictures.Select(p => p.Picture.Name).First(),
+                                        }).ToListAsync(cancellationToken);
+
     }
 }

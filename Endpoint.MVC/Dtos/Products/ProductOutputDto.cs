@@ -8,12 +8,10 @@ public class ProductOutputDto
 
     public string PersianTitle { get; set; } = null!;
 
-    public double CalculatedRate { get; set; }
-
     public decimal Price { get; set; }
     public SellType SellType { get; set; }
     public int DiscountPercent { get; set; }
 
-    public string MainPicturePath { get; set; }
+    public string PicturesPath { get; set; }
 
 }

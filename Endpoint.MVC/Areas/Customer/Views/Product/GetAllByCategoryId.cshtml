@@ -9,12 +9,11 @@
         <a class="remove-dafault" asp-area="customer" asp-action="getbyid" asp-controller="product" asp-route-id="@product.Id">
             <div class="max-width py-1 my-2 border border-dark rounded-3 cursor-pointer">
                 <div class="text-center">
-                    <img class="picture-style" src="~/pictures/@product.MainPicturePath" alt="عکس محصول">
+                    <img class="picture-style" src="~/pictures/@product.PicturesPath" alt="عکس محصول">
                 </div>
                 <div>
                     <h5 class="title mt-2 text-center">@product.PersianTitle</h5>
                     <div class="d-flex gap-1 justify-content-around align-items-center">
-                        <div class="fs-7 ms-3 d-flex align-items-center"><img src="~/icons//star.png" />@product.CalculatedRate</div>
                         <div class="fs-7 ms-3 mt-2"><span class="fs-7">تومان</span> @product.Price</div>
                     </div>
 

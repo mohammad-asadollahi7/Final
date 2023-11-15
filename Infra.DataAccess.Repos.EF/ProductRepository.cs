@@ -427,7 +427,7 @@ public class ProductRepository : IProductRepository
                                 {
                                     Id = p.Id,
                                     BoothTitle = p.Booth.Title,
-                                    MainPicturePath = p.ProductPictures.Select(p => p.Picture.Name).First(),
+                                    PicturesPath = p.ProductPictures.Select(p => p.Picture.Name).First(),
                                     PersianTitle = p.PersianTitle,
                                     Price = p.AuctionOrders.Select(p => p.Price).Max(),
                                     SellType = SellType.Auction,

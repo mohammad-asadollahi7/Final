@@ -24,5 +24,7 @@ public interface IBoothAppService
     Task<BoothDto> GetByTitle(string title,
                               CancellationToken cancellationToken);
 
+    Task<List<ProductOutputDto>> GetNonAuctionsBySellerId(int id,
+                                            CancellationToken cancellationToken);
 
 }

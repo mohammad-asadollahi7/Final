@@ -9,7 +9,8 @@ public class HomeController : AdminBaseController
         : base(httpClientFactory)
     { }
 
-    [HttpGet("Error")]
+
+
     public IActionResult Error()
     {
         ViewData["ErrorMessage"] = TempData["ErrorMessage"];

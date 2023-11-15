@@ -3,6 +3,7 @@ using Domain.Core.Contracts.Services;
 using Domain.Core.Dtos.Booth;
 using Domain.Core.Dtos.Product;
 using Domain.Core.Entities;
+using System.Formats.Asn1;
 
 namespace Domain.AppServices;
 
@@ -59,4 +60,9 @@ public class BoothAppService : IBoothAppService
         return await _boothService.GetByTitle(title, cancellationToken);
     }
 
+    public async Task<List<ProductOutputDto>> GetNonAuctionsBySellerId(int id, 
+                                                    CancellationToken cancellationToken)
+    {
+        return await _boothService.GetNonAuctionsBySellerId(id, cancellationToken);
+    }
 }
