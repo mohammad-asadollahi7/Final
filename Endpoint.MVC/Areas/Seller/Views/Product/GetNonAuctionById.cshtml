@@ -1,0 +1,61 @@
+﻿@model Endpoint.MVC.Dtos.Products.ProductDetailsDto
+
+@section GetProductByIdCss{
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+    <link href="~/Admin/ProductDetails/style.css" rel="stylesheet">
+}
+
+
+<main class="container border border-3 rounded-1 p-2">
+
+    <!-- Left Column / Headphones Image -->
+    <div class="left-column text-center rounded-3">
+        @* <img data-image="black" src="images/black.png" alt="">
+        <img data-image="blue" src="images/blue.png" alt="">*@
+        <img data-image="red" class="active" src="~/img/@Model.ProductPictureDto.First().Name" alt="">
+    </div>
+
+
+    <!-- Right Column -->
+    <div class="right-column">
+
+        <!-- Product Description -->
+        <div class="product-description">
+            <span>@Model.EnglishTitle</span>
+            <h4>@Model.PersianTitle</h4>
+            <p>@Model.Description</p>
+            <h7 class="fw-bold">مشخصات:</h7>
+            <ul class="list-group mt-1">
+                @for (int i = 0; i < Model.CustomAttributes.Count(); i++)
+                {
+                    <li class="list-font list-group-item">@Model.CustomAttributes[i].Title : @Model.CustomAttributes[i].Value</li>
+                }
+            </ul>
+        </div>
+
+        <!-- Product Configuration -->
+        <div class="product-configuration">
+           
+
+        </div>
+
+        <!-- Product Pricing -->
+        <div class="product-price">
+            <span>(@Model.DiscountPercent % تخفیف)  @Model.Price تومان</span>
+        </div>
+    </div>
+
+
+</main>
+<div class="m-2 text-center">
+    <a class="btn btn-primary" asp-area="seller" asp-action="updatenonauction" asp-controller="product" asp-route-id="@Model.Id">بروزرسانی</a>
+    <a class="btn btn-danger" asp-area="seller" asp-action="delete" asp-controller="product" asp-route-productId="@Model.Id" asp-route-title="@Model.BoothTitle">حذف</a>
+</div>
+
+
+
+@section GetProductByIdScript{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" charset="utf-8"></script>
+    <script src="~/Admin/ProductDetails/script.js" charset="utf-8"></script>
+    }
+

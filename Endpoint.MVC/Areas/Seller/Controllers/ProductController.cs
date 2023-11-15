@@ -2,6 +2,7 @@
 using Endpoint.MVC.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Endpoint.MVC.Dtos.Products;
+using Newtonsoft.Json;
 
 namespace Endpoint.MVC.Areas.Seller.Controllers;
 
@@ -17,8 +18,6 @@ public class ProductController : SellerBaseController
     {
         _hostingEnvironment = hostingEnvironment;
     }
-
-
 
     public IActionResult Index()
     {
@@ -38,6 +37,64 @@ public class ProductController : SellerBaseController
         var products = await httpResponseMessage.Content
                                               .ReadFromJsonAsync<List<ProductOutputDto>>();
         return View(products);
+    }
+
+    public async Task<IActionResult> GetNonAuctionById(int productId, 
+                                                CancellationToken cancellationToken)
+    {
+        var httpResponseMessage = await SendGetRequest($"Product/GetNonAuctionProductById/{productId}?isApproved=true",
+                                                                       cancellationToken);
+
+        if (!httpResponseMessage.IsSuccessStatusCode)
+            return RedirectToErrorPage(httpResponseMessage);
+
+
+        var product = await httpResponseMessage.Content
+                                              .ReadFromJsonAsync<ProductDetailsDto>();
+        return View(product);
+    }
+
+
+    [HttpGet]
+    public async Task<IActionResult> UpdateNonAuction(int id, CancellationToken cancellationToken)
+    {
+        var httpResponseMessage = await SendGetRequest($"Product/GetNonAuctionProductById/{id}?isApproved=true",
+                                                       cancellationToken);
+
+        if (!httpResponseMessage.IsSuccessStatusCode)
+            return RedirectToErrorPage(httpResponseMessage);
+
+
+        var productDetails = await httpResponseMessage.Content
+                                             .ReadFromJsonAsync<ProductDetailsDto>();
+        var updateProductDto = new UpdateProductDto()
+        {
+            Id = productDetails.Id,
+            CustomAttributes = productDetails.CustomAttributes,
+            Description = productDetails.Description,
+            EnglishTitle = productDetails.EnglishTitle,
+            PersianTitle = productDetails.PersianTitle,
+            Price = productDetails.Price,
+            Discount = productDetails.DiscountPercent ?? 0,
+            BoothTitle = productDetails.BoothTitle,
+            CategoryId = productDetails.CategoryId,
+
+        };
+        return View(updateProductDto);
+    }
+
+
+    [HttpPost]
+    public async Task<IActionResult> UpdateNonAuction(UpdateProductDto updateProductDto,
+                                                      CancellationToken cancellationToken)
+    {
+        var httpResponseMessage = await SendPutRequest($"Product/UpdateNonAuction/{updateProductDto.Id}",
+                                                      JsonConvert.SerializeObject(updateProductDto),
+                                                      cancellationToken);
+        if (!httpResponseMessage.IsSuccessStatusCode)
+            return RedirectToErrorPage(httpResponseMessage);
+
+        return RedirectToAction(nameof(GetNonAuctions));
     }
 
 
