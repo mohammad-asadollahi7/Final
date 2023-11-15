@@ -98,6 +98,16 @@ public class ProductController : SellerBaseController
     }
 
 
+    public async Task<IActionResult> DeleteNonAuction(int productId, 
+                                                 CancellationToken cancellationToken)
+    {
+        var httpResponseMessage = await SendDeleteRequest($"product/remove/{productId}",
+                                                          cancellationToken);
+        if (!httpResponseMessage.IsSuccessStatusCode)
+            return RedirectToErrorPage(httpResponseMessage);
+
+        return RedirectToAction(nameof(GetNonAuctions));
+    }
 
     //public async Task<IActionResult> GetAuctions(CancellationToken cancellationToken)
     //{
