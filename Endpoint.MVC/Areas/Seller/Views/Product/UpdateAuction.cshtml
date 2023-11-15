@@ -1,0 +1,52 @@
+﻿@using Endpoint.MVC.ExtensionMethods;
+@model Endpoint.MVC.Dtos.Products.AuctionDetailsDto
+
+
+<div class="container border rounded-2 p-2 my-2">
+
+    <form method="post" asp-area="seller" asp-controller="product" asp-action="UpdateAuction" class="form">
+
+        <input type="hidden" class="form-control" asp-for="@Model.Id" />
+        <input type="hidden" class="form-control" asp-for="@Model.CategoryId" />
+        <input type="hidden" class="form-control" asp-for="@Model.BoothTitle" />
+        <input type="hidden" class="form-control" asp-for="@Model.PictureName" />
+
+        <label class="form-label">عنوان فارسی</label>
+        <input type="text" required class="form-control" asp-for="@Model.PersianTitle" />
+
+        <label class="mt-4 form-label">عنوان لاتین</label>
+        <input type="text" required class="form-control" asp-for="@Model.EnglishTitle" />
+
+        <label class="mt-4 form-label">زمان شروع</label>
+        <input type="datetime" required class="form-control" asp-for="@Model.FromDate" />
+
+        <label class="mt-4 form-label">زمان پایان</label>
+        <input type="datetime" required class="form-control" asp-for="@Model.ToDate"/>
+
+        <label class="mt-4 form-label">حداقل قیمت قابل پیشنهاد (تومان)</label>
+        <input type="text" required class="form-control" asp-for="@Model.MinPrice" />
+
+        <label class="mt-4 form-label">توضیحات</label>
+        <textarea class="form-control" required asp-for="@Model.Description">@Model.Description</textarea>
+
+        <div class="mt-4">
+            @for (int i = 0; i < Model.CustomAttributes.Count(); i++)
+            {
+                <div class="mt-1">
+                    <input type="hidden" asp-for="@Model.CustomAttributes[i].Id" />
+                    <input type="hidden" asp-for="@Model.CustomAttributes[i].Title" />
+                    <label class="mt-1 form-label">@Model.CustomAttributes[i].Title:  </label>
+                    <input required type="text" class="form-control" asp-for="@Model.CustomAttributes[i].Value" />
+
+                </div>
+            }
+
+        </div>
+
+        <div class="text-center">
+            <button type="submit" class="my-4 btn btn-info">بروزرسانی </button>
+        </div>
+
+
+    </form>
+</div>

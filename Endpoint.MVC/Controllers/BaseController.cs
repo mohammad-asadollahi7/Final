@@ -15,8 +15,8 @@ public class BaseController : Controller
                                                  _httpClientFactory = httpClientFactory;
 
 
-    public async Task<HttpResponseMessage> SendGetRequest(string uri,
-                                                          CancellationToken cancellationToken)
+    public virtual async Task<HttpResponseMessage> SendGetRequest(string uri,
+                                                      CancellationToken cancellationToken)
     {
         var requestMessage = new HttpRequestMessage
         {
@@ -80,16 +80,16 @@ public class BaseController : Controller
     }
 
 
-    public IActionResult RedirectToErrorPage(HttpResponseMessage httpResponseMessage)
+    public virtual IActionResult RedirectToErrorPage(HttpResponseMessage httpResponseMessage)
     {
-        if (httpResponseMessage.StatusCode == HttpStatusCode.Unauthorized)
-            TempData["ErrorMessage"] = "عدم دسترسی به محتوای جاری";
+       // if (httpResponseMessage.StatusCode == HttpStatusCode.Unauthorized)
+         //   TempData["ErrorMessage"] = "عدم دسترسی به محتوای جاری";
 
-        else
-        {
+      //  else
+      //  {
             var errorMessage = httpResponseMessage.Content.ReadAsStringAsync().Result;
             TempData["ErrorMessage"] = errorMessage;
-        }
+       // }
         return RedirectToAction("Error", "Home");
     }
 

@@ -48,6 +48,9 @@ public interface IProductAppService
     Task<List<ProductOutputDto>> GetAuctions(bool? isApproved,
                                             CancellationToken cancellationToken);
 
+    Task<List<ProductOutputDto>> GetAuctionsBySellerId(int id,
+                                           CancellationToken cancellationToken);
+
 
 
 }

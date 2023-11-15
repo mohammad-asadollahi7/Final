@@ -32,12 +32,13 @@ public class ProductController : SellerBaseController
         var httpResponseMessage = await SendGetRequest("Booth/GetNonAuctionsBySellerId",
                                                                        cancellationToken);
 
-        if (!httpResponseMessage.IsSuccessStatusCode)
-            return RedirectToErrorPage(httpResponseMessage);
+          if (!httpResponseMessage.IsSuccessStatusCode)
+             return RedirectToErrorPage(httpResponseMessage);
 
-
-        var products = await httpResponseMessage.Content
+       
+         var products = await httpResponseMessage.Content
                                               .ReadFromJsonAsync<List<ProductOutputDto>>();
+       
         return View(products);
     }
 
@@ -162,10 +163,72 @@ public class ProductController : SellerBaseController
 
 
 
-    //public async Task<IActionResult> GetAuctions(CancellationToken cancellationToken)
-    //{
+    public async Task<IActionResult> GetAuctions(CancellationToken cancellationToken)
+    {
 
-    //}
+        var httpResponseMessage = await SendGetRequest("Booth/GetAuctionsBySellerId",
+                                                                cancellationToken);
+
+       if (!httpResponseMessage.IsSuccessStatusCode)
+            return RedirectToErrorPage(httpResponseMessage);
+
+
+        var products = await httpResponseMessage.Content
+                                            .ReadFromJsonAsync<List<ProductOutputDto>>();
+        return View(products);
+    }
+
+
+
+    public async Task<IActionResult> GetAuctionById(int id, 
+                                                    CancellationToken cancellationToken)
+    {
+        var httpResponseMessage = await SendGetRequest($"Product/GetAuctionProductById/{id}?isApproved=true",
+                                                                            cancellationToken);
+
+        
+        if (!httpResponseMessage.IsSuccessStatusCode)
+            return RedirectToErrorPage(httpResponseMessage);
+
+
+        var product = await httpResponseMessage.Content
+                                         .ReadFromJsonAsync<AuctionDetailsDto>();
+        return View(product);
+    }
+
+
+    [HttpGet]
+    public async Task<IActionResult> UpdateAuction(int id, 
+                                                   CancellationToken cancellationToken)
+    {
+        var httpResponseMessage = await SendGetRequest($"Product/GetAuctionProductById/{id}?isApproved=true",
+                                                       cancellationToken);
+
+        if (!httpResponseMessage.IsSuccessStatusCode)
+            return RedirectToErrorPage(httpResponseMessage);
+
+
+        var productDetails = await httpResponseMessage.Content
+                                             .ReadFromJsonAsync<AuctionDetailsDto>();
+
+        return View(productDetails);
+    }
+
+
+
+    [HttpPost]
+    public async Task<IActionResult> UpdateAuction(AuctionDetailsDto updateProductDto, 
+                                                   CancellationToken cancellationToken)
+    {
+        var httpResponseMessage = await SendPutRequest($"Product/UpdateAuction/{updateProductDto.Id}",
+                                                     JsonConvert.SerializeObject(updateProductDto),
+                                                     cancellationToken);
+        if (!httpResponseMessage.IsSuccessStatusCode)
+            return RedirectToErrorPage(httpResponseMessage);
+
+        return RedirectToAction(nameof(GetAuctions));
+    }
+
 
 
     //[HttpGet]
@@ -182,57 +245,10 @@ public class ProductController : SellerBaseController
     //}
 
 
-
-
-
-
-
-    //public async Task<IActionResult> GetAuctionById(int id, CancellationToken cancellationToken)
-    //{
-
-    //}
-
-
-
-    //public async Task<IActionResult> GetNonAuctionById(int id, CancellationToken cancellationToken)
-    //{
-
-    //}
-
-
-    //[HttpGet]
-    //public async Task<IActionResult> UpdateAuction(int id, CancellationToken cancellationToken)
-    //{
-
-    //}
-
-    //[HttpGet]
-    //public async Task<IActionResult> UpdateAuction(CancellationToken cancellationToken)
-    //{
-
-    //}
-
-
-    //[HttpGet]
-    //public async Task<IActionResult> UpdateNonAuction(int id, CancellationToken cancellationToken)
-    //{
-
-    //}
-
-    //[HttpGet]
-    //public async Task<IActionResult> UpdateNonAuction(CancellationToken cancellationToken)
-    //{
-
-    //}
-
     //public async Task<IActionResult> DeleteAuction(int id, CancellationToken cancellationToken)
     //{
 
     //}
 
-    //public async Task<IActionResult> DeleteNonAuction(int id, CancellationToken cancellationToken)
-    //{
-
-    //}
 
 }

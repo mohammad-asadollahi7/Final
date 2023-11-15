@@ -164,4 +164,15 @@ public class BoothService : IBoothService
            throw new AppException(ExpMessage.NotFoundBooth,
                                   ExpStatusCode.NotFound);
     }
+
+    public async Task<List<ProductOutputDto>> GetAuctionsBySellerId(int id, 
+                                                        CancellationToken cancellationToken)
+    {
+        var products = await _boothRepository.GetAuctionsBySellerId(id, cancellationToken);
+        if (products.Count() == 0)
+            throw new AppException(ExpMessage.HaveNotProduct,
+                                   ExpStatusCode.NotFound);
+
+        return products;
+    }
 }

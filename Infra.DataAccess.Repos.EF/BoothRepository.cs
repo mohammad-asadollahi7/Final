@@ -197,4 +197,19 @@ public class BoothRepository : IBoothRepository
     {
         return await _context.Booths.AnyAsync(b => b.SellerId == sellerId);
     }
+
+    public async Task<List<ProductOutputDto>> GetAuctionsBySellerId(int id, CancellationToken cancellationToken)
+    {
+        return await _context.Products.Where(p => p.IsDeleted == false && p.IsApproved == true
+                                       && p.Booth.Seller.Id == id && p.SellType == SellType.Auction)
+                                       .Select(p => new ProductOutputDto()
+                                       {
+                                           Id = p.Id,
+                                           BoothTitle = p.Booth.Title,
+                                           PersianTitle = p.PersianTitle,
+                                           Price = p.Auction.MinPrice,
+                                           SellType = SellType.NonAuction,
+                                           PicturesPath = p.ProductPictures.Select(p => p.Picture.Name).First(),
+                                       }).ToListAsync(cancellationToken);
+    }
 }

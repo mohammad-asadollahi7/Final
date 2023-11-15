@@ -9,10 +9,9 @@ public class SellerBaseController : BaseController
 {
     public SellerBaseController(IHttpClientFactory httpClientFactory)
                                 : base(httpClientFactory)
-    {
-    }
-
-    public IActionResult RedirectToErrorPage(HttpResponseMessage httpResponseMessage)
+    { }
+  
+    public override IActionResult RedirectToErrorPage(HttpResponseMessage httpResponseMessage)
     {
         if (httpResponseMessage.StatusCode == HttpStatusCode.Unauthorized)
             TempData["ErrorMessage"] = "عدم دسترسی به محتوای جاری";

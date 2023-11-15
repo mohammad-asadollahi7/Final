@@ -1,0 +1,28 @@
+﻿@model List<Endpoint.MVC.Dtos.Products.ProductOutputDto>
+
+
+<div class="container d-flex justify-content-center mt flex-wrap border" style="gap:10px;">
+
+    @foreach (var product in Model)
+    {
+        <a class="remove-dafault" asp-area="seller" asp-controller="product" asp-action="GetAuctionById" asp-route-id="@product.Id">
+            <div style="border-radius:5px" class="max-width py-1 my-2 border border-dark rounded-3 cursor-pointer">
+                <div class="text-center">
+                    <img class="picture-style" src="~/img/@product.PicturesPath" alt="عکس محصول">
+                </div>
+                <div>
+                    <h5 class="title mt-2 text-center">@product.PersianTitle</h5>
+                    <div class="d-flex gap-1 justify-content-around align-items-center">
+                        <div class="fs-7 ms-3 mt-2"> <span class="fs-7">تومان</span> @product.Price</div>
+                    </div>
+
+                </div>
+            </div>
+        </a>
+    }
+</div>
+
+
+@section GetProductByIdCss{
+    <link href="~/Admin/mycss/StyleSheet.css" rel="stylesheet">
+}

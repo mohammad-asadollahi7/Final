@@ -3,6 +3,7 @@ using Domain.Core.Contracts.AppServices;
 using Domain.Core.Contracts.Services;
 using Domain.Core.Dtos.Product;
 using Domain.Core.Dtos.Products;
+using System.Globalization;
 
 namespace Domain.AppServices;
 
@@ -206,5 +207,11 @@ public class ProductAppService : IProductAppService
                                             CancellationToken cancellationToken)
     {
         return await _productService.GetAuctions(isApproved, cancellationToken);
+    }
+
+    public async Task<List<ProductOutputDto>> GetAuctionsBySellerId(int id, 
+                                                            CancellationToken cancellationToken)
+    {
+        return await _boothService.GetAuctionsBySellerId(id, cancellationToken);
     }
 }

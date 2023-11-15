@@ -40,5 +40,6 @@ public interface IBoothRepository
     Task<BoothDto?> GetByTitle(string title, CancellationToken cancellationToken);
 
     Task<List<ProductOutputDto>> GetNonAuctionsBySellerId(int id, CancellationToken cancellationToken);
+    Task<List<ProductOutputDto>> GetAuctionsBySellerId(int id, CancellationToken cancellationToken);
 
 }

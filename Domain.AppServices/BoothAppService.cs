@@ -65,4 +65,11 @@ public class BoothAppService : IBoothAppService
     {
         return await _boothService.GetNonAuctionsBySellerId(id, cancellationToken);
     }
+
+    public async Task<List<ProductOutputDto>> GetAuctionsBySellerId(int id,
+                                                        CancellationToken cancellationToken)
+    {
+        return await _boothService.GetAuctionsBySellerId(id, cancellationToken);
+
+    }
 }

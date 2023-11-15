@@ -48,7 +48,7 @@ public class ProductService : IProductService
     {
         var product = await _productRepository.GetAuctionProductById(productId, isApproved, cancellationToken);
 
-        if (product == null)
+        if (product is null)
             throw new AppException(string.Format(ExpMessage.NotChangedProduct, "پیدا"),
                                    ExpStatusCode.NotFound);
         return product;

@@ -99,4 +99,13 @@ public class BoothController : BaseController
 
 
 
+    [HttpGet("GetAuctionsBySellerId")]
+    //[HaveAccess(Role.Seller)]
+    public async Task<IActionResult> GetAuctionsBySellerId(CancellationToken cancellationToken)
+    {
+        var products = await _boothAppService.GetAuctionsBySellerId(CurrentUserId,
+                                                                    cancellationToken);
+        return Ok(products);
+    }
+
 }
