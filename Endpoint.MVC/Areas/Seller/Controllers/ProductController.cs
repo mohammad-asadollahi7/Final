@@ -231,6 +231,16 @@ public class ProductController : SellerBaseController
 
 
 
+    public async Task<IActionResult> DeleteAuction(int id, CancellationToken cancellationToken)
+    {
+        var httpResponseMessage = await SendDeleteRequest($"product/remove/{id}",
+                                                          cancellationToken);
+        if (!httpResponseMessage.IsSuccessStatusCode)
+            return RedirectToErrorPage(httpResponseMessage);
+
+        return RedirectToAction(nameof(GetAuctions));
+    }
+
     //[HttpGet]
     //public async Task<IActionResult> CreateAuction(CancellationToken cancellationToken)
     //{
@@ -245,10 +255,7 @@ public class ProductController : SellerBaseController
     //}
 
 
-    //public async Task<IActionResult> DeleteAuction(int id, CancellationToken cancellationToken)
-    //{
 
-    //}
 
 
 }
