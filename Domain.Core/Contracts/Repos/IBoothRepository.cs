@@ -33,6 +33,7 @@ public interface IBoothRepository
 
     Task<bool> IsExistById(int id,
                            CancellationToken cancellationToken);
+    Task<bool> IsExistBySellerId(int sellerId, CancellationToken cancellationToken);
 
     Task<bool> IsExistByTitle(string title,
                              CancellationToken cancellationToken);

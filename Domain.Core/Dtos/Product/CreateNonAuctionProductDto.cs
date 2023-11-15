@@ -1,5 +1,4 @@
-﻿
-using Domain.Core.Dtos.Pictures;
+﻿using Domain.Core.Dtos.Pictures;
 using Domain.Core.Dtos.Products;
 using Domain.Core.Enums;
 
@@ -12,8 +11,6 @@ public class CreateNonAuctionProductDto
     public string EnglishTitle { get; set; }
 
     public string Description { get; set; }
-
-    public int BoothId { get; set; }
 
     public int FirstQuantity { get; set; }
 

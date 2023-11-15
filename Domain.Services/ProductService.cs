@@ -73,20 +73,20 @@ public class ProductService : IProductService
         return await _productRepository.GetSellType(productId, cancellationToken);
     }
 
-    public async Task<int> Create(string persianTitle,
+    public async Task<int> Create(int sellerId,
+                                  string persianTitle,
                                   string englishTitle,
                                   string description,
                                   int categoryId,
-                                  int boothId,
                                   SellType sellType,
                                   bool isCommit,
                                   CancellationToken cancellationToken)
     {
-        return await _productRepository.Create(persianTitle,
+        return await _productRepository.Create(sellerId,
+                                               persianTitle,
                                                englishTitle,
                                                description,
                                                categoryId,
-                                               boothId,
                                                sellType,
                                                isCommit,
                                                cancellationToken);

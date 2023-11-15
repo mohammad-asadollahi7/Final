@@ -65,7 +65,7 @@ public class ProductController : BaseController
     public async Task<IActionResult> CreateNonAuction(CreateNonAuctionProductDto createProduct,
                                        CancellationToken cancellationToken)
     {
-        await _productAppService.CreateNonAuction(createProduct, cancellationToken);
+        await _productAppService.CreateNonAuction(CurrentUserId, createProduct, cancellationToken);
         return Ok();
     }
 
@@ -76,7 +76,7 @@ public class ProductController : BaseController
     public async Task<IActionResult> CreateAuction(CreateAuctionProductDto createProduct,
                                                 CancellationToken cancellationToken)
     {
-        await _productAppService.CreateAuction(createProduct, cancellationToken);
+        await _productAppService.CreateAuction(CurrentUserId, createProduct, cancellationToken);
         return Ok();
     }
 

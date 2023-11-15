@@ -191,4 +191,10 @@ public class BoothRepository : IBoothRepository
                                         }).ToListAsync(cancellationToken);
 
     }
+
+    public async Task<bool> IsExistBySellerId(int sellerId, 
+                                            CancellationToken cancellationToken)
+    {
+        return await _context.Booths.AnyAsync(b => b.SellerId == sellerId);
+    }
 }

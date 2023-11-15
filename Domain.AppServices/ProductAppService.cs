@@ -11,14 +11,17 @@ public class ProductAppService : IProductAppService
     private readonly IProductService _productService;
     private readonly ICategoryService _categoryService;
     private readonly ICartService _cartService;
+    private readonly IBoothService _boothService;
 
     public ProductAppService(IProductService productService,
                              ICategoryService categoryService,
-                             ICartService cartService)
+                             ICartService cartService,
+                             IBoothService boothService)
     {
         _productService = productService;
         _categoryService = categoryService;
         _cartService = cartService;
+        _boothService = boothService;
     }
 
     public async Task<List<ProductOutputDto>> GetNonAuctionsByCategoryId(int categoryId,
@@ -55,17 +58,19 @@ public class ProductAppService : IProductAppService
     }
 
 
-    public async Task CreateNonAuction(CreateNonAuctionProductDto createProduct,
+    public async Task CreateNonAuction(int sellerId, CreateNonAuctionProductDto createProduct,
                                        CancellationToken cancellationToken)
     {
         await _categoryService.EnsureCategoryIsLeaf(createProduct.CategoryId,
                                                     cancellationToken);
 
-        var newProductId = await _productService.Create(createProduct.PersianTitle,
+        await _boothService.EnsureExistBySellerId(sellerId, cancellationToken);
+
+         var newProductId = await _productService.Create(sellerId,
+                                                        createProduct.PersianTitle,
                                                         createProduct.EnglishTitle,
                                                         createProduct.Description,
                                                         createProduct.CategoryId,
-                                                        createProduct.BoothId,
                                                         SellType.NonAuction,
                                                         false,
                                                         cancellationToken);
@@ -97,17 +102,20 @@ public class ProductAppService : IProductAppService
     }
 
 
-    public async Task CreateAuction(CreateAuctionProductDto createProduct,
+    public async Task CreateAuction(int sellerId,
+                                    CreateAuctionProductDto createProduct,
                                     CancellationToken cancellationToken)
     {
         await _categoryService.EnsureCategoryIsLeaf(createProduct.CategoryId,
                                                     cancellationToken);
 
-        var newProductId = await _productService.Create(createProduct.PersianTitle,
+        await _boothService.EnsureExistBySellerId(sellerId, cancellationToken);
+
+        var newProductId = await _productService.Create(sellerId,
+                                                        createProduct.PersianTitle,
                                                         createProduct.EnglishTitle,
                                                         createProduct.Description,
                                                         createProduct.CategoryId,
-                                                        createProduct.BoothId,
                                                         SellType.Auction,
                                                         false,
                                                         cancellationToken);

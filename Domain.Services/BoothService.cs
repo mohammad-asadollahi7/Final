@@ -151,8 +151,17 @@ public class BoothService : IBoothService
         var products = await _boothRepository.GetNonAuctionsBySellerId(id, cancellationToken);
         if(products.Count() == 0)
             throw new AppException(ExpMessage.HaveNotProduct,
-                                  ExpStatusCode.NotFound);
+                                   ExpStatusCode.NotFound);
 
         return products;
+    }
+
+    public async Task EnsureExistBySellerId(int sellerId, 
+                                       CancellationToken cancellationToken)
+    {
+        var isExist = await _boothRepository.IsExistBySellerId(sellerId, cancellationToken);
+        if (!isExist)
+           throw new AppException(ExpMessage.NotFoundBooth,
+                                  ExpStatusCode.NotFound);
     }
 }

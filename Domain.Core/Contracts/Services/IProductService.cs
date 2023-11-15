@@ -21,11 +21,11 @@ public interface IProductService
 
     Task<SellType> GetSellType(int productId, CancellationToken cancellationToken);
 
-    Task<int> Create(string persianTitle,
+    Task<int> Create(int sellerId,
+                     string persianTitle,
                      string englishTitle,
                      string description,
                      int categoryId,
-                     int boothId,
                      SellType sellType,
                      bool isCommit,
                      CancellationToken cancellationToken);

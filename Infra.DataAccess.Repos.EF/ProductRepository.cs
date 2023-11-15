@@ -117,18 +117,19 @@ public class ProductRepository : IProductRepository
                                                     SellPrice = pi.SellPrice,
                                                 }).ToListAsync(cancellationToken);
     }
-    public async Task<int> Create(string persianTitle,
+    public async Task<int> Create(int sellerId,
+                                  string persianTitle,
                                   string englishTitle,
                                   string description,
                                   int categoryId,
-                                  int boothId,
                                   SellType sellType,
                                   bool isCommit,
                                   CancellationToken cancellationToken)
     {
 
-        var category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == categoryId);
-
+        var category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == categoryId, cancellationToken);
+        var boothId = await _context.Booths.Where(b => b.SellerId == sellerId).Select(b => b.Id)
+                                            .FirstOrDefaultAsync(cancellationToken);
         var newProduct = new Product()
         {
             PersianTitle = persianTitle,
@@ -138,6 +139,7 @@ public class ProductRepository : IProductRepository
             IsApproved = null,
             BoothId = boothId,
             SellType = sellType,
+            
         };
         newProduct.Categories.Add(category);
 

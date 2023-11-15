@@ -19,12 +19,12 @@ public interface IProductAppService
                                                      CancellationToken cancellationToken);
 
     Task<List<ProductOutputApprove>> GetProductsForApprove(
-                                                        CancellationToken cancellationToken);
+                                                CancellationToken cancellationToken);
 
-    Task CreateNonAuction(CreateNonAuctionProductDto createProduct,
-                           CancellationToken cancellationToken);
+    Task CreateNonAuction(int sellerId, CreateNonAuctionProductDto createProduct,
+                                      CancellationToken cancellationToken);
 
-    Task CreateAuction(CreateAuctionProductDto createProduct,
+    Task CreateAuction(int selleraId, CreateAuctionProductDto createProduct,
                        CancellationToken cancellationToken);
 
 

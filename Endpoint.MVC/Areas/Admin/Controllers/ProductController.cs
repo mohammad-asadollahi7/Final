@@ -307,44 +307,6 @@ public class ProductController : AdminBaseController
     }
 
 
-
-    [HttpPost("Create")]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([FromForm] CreateProductViewModel model,
-                                            CancellationToken cancellationToken)
-    {
-        string uniqueFileName = string.Empty;
-        string uploadFolder = Path.Combine(_hostingEnvironment.WebRootPath, "pictures");
-        uniqueFileName = Guid.NewGuid().ToString() + model.Picture.FileName;
-        string filePath = Path.Combine(uploadFolder, uniqueFileName);
-        model.Picture.CopyTo(new FileStream(filePath, FileMode.Create));
-
-        var createProductDto = new CreateProductDto()
-        {
-            PersianTitle = model.PersianTitle,
-            EnglishTitle = model.EnglishTitle,
-            Description = model.Description,
-            FirstDiscount = model.FirstDiscount,
-            FirstPrice = model.FirstPrice,
-            CategoryId = model.CategoryId,
-            FirstQuantity = model.FirstQuantity,
-            CustomAttributes = model.CustomAttributes,
-            PictureDto = new PictureDto() { PictureName = uniqueFileName }
-        };
-
-        var httpResponseMessage = await SendPostRequest("product/Create",
-                                                        JsonConvert.SerializeObject(createProductDto),
-                                                        cancellationToken);
-
-        if (!httpResponseMessage.IsSuccessStatusCode)
-            return RedirectToErrorPage(httpResponseMessage);
-
-        return RedirectToAction("GetAllByCategoryId");
-    }
-
-
-
-
     //[HttpGet("Update/{productId}")]
     //public async Task<IActionResult> Update(int productId,
     //                                        CancellationToken cancellationToken)

@@ -18,7 +18,7 @@ public class CategoryController : BaseController
 
 
     [HttpGet("GetById")]
-    [HaveAccess(Role.Admin, Role.Seller)]
+    //[HaveAccess(Role.Admin, Role.Seller)]
     public async Task<IActionResult> GetById(int categoryId,
                                              CancellationToken cancellationToken)
     {
@@ -28,7 +28,7 @@ public class CategoryController : BaseController
 
 
     [HttpGet("GetCustomAttributeTitles/{categoryId}")]
-    [HaveAccess(Role.Admin, Role.Seller)]
+    //[HaveAccess(Role.Admin, Role.Seller)]
     public async Task<IActionResult> GetCustomAttributeTitlesByCategoryId(int categoryId,
                                                                           CancellationToken cancellationToken)
     {
@@ -38,7 +38,7 @@ public class CategoryController : BaseController
 
 
     [HttpGet("GetLeafCategories")]
-    [AllowAnonymous]
+    //[AllowAnonymous]
     public async Task<List<CategoryTitleDto>> GetLeafCategoryTitles(CancellationToken cancellationToken)
     {
         return await _categoryAppService.GetLeafCategoryTitles(cancellationToken);

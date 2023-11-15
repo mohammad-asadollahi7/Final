@@ -3,6 +3,8 @@ using Endpoint.MVC.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Endpoint.MVC.Dtos.Products;
 using Newtonsoft.Json;
+using Endpoint.MVC.Dtos.Pictures;
+using Endpoint.MVC.Dtos.Categories;
 
 namespace Endpoint.MVC.Areas.Seller.Controllers;
 
@@ -109,6 +111,57 @@ public class ProductController : SellerBaseController
         return RedirectToAction(nameof(GetNonAuctions));
     }
 
+
+
+    [HttpGet]
+    public async Task<IActionResult> CreateNonAuction(CancellationToken cancellationToken)
+    {
+        var httpResponseMessage = await SendGetRequest("category/GetLeafCategories",
+                                                        cancellationToken);
+
+        if (!httpResponseMessage.IsSuccessStatusCode)
+            return RedirectToErrorPage(httpResponseMessage);
+
+        var categoryTitles = await httpResponseMessage.Content.ReadFromJsonAsync<List<CategoryTitleDto>>();
+        return View(categoryTitles);
+    }
+
+
+    [HttpPost]
+    public async Task<IActionResult> CreateNonAuction(CreateProductViewModel model,
+                                                CancellationToken cancellationToken)
+    {
+        string uniqueFileName = string.Empty;
+        string uploadFolder = Path.Combine(_hostingEnvironment.WebRootPath, "img");
+        uniqueFileName = Guid.NewGuid().ToString() + model.Picture.FileName;
+        string filePath = Path.Combine(uploadFolder, uniqueFileName);
+        model.Picture.CopyTo(new FileStream(filePath, FileMode.Create));
+
+        var createProductDto = new CreateNonAuctionProductDto()
+        {
+            PersianTitle = model.PersianTitle,
+            EnglishTitle = model.EnglishTitle,
+            Description = model.Description,
+            FirstDiscount = model.FirstDiscount,
+            FirstPrice = model.FirstPrice,
+            CategoryId = model.CategoryId,
+            FirstQuantity = model.FirstQuantity,
+            CustomAttributes = model.CustomAttributes,
+            PictureDto = new PictureDto() { PictureName = uniqueFileName },
+        };
+
+    var httpResponseMessage = await SendPostRequest("product/CreateNonAuction",
+                                                        JsonConvert.SerializeObject(createProductDto),
+                                                        cancellationToken);
+
+        if (!httpResponseMessage.IsSuccessStatusCode)
+            return RedirectToErrorPage(httpResponseMessage);
+
+        return RedirectToAction(nameof(Index));
+    }
+
+
+
     //public async Task<IActionResult> GetAuctions(CancellationToken cancellationToken)
     //{
 
@@ -128,18 +181,6 @@ public class ProductController : SellerBaseController
 
     //}
 
-    //[HttpGet]
-    //public async Task<IActionResult> CreateNonAuction(CancellationToken cancellationToken)
-    //{
-    //    return View();
-    //}
-
-
-    //[HttpPost]
-    //public async Task<IActionResult> CreateNonAuction(CancellationToken cancellationToken)
-    //{
-
-    //}
 
 
 

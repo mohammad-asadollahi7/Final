@@ -2,8 +2,7 @@
 
 namespace Endpoint.MVC.Dtos.Products;
 
-
-public class CreateProductDto
+public class CreateNonAuctionProductDto
 {
     public string PersianTitle { get; set; }
 
@@ -22,5 +21,4 @@ public class CreateProductDto
     public List<CustomAttributeDto> CustomAttributes { get; set; }
 
     public PictureDto PictureDto { get; set; }
-
 }

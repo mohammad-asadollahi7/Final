@@ -1,4 +1,6 @@
 ﻿
+using System.Security.Principal;
+
 namespace Endpoint.MVC.Dtos.Products;
 
 
@@ -22,8 +24,6 @@ public class CreateProductViewModel
 
 
     public int CategoryId { get; set; }
-
-
     public List<CustomAttributeDto> CustomAttributes { get; set; }
 
 
