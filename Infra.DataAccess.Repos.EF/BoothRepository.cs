@@ -198,7 +198,8 @@ public class BoothRepository : IBoothRepository
         return await _context.Booths.AnyAsync(b => b.SellerId == sellerId);
     }
 
-    public async Task<List<ProductOutputDto>> GetAuctionsBySellerId(int id, CancellationToken cancellationToken)
+    public async Task<List<ProductOutputDto>> GetAuctionsBySellerId(int id,
+                                        CancellationToken cancellationToken)
     {
         return await _context.Products.Where(p => p.IsDeleted == false && p.IsApproved == true
                                        && p.Booth.Seller.Id == id && p.SellType == SellType.Auction)
@@ -211,5 +212,16 @@ public class BoothRepository : IBoothRepository
                                            SellType = SellType.NonAuction,
                                            PicturesName = p.ProductPictures.Select(p => p.Picture.Name).First(),
                                        }).ToListAsync(cancellationToken);
+    }
+
+    public async Task DeleteProductsOfDeletedBooth(int boothId, 
+                                   CancellationToken cancellationToken)
+    {
+        var products = await _context.Products.Where(p => p.BoothId == boothId)
+                                              .ToListAsync(cancellationToken);
+        foreach(var product in products)
+                product.IsDeleted = true;
+
+        await _context.SaveChangesAsync(cancellationToken);
     }
 }

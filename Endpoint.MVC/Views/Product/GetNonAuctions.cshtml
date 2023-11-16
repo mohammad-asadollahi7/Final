@@ -17,7 +17,7 @@
                         <li><i class="fa fa-bars"></i>تخفیف: @product.DiscountPercent %</li>
                         <li><i class="fa fa-calendar-o"></i>قیمت: @product.Price</li>
                     </ul>
-                    <a class="mybtn"><i class="fa fa-continuous"></i>ادامه مطلب&raquo;</a>
+                    <a asp-controller="product" asp-action="getnonauction" asp-route-id="@product.Id" class="mybtn"><i class="fa fa-continuous"></i>ادامه مطلب&raquo;</a>
                 </div>
             </div>
             }

@@ -41,5 +41,7 @@ public interface IBoothService
 
      Task EnsureNotExistBySellerId(int sellerId,
                                   CancellationToken cancellationToken);
+     Task DeleteProductsOfDeletedBooth(int boothId,
+                                      CancellationToken cancellationToken);
 
 }

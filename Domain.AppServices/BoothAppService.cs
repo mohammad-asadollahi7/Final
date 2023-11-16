@@ -49,6 +49,7 @@ public class BoothAppService : IBoothAppService
     {
         await _boothService.EnsureExistById(boothId, cancellationToken);
         await _boothService.Delete(boothId, cancellationToken);
+        await _boothService.DeleteProductsOfDeletedBooth(boothId, cancellationToken);   
     }
 
     public async Task<BoothDto> GetById(int boothId, CancellationToken cancellationToken)

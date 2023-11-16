@@ -185,4 +185,10 @@ public class BoothService : IBoothService
 
         return products;
     }
+
+    public async Task DeleteProductsOfDeletedBooth(int boothId,
+                                            CancellationToken cancellationToken)
+    {
+        await _boothRepository.DeleteProductsOfDeletedBooth(boothId, cancellationToken);
+    }
 }
