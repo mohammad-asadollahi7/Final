@@ -207,7 +207,7 @@ app.UseExceptionMiddleware();
 
 app.UseCors();
 
-//app.UseExceptionMiddleware();
+app.UseExceptionMiddleware();
 
 app.UseAuthentication();
 app.UseAuthorization();

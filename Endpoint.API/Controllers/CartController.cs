@@ -18,14 +18,13 @@ public class CartController : BaseController
 
 
 
-    [HttpPost("AddProduct")]
-    //[HaveAccess(Role.Customer)]
-    public async Task<IActionResult> AddProductToCart([FromBody] AddProductToCartDto productDto,
-                                                      CancellationToken cancellationToken)
+    [HttpGet("AddProduct/{productId}")]
+    [HaveAccess(Role.Customer)]
+    public async Task<IActionResult> AddProductToCart(int productId, CancellationToken cancellationToken)
     {
         await _cartAppService.AddNonAuctionProductToCart(CurrentUserId,
-                                                         productDto.ProductId,
-                                                         productDto.Count,
+                                                         productId,
+                                                         1,
                                                          cancellationToken);
         return Ok();
     }

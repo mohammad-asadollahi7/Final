@@ -66,19 +66,18 @@ public class AccountController : BaseController
 
         TempData.Peek("Role");
         TempData["Role"] = loginDto.Role;
-        if (loginDto.Role.ToString().ToLower() == "customer")
-            return RedirectToAction("GetAllByCategoryId", "Product", new { area = "customer" });
 
-        else if(loginDto.Role.ToString().ToLower() == "admin")
+
+        if (loginDto.Role.ToString().ToLower() == "admin")
             return RedirectToAction("Index", "Product", new { area = "admin" });
 
-        else
-           return RedirectToAction("Index", "Product");
 
-            // else if (loginDto.Role.ToString().ToLower() == "seller")
-            //     return RedirectToAction("Index", "Product", new { area = "seller" });
-            //  else
-            //     return RedirectToErrorPage(httpResponseMessage);
+        else if (loginDto.Role.ToString().ToLower() == "seller")
+            return RedirectToAction("Index", "Product", new { area = "seller" });
+
+        else
+            return RedirectToAction("getnonauctions", "Product");
+
 
 
     }

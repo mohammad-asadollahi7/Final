@@ -15,13 +15,13 @@ public class CartController : BaseController
         return View();
     }
 
+
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> AddProductToCart(int productId,
-                                                    int count,
-                                                    CancellationToken cancellationToken)
+                                                     CancellationToken cancellationToken)
     {
-        var content = JsonConvert.SerializeObject(new { ProductId = productId, Count = count });
+        var content = JsonConvert.SerializeObject(new { ProductId = productId, Count = 1 });
         var httpResponseMessage = await SendPostRequest("Cart/AddProduct", content, cancellationToken);
 
         if (!httpResponseMessage.IsSuccessStatusCode)
