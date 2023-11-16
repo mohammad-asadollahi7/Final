@@ -1,0 +1,27 @@
+﻿@model List<Endpoint.MVC.Dtos.Products.ProductOutputDto>
+
+<div class="container">
+    <div class="d-flex flex-wrap gap-3 justify-content-center">
+        
+            @foreach (var product in @Model)
+            {<div class="">
+                <div class="blog-content cursor-pointer">
+                    <figure>
+                        <img src="~/img/@product.PicturesName" style="width: 13rem;height: 10rem;">
+                    </figure>
+                    <h5><i class="fa fa-title"></i>@product.PersianTitle</h5>
+                    <p></p>
+                    <ul>
+                        <li>غرفه: @product.BoothTitle</li>
+
+                        <li><i class="fa fa-bars"></i>تخفیف: @product.DiscountPercent %</li>
+                        <li><i class="fa fa-calendar-o"></i>قیمت: @product.Price</li>
+                    </ul>
+                    <a class="mybtn"><i class="fa fa-continuous"></i>ادامه مطلب&raquo;</a>
+                </div>
+            </div>
+            }
+
+       
+    </div>
+</div>

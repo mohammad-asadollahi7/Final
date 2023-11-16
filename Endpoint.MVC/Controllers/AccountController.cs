@@ -72,10 +72,13 @@ public class AccountController : BaseController
         else if(loginDto.Role.ToString().ToLower() == "admin")
             return RedirectToAction("Index", "Product", new { area = "admin" });
 
-        else if (loginDto.Role.ToString().ToLower() == "seller")
-            return RedirectToAction("Index", "Product", new { area = "seller" });
         else
-            return RedirectToErrorPage(httpResponseMessage);
+           return RedirectToAction("Index", "Product");
+
+            // else if (loginDto.Role.ToString().ToLower() == "seller")
+            //     return RedirectToAction("Index", "Product", new { area = "seller" });
+            //  else
+            //     return RedirectToErrorPage(httpResponseMessage);
 
 
     }

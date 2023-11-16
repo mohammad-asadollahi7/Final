@@ -956,3 +956,9 @@ margin-left:10px;
 .foures{
    line-height: 5;
 }
+
+
+.cursor-pointer:hover {
+    -webkit-box-shadow: 0 0 5px;
+    box-shadow: 0 0 5px;
+}
