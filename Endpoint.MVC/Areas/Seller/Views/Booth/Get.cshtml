@@ -1,0 +1,48 @@
+﻿@using Endpoint.MVC.ExtensionMethods;
+@model Endpoint.MVC.Dtos.Booth.BoothDto
+
+
+@section GetProductByIdCss{
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+    <link href="~/Admin/ProductDetails/style.css" rel="stylesheet">
+}
+
+
+<main class="container border border-3 rounded-1 p-3">
+
+    <!-- Left Column / Headphones Image -->
+    <div class="left-column text-center rounded-3">
+        @* <img data-image="black" src="images/black.png" alt="">
+        <img data-image="blue" src="images/blue.png" alt="">*@
+        <img data-image="red" style="border-radius:10px" src="~/img/@Model.PictureName" alt="">
+    </div>
+
+
+    <!-- Right Column -->
+    <div class="right-column">
+
+        <!-- Product Description -->
+        <div class="product-description">
+
+            <h4>@Model.Title</h4>
+            <p>@Model.Description</p>
+            <h6>  <img src="~/icon/medal.png" />  @Model.Medal.GetDisplayName() </h6>
+            <span>کارمزد</span>    <span>@Model.Wage %</span>
+        </div>
+
+
+    </div>
+
+
+</main>
+<div class="m-2 text-center">
+    <a class="btn border-secondary rounded-1" asp-area="seller" asp-action="update">بروزرسانی</a>
+</div>
+
+
+
+@section GetProductByIdScript{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" charset="utf-8"></script>
+    <script src="~/Admin/ProductDetails/script.js" charset="utf-8"></script>
+    }
+

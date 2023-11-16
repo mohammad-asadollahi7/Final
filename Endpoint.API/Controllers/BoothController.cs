@@ -50,7 +50,7 @@ public class BoothController : BaseController
     }
 
 
-    [HttpPut("Update/boothId")]
+    [HttpPut("Update/{boothId}")]
     //[HaveAccess(Role.Seller)]
     public async Task<IActionResult> Update(int boothId, UpdateBoothDto boothDto,
                                               CancellationToken cancellationToken)
@@ -59,7 +59,7 @@ public class BoothController : BaseController
         return Ok();
     }
 
-    [HttpDelete("Delete/boothId")]
+    [HttpDelete("Delete/{boothId}")]
     //[HaveAccess(Role.Seller, Role.Admin)]
     public async Task<IActionResult> Delete(int boothId, 
                                         CancellationToken cancellationToken)

@@ -1,0 +1,25 @@
+﻿@model Endpoint.MVC.Dtos.Booth.UpdateBoothViewModel
+
+
+<div class="container border rounded-2 p-2 my-2">
+
+    <form method="post" asp-area="seller" asp-controller="booth" asp-action="update" class="form" enctype="multipart/form-data">
+
+        <input type="hidden" class="form-control" asp-for="@Model.Id" />
+
+        <label class="form-label">عنوان غرفه</label>
+        <input type="text" required class="form-control" asp-for="@Model.Title" />
+
+        <label class="mt-4 form-label">توضیحات</label>
+        <textarea class="form-control" required asp-for="@Model.Description">@Model.Description</textarea>
+
+        <label class="form-label">تصویر</label>
+        <input type="file" required class="form-control" asp-for="@Model.Picture" />
+
+        <div class="text-center">
+            <button type="submit" class="my-4 btn btn-info">بروزرسانی </button>
+        </div>
+
+
+    </form>
+</div>

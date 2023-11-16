@@ -12,6 +12,6 @@ public class ProductOutputDto
     public SellType SellType { get; set; }
     public int DiscountPercent { get; set; }
 
-    public string PicturesPath { get; set; }
+    public string PicturesName { get; set; }
 
 }

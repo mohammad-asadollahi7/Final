@@ -24,7 +24,7 @@
                     <td>@product.Id</td>
                     <td>@product.PersianTitle</td>
                     <td>@product.Price</td>
-                    <td> <img style="width:35px;" src="~/img/@product.PicturesPath" /> </td>
+                    <td> <img style="width:35px;" src="~/img/@product.PicturesName" /> </td>
                     <td> <a class="btn" asp-area="seller" asp-action="getnonauctionbyid" asp-route-productId="@product.Id" asp-route-sellType="@product.SellType"> <img src="~/icon/details.png">  </a> </td>
                 </tr>
             }
