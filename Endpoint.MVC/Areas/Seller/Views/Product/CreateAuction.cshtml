@@ -1,0 +1,52 @@
+﻿@model List<Endpoint.MVC.Dtos.Categories.CategoryTitleDto>
+
+<div class="container border rounded-2 p-2 my-4">
+
+
+    <form method="post" asp-controller="product" asp-area="seller" asp-action="createauction" class="form" enctype="multipart/form-data">
+
+
+        <label class="form-label">عنوان فارسی</label>
+        <input type="text" required class="form-control" name="PersianTitle" />
+
+        <label class="mt-4 form-label">عنوان لاتین</label>
+        <input type="text" required class="form-control" name="EnglishTitle" />
+
+        <label class="mt-4 form-label">توضیحات</label>
+        <textarea class="form-control" required name="Description"> </textarea>
+
+
+        <label class="mt-4 form-label">کمترین قیمت (تومان)</label>
+        <input type="number" required class="form-control" name="MinPrice" />
+
+        <label class="mt-4 form-label">تعداد</label>
+        <input type="number" required class="form-control" name="FirstQuantity" />
+
+        <label class="mt-4 form-label">زمان شروع مزایده</label>
+        <input type="date" required class="form-control" name="FromDate" />
+
+        <label class="mt-4 form-label">زمان اتمام مزایده</label>
+        <input type="date" required class="form-control" name="ToDate" />
+
+        <label class="mt-4 form-label">عکس</label>
+        <input type="file" required class="form-control" name="Picture" />
+
+        <select name="CategoryId" id="select-category" class="mt-4 form-select" onChange="GetAttributeTitles()">
+            <option disabled selected>انتخاب دسته بندی</option>
+            @for (int i = 0; i < @Model.Count(); i++)
+            {
+                <option class="form-control" required value="@Model[i].Id">@Model[i].Title</option>
+            }
+        </select>
+
+        <div id="attributeDiv">
+        </div>
+
+
+        <div class="text-center">
+            <button type="submit" class="my-4 btn btn-info">افزودن</button>
+        </div>
+
+
+    </form>
+</div>

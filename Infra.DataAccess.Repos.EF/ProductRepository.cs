@@ -208,7 +208,8 @@ public class ProductRepository : IProductRepository
             ProductId = productId,
             FromDate = fromDate,
             ToDate = toDate,
-            MinPrice = minPrice
+            MinPrice = minPrice,
+            IsActive = true
         };
 
         await _context.Auctions.AddAsync(auction, cancellationToken);
@@ -429,7 +430,7 @@ public class ProductRepository : IProductRepository
                                 {
                                     Id = p.Id,
                                     BoothTitle = p.Booth.Title,
-                                    PicturesPath = p.ProductPictures.Select(p => p.Picture.Name).First(),
+                                    PicturesName = p.ProductPictures.Select(p => p.Picture.Name).First(),
                                     PersianTitle = p.PersianTitle,
                                     Price = p.AuctionOrders.Select(p => p.Price).Max(),
                                     SellType = SellType.Auction,

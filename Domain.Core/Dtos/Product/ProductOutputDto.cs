@@ -16,6 +16,6 @@ public class ProductOutputDto
 
     public string BoothTitle { get; set; }
 
-    public string PicturesPath { get; set; }
+    public string PicturesName { get; set; }
 
 }

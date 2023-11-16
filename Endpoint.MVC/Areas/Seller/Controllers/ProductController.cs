@@ -77,7 +77,7 @@ public class ProductController : SellerBaseController
             Description = productDetails.Description,
             EnglishTitle = productDetails.EnglishTitle,
             PersianTitle = productDetails.PersianTitle,
-            Price = productDetails.Price,
+            Price = productDetails.Price ?? 0,
             Discount = productDetails.DiscountPercent ?? 0,
             BoothTitle = productDetails.BoothTitle,
             CategoryId = productDetails.CategoryId,
@@ -241,18 +241,55 @@ public class ProductController : SellerBaseController
         return RedirectToAction(nameof(GetAuctions));
     }
 
-    //[HttpGet]
-    //public async Task<IActionResult> CreateAuction(CancellationToken cancellationToken)
-    //{
-    //    return View();
-    //}
+
+    [HttpGet]
+    public async Task<IActionResult> CreateAuction(CancellationToken cancellationToken)
+    {
+        var httpResponseMessage = await SendGetRequest("category/GetLeafCategories",
+                                                        cancellationToken);
+
+        if (!httpResponseMessage.IsSuccessStatusCode)
+            return RedirectToErrorPage(httpResponseMessage);
+
+        var categoryTitles = await httpResponseMessage.Content.ReadFromJsonAsync<List<CategoryTitleDto>>();
+        return View(categoryTitles);
+    }
 
 
-    //[HttpPost]
-    //public async Task<IActionResult> CreateAuction(CancellationToken cancellationToken)
-    //{
+    [HttpPost]
+    public async Task<IActionResult> CreateAuction(CreateAuctionViewModel model, 
+                                              CancellationToken cancellationToken)
+    {
 
-    //}
+        string uniqueFileName = string.Empty;
+        string uploadFolder = Path.Combine(_hostingEnvironment.WebRootPath, "img");
+        uniqueFileName = Guid.NewGuid().ToString() + model.Picture.FileName;
+        string filePath = Path.Combine(uploadFolder, uniqueFileName);
+        model.Picture.CopyTo(new FileStream(filePath, FileMode.Create));
+
+        var createProductDto = new CreateAuctionProductDto()
+        {
+            PersianTitle = model.PersianTitle,
+            EnglishTitle = model.EnglishTitle,
+            Description = model.Description,
+            MinPrice = model.MinPrice,
+            CategoryId = model.CategoryId,
+            FirstQuantity = model.FirstQuantity,
+            FromDate = model.FromDate,
+            ToDate = model.ToDate,
+            CustomAttributes = model.CustomAttributes.ToList(),
+            PictureDto = new PictureDto() { PictureName = uniqueFileName }
+        };
+
+        var httpResponseMessage = await SendPostRequest("product/CreateAuction",
+                                                            JsonConvert.SerializeObject(createProductDto),
+                                                            cancellationToken);
+
+        if (!httpResponseMessage.IsSuccessStatusCode)
+            return RedirectToErrorPage(httpResponseMessage);
+
+        return RedirectToAction(nameof(Index));
+    }
 
 
 

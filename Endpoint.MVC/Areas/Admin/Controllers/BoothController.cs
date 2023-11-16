@@ -92,7 +92,7 @@ public class BoothController : AdminBaseController
             Description = productDetails.Description,
             EnglishTitle = productDetails.EnglishTitle,
             PersianTitle = productDetails.PersianTitle,
-            Price = productDetails.Price,
+            Price = productDetails.Price??0,
             Discount = productDetails.DiscountPercent??0,
             BoothTitle = productDetails.BoothTitle,
             CategoryId = productDetails.CategoryId,

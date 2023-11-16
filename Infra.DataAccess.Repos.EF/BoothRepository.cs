@@ -48,7 +48,7 @@ public class BoothRepository : IBoothRepository
                                              Price = p.NonAuctionPrice.Price,
                                              BoothTitle = p.Booth.Title,
                                              SellType = p.SellType,
-                                             PicturesPath = p.ProductPictures.Select(p => p.Picture.Name).First(),
+                                             PicturesName = p.ProductPictures.Select(p => p.Picture.Name).First(),
                                          }).AsNoTracking()
                                          .ToListAsync(cancellationToken);
     }
@@ -187,7 +187,7 @@ public class BoothRepository : IBoothRepository
                                             PersianTitle = p.PersianTitle,
                                             Price = p.NonAuctionPrice.Price,
                                             SellType = SellType.NonAuction,
-                                            PicturesPath = p.ProductPictures.Select(p => p.Picture.Name).First(),
+                                            PicturesName = p.ProductPictures.Select(p => p.Picture.Name).First(),
                                         }).ToListAsync(cancellationToken);
 
     }
@@ -209,7 +209,7 @@ public class BoothRepository : IBoothRepository
                                            PersianTitle = p.PersianTitle,
                                            Price = p.Auction.MinPrice,
                                            SellType = SellType.NonAuction,
-                                           PicturesPath = p.ProductPictures.Select(p => p.Picture.Name).First(),
+                                           PicturesName = p.ProductPictures.Select(p => p.Picture.Name).First(),
                                        }).ToListAsync(cancellationToken);
     }
 }

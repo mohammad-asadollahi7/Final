@@ -105,8 +105,6 @@ public class FinalContext : IdentityDbContext<ApplicationUser, IdentityRole<int>
         modelBuilder.Entity<Auction>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("Pk_Auction");
-            entity.ToTable("Auction");
-            entity.HasIndex(e => e.ProductId, "IX_Auction").IsUnique();
 
             entity.Property(e => e.FromDate).HasColumnType("datetime");
             entity.Property(e => e.MinPrice).HasColumnType("decimal(18, 0)");
@@ -120,6 +118,8 @@ public class FinalContext : IdentityDbContext<ApplicationUser, IdentityRole<int>
 
         modelBuilder.Entity<AuctionOrder>(entity =>
         {
+            entity.HasKey(e => e.Id).HasName("Pk_AuctionOrders");
+
             entity.Property(e => e.Price).HasColumnType("decimal(18, 0)");
 
             entity.HasOne(d => d.Customer).WithMany(p => p.AuctionOrders)
@@ -135,6 +135,8 @@ public class FinalContext : IdentityDbContext<ApplicationUser, IdentityRole<int>
 
         modelBuilder.Entity<Booth>(entity =>
         {
+            entity.HasKey(e => e.Id).HasName("Pk_Booths");
+
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.Medal)
                 .HasMaxLength(50)
@@ -162,6 +164,8 @@ public class FinalContext : IdentityDbContext<ApplicationUser, IdentityRole<int>
 
         modelBuilder.Entity<Category>(entity =>
         {
+            entity.HasKey(e => e.Id).HasName("Pk_Categories");
+
             entity.Property(e => e.Title).HasMaxLength(50);
 
            
@@ -190,6 +194,8 @@ public class FinalContext : IdentityDbContext<ApplicationUser, IdentityRole<int>
 
         modelBuilder.Entity<CustomAttributes>(entity =>
         {
+            entity.HasKey(e => e.Id).HasName("Pk_CustomAttributes");
+
             entity.HasIndex(e => e.ProductId, "IX_CustomAttributes_ProductId");
 
             entity.Property(e => e.AttributeTitle).HasMaxLength(255);
@@ -202,7 +208,7 @@ public class FinalContext : IdentityDbContext<ApplicationUser, IdentityRole<int>
 
         modelBuilder.Entity<CustomAttributesTemplate>(entity =>
         {
-            entity.ToTable("CustomAttributesTemplate");
+            entity.HasKey(e => e.Id).HasName("Pk_CustomAttributesTemplate");
 
             entity.HasIndex(e => e.CategoryId, "IX_CustomAttributesTemplate_CategoryId");
 
@@ -227,8 +233,6 @@ public class FinalContext : IdentityDbContext<ApplicationUser, IdentityRole<int>
 
         modelBuilder.Entity<NonAuctionPrice>(entity =>
         {
-            entity.ToTable("NonAuctionPrice");
-
             entity.HasIndex(e => e.ProductId, "IX_NonAuctionPrice").IsUnique();
 
             entity.Property(e => e.Price).HasColumnType("decimal(18, 0)");
@@ -258,6 +262,8 @@ public class FinalContext : IdentityDbContext<ApplicationUser, IdentityRole<int>
 
         modelBuilder.Entity<Picture>(entity =>
         {
+            entity.HasKey(e => e.Id).HasName("Pk_Pictures");
+
             entity.Property(e => e.Name).HasMaxLength(255);
         });
 
@@ -296,7 +302,7 @@ public class FinalContext : IdentityDbContext<ApplicationUser, IdentityRole<int>
 
         modelBuilder.Entity<ProductInventory>(entity =>
         {
-            entity.ToTable("ProductInventory");
+            entity.HasKey(e => e.Id).HasName("Pk_ProductInventory");
 
             entity.HasIndex(e => e.ProductId, "IX_ProductInventory_ProductId");
 
@@ -310,6 +316,7 @@ public class FinalContext : IdentityDbContext<ApplicationUser, IdentityRole<int>
 
         modelBuilder.Entity<ProductPicture>(entity =>
         {
+            entity.HasKey(e => e.Id).HasName("Pk_ProductPictures");
             entity.HasIndex(e => e.PictureId, "IX_ProductPictures").IsUnique();
 
             entity.HasIndex(e => e.ProductId, "IX_ProductPictures_ProductId");
