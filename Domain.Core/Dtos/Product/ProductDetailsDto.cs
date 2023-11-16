@@ -28,5 +28,5 @@ public class ProductDetailsDto
 
     public IEnumerable<CustomAttributeDto> CustomAttributes { get; set; }
 
-    public IEnumerable<ProductPictureDto> ProductPictureDto { get; set; }
+    public string PictureName { get; set; }
 }

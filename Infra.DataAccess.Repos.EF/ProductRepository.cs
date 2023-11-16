@@ -33,12 +33,7 @@ public class ProductRepository : IProductRepository
                                                        Price = p.NonAuctionPrice.Price,
                                                        DiscountPercent = p.NonAuctionPrice.Discount,
                                                        BoothId = p.BoothId,
-                                                       ProductPictureDto = p.ProductPictures.Select(p => p.Picture)
-                                                                                            .Select(p => new ProductPictureDto()
-                                                                                            {
-                                                                                                Id = p.Id,
-                                                                                                Name = p.Name,
-                                                                                            }),
+                                                       PictureName = p.ProductPictures.Select(p => p.Picture.Name).First(),
                                                        CustomAttributes = p.CustomAttributes.Select(c => new CustomAttributeDto()
                                                        {
                                                            Id = c.Id,
