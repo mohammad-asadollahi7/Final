@@ -26,6 +26,7 @@ public static class ExpMessage
     public static string Unauthorized { get; } = "عدم دسترسی به محتوای جاری";
   
     public static string NotFoundBooth { get; } = "غرفه ای پیدا نشد";
+    public static string FoundBooth { get; } = "شما قبلا یک غرفه ایجاد کرده اید";
     public static string NotFoundRole { get; } = "چنین نقشی پیدا نشد";
     public static string LowPrice { get; } = "قیمت از بالاترین قیمت مزایده پایین تر است";
     public static string WrongCartStatus { get; } = "وضعیت سبد خرید انتخابی قابل تغییر نیست";

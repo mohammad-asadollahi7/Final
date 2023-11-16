@@ -41,7 +41,7 @@ public class BoothController : BaseController
 
 
     [HttpPost("Create")]
-    //[HaveAccess(Role.Customer)]
+    //[HaveAccess(Role.Seller)]
     public async Task<IActionResult> Create(CreateBoothDto boothDto,
                                              CancellationToken cancellationToken)
     {

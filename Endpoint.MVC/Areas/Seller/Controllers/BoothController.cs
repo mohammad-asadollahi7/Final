@@ -58,7 +58,7 @@ public class BoothController : SellerBaseController
 
 
     [HttpPost]
-    public async Task<IActionResult> Update(UpdateBoothViewModel booth, 
+    public async Task<IActionResult> Update(UpdateBoothViewModel booth,
                                         CancellationToken cancellationToken)
     {
         string uniqueFileName = string.Empty;
@@ -82,12 +82,42 @@ public class BoothController : SellerBaseController
 
         return RedirectToAction(nameof(Get));
     }
+
+
+
+    [HttpGet]
+    public async Task<IActionResult> Create()
+    {
+        return View();
+    }
+
+
+
+    [HttpPost]
+    public async Task<IActionResult> Create(CreateBoothViewModel model, 
+                                            CancellationToken cancellationToken)
+    {
+        string uniqueFileName = string.Empty;
+        string uploadFolder = Path.Combine(_hostingEnvironment.WebRootPath, "img");
+        uniqueFileName = Guid.NewGuid().ToString() + model.Picture.FileName;
+        string filePath = Path.Combine(uploadFolder, uniqueFileName);
+        model.Picture.CopyTo(new FileStream(filePath, FileMode.Create));
+
+        var createDto = new CreateBoothDto()
+        {
+            Title = model.Title,
+            Description = model.Description,
+            PictureName = uniqueFileName,
+        };
+        var httpResponseMessage = await SendPostRequest("Booth/Create",
+                                                  JsonConvert.SerializeObject(createDto),
+                                                  cancellationToken);
+
+        if (!httpResponseMessage.IsSuccessStatusCode)
+            return RedirectToErrorPage(httpResponseMessage);
+
+        return RedirectToAction(nameof(Get));
+    }
 }
-
-    //public async Task<IActionResult> Create(CancellationToken cancellationToken)
-    //{
-
-    //}
-
 
 

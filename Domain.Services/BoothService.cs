@@ -165,6 +165,16 @@ public class BoothService : IBoothService
                                   ExpStatusCode.NotFound);
     }
 
+    public async Task EnsureNotExistBySellerId(int sellerId,
+                                          CancellationToken cancellationToken)
+    {
+        var isExist = await _boothRepository.IsExistBySellerId(sellerId, cancellationToken);
+        if (isExist)
+            throw new AppException(ExpMessage.FoundBooth,
+                                   ExpStatusCode.Conflict);
+    }
+
+
     public async Task<List<ProductOutputDto>> GetAuctionsBySellerId(int id, 
                                                         CancellationToken cancellationToken)
     {

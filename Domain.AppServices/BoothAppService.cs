@@ -4,6 +4,7 @@ using Domain.Core.Dtos.Booth;
 using Domain.Core.Dtos.Product;
 using Domain.Core.Entities;
 using System.Formats.Asn1;
+using System.Runtime.InteropServices;
 
 namespace Domain.AppServices;
 
@@ -32,6 +33,7 @@ public class BoothAppService : IBoothAppService
     public async Task Create(CreateBoothDto boothDto, int sellerId, 
                                 CancellationToken cancellationToken)
     {
+        await _boothService.EnsureNotExistBySellerId(sellerId, cancellationToken);
         await _boothService.Create(boothDto, sellerId, cancellationToken);   
     }
 

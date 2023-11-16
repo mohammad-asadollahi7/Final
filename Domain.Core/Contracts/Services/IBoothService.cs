@@ -39,4 +39,7 @@ public interface IBoothService
     Task<List<ProductOutputDto>> GetAuctionsBySellerId(int id, 
                                 CancellationToken cancellationToken);
 
+     Task EnsureNotExistBySellerId(int sellerId,
+                                  CancellationToken cancellationToken);
+
 }
