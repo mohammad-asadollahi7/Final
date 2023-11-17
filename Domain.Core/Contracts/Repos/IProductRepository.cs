@@ -1,6 +1,7 @@
 ﻿using Domain.Core.Dtos.Pictures;
 using Domain.Core.Dtos.Product;
 using Domain.Core.Dtos.Products;
+using Domain.Core.Entities;
 using Domain.Core.Enums;
 
 namespace Domain.Core.Contracts.Repos;
@@ -48,6 +49,12 @@ public interface IProductRepository
 
     Task AddQuantityRecord(int productId,
                            int quantity,
+                           DateTime submitDate,
+                           bool isSold,
+                           CancellationToken cancellationToken,
+                           bool isCommit);
+
+    Task AddQuantityRecord(int cartId,
                            DateTime submitDate,
                            bool isSold,
                            CancellationToken cancellationToken,
@@ -106,5 +113,9 @@ public interface IProductRepository
     Task<int> GetNumberOfProductsForApprove(CancellationToken cancellationToken);
 
     Task<int> GetWageNumbers(CancellationToken cancellationToken);
+
+    Task AddWages(List<CreateWageDto> createWageDtos,
+                  CancellationToken cancellationToken);
     
+
 }

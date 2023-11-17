@@ -9,5 +9,6 @@ public class ProductInventoryDto
 
     public bool IsSold { get; set; }
     public decimal? SellPrice { get; set; }
+    public int BoothId { get; set; }
 
 }

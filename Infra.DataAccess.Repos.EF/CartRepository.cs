@@ -1,4 +1,5 @@
 ﻿using Domain.Core.Contracts.Repos;
+using Domain.Core.Dtos.Booth;
 using Domain.Core.Dtos.Cart;
 using Domain.Core.Dtos.Product;
 using Domain.Core.Entities;
@@ -108,17 +109,30 @@ public class CartRepository : ICartRepository
                                decimal discountedPrice,
                                CancellationToken cancellationToken)
     {
-        var newOrder = new Order()
+        var cart = await _context.Carts.Where(c => c.Id == cartId)
+                                .Include(c => c.Orders)
+                                .SingleOrDefaultAsync(cancellationToken);
+
+        var sameOrder = cart.Orders.FirstOrDefault(o => o.ProductId == productId);
+        if (sameOrder is not null)
         {
-            CartId = cartId,
-            DiscountedPrice = discountedPrice,
-            ProductId = productId,
-            Quantity = quantity,
-            BuyType = 0,
-        };
-        var cart = await _context.Carts.SingleOrDefaultAsync(c => c.Id == cartId);
-        cart.Orders.Add(newOrder);
-        await _context.SaveChangesAsync();
+            sameOrder.Quantity += quantity;
+        }
+
+        else
+        {
+            var newOrder = new Order()
+            {
+                CartId = cartId,
+                DiscountedPrice = discountedPrice,
+                ProductId = productId,
+                Quantity = quantity,
+                BuyType = 0,
+            };
+            cart.Orders.Add(newOrder);
+        }
+
+        await _context.SaveChangesAsync(cancellationToken);
     }
 
 
@@ -164,7 +178,21 @@ public class CartRepository : ICartRepository
 
         await _context.AuctionOrders.AddAsync(auctionOrder, cancellationToken);
 
-        if(isCommit)
+        if (isCommit)
             await _context.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task<List<OrderWithProductDto>> GetOrdersInCart(int cartId,
+                                                    CancellationToken cancellationToken)
+    {
+        return await _context.Orders.Where(o => o.CartId == cartId)
+                                          .Select(o => new OrderWithProductDto()
+                                          {
+                                              DiscountedPrice = o.DiscountedPrice,
+                                              Quantity = o.Quantity,
+                                              BoothId = o.Product.BoothId,
+                                              ProductId = o.ProductId,
+                                              Wage = o.Product.Booth.Wage
+                                          }).ToListAsync(cancellationToken);
     }
 }

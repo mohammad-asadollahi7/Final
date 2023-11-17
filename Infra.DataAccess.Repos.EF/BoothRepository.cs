@@ -115,12 +115,6 @@ public class BoothRepository : IBoothRepository
         await _context.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task UpdateWage(int boothId, int wage,
-                                  Medal medal, CancellationToken cancellationToken)
-    {
-        await _context.Booths.SingleOrDefaultAsync(b => b.Id == boothId);
-    }
-
 
     public async Task Delete(int boothId, CancellationToken cancellationToken)
     {

@@ -79,7 +79,8 @@ public class CartController : BaseController
     public async Task<IActionResult> FinalizeCart(int cartId,
                                                   CancellationToken cancellationToken)
     {
-        var httpResponseMessage = await SendPatchRequest($"cart/ChangeCartStatus/{cartId}?cartStatus=1", cancellationToken);
+        var httpResponseMessage = await SendPatchRequest($"cart/FinalizeCart/{cartId}", 
+                                                                     cancellationToken);
 
         if (!httpResponseMessage.IsSuccessStatusCode)
             return RedirectToErrorPage(httpResponseMessage);
@@ -87,10 +88,10 @@ public class CartController : BaseController
         return RedirectToAction("GetAllByCustomerId");
     }
 
-    public async Task<IActionResult> CancelationCart(int cartId,
-                                                     CancellationToken cancellationToken)
+    public async Task<IActionResult> CancelCart(int cartId,
+                                               CancellationToken cancellationToken)
     {
-        var httpResponseMessage = await SendPatchRequest($"cart/ChangeCartStatus/{cartId}?cartStatus=2",
+        var httpResponseMessage = await SendPatchRequest($"cart/CancelCart/{cartId}",
                                                          cancellationToken);
         if (!httpResponseMessage.IsSuccessStatusCode)
             return RedirectToErrorPage(httpResponseMessage);

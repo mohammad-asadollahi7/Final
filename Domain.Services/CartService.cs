@@ -1,6 +1,9 @@
 ﻿using Domain.Core.Contracts.Repos;
 using Domain.Core.Contracts.Services;
+using Domain.Core.Dtos.Booth;
 using Domain.Core.Dtos.Cart;
+using Domain.Core.Dtos.Product;
+using Domain.Core.Entities;
 using Domain.Core.Enums;
 using Domain.Core.Exceptions;
 
@@ -11,25 +14,28 @@ public class CartService : ICartService
 {
     private readonly ICartRepository _cartRepository;
     private readonly IProductService _productService;
+    private readonly IProductRepository _productRepository;
 
-    public CartService(ICartRepository cartRepository, IProductService productService)
+    public CartService(ICartRepository cartRepository, 
+                        IProductService productService,
+                        IProductRepository productRepository)
     {
         _cartRepository = cartRepository;
         _productService = productService;
-        
+        _productRepository = productRepository;
     }
 
-    public async Task AddAuctionOrder(int? customerId, int productId, 
+    public async Task AddAuctionOrder(int? customerId, int productId,
                                        decimal lastSubmittedPrice, decimal proposedPrice,
                                        bool isCommit,
                                        CancellationToken cancellationToken)
     {
         if (lastSubmittedPrice > proposedPrice)
-            throw new AppException(ExpMessage.LowPrice,   
+            throw new AppException(ExpMessage.LowPrice,
                                      ExpStatusCode.BadRequest);
 
 
-        await _cartRepository.AddAuctionOrder(customerId, productId, 
+        await _cartRepository.AddAuctionOrder(customerId, productId,
                                         proposedPrice, isCommit, cancellationToken);
     }
 
@@ -57,7 +63,7 @@ public class CartService : ICartService
 
         if (carts.Count() == 0)
         {
-            var newCartId = await _cartRepository.CreateByCustomerId(customerId, 
+            var newCartId = await _cartRepository.CreateByCustomerId(customerId,
                                                                     cancellationToken);
             return newCartId;
         }
@@ -129,4 +135,10 @@ public class CartService : ICartService
         await _cartRepository.CancelCart(cartId, cancellationToken);
     }
 
+    public async Task<List<OrderWithProductDto>> GetOrdersInCart(int cartId,
+                                                    CancellationToken cancellationToken)
+    {
+        return await _cartRepository.GetOrdersInCart(cartId, cancellationToken);
+    }
+    
 }

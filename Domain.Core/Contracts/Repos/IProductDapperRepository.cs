@@ -7,6 +7,4 @@ public interface IProductDapperRepository
 {
     Task<List<ProductOutputDto>> GetNonAuctionsByCategoryId(CancellationToken cancellationToken,
                                                     params int[] ids);
-
-
 }

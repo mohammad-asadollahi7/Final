@@ -1,4 +1,5 @@
 ﻿using Domain.Core.Dtos.Booth;
+using Domain.Core.Dtos.Cart;
 using Domain.Core.Dtos.Product;
 using Domain.Core.Entities;
 using Domain.Core.Enums;
@@ -18,7 +19,7 @@ public interface IBoothService
     Task Update(int boothId, UpdateBoothDto boothDto,
                     CancellationToken cancellationToken);
 
-    Task UpdateWage(int boothId,  CancellationToken cancellationToken);
+    Task UpdateMedal(List<int> boothIds,  CancellationToken cancellationToken);
 
     Task Delete(int boothId, CancellationToken cancellationToken);
 

@@ -26,9 +26,6 @@ public interface IBoothRepository
     Task Update(int boothId, UpdateBoothDto boothDto, 
                     CancellationToken cancellationToken);
 
-    Task UpdateWage(int boothId, int wage, 
-                         Medal medal, CancellationToken cancellationToken);
-
     Task Delete(int boothId, CancellationToken cancellationToken);
 
     Task<bool> IsExistById(int id,

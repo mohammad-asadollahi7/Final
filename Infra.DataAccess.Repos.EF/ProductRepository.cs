@@ -78,7 +78,8 @@ public class ProductRepository : IProductRepository
         return productDetailsDto;
     }
 
-    public async Task<List<ProductOutputApprove>> GetProductsForApprove(CancellationToken cancellationToken)
+    public async Task<List<ProductOutputApprove>> GetProductsForApprove(CancellationToken 
+                                                                          cancellationToken)
     {
         return await _context.Products.Where(p => p.IsApproved == null && p.IsDeleted == false)
                                .Select(p => new ProductOutputApprove()
@@ -226,10 +227,41 @@ public class ProductRepository : IProductRepository
             IsSold = isSold,
             ChangedAt = submitDate,
             ProductId = productId,
-            Quantity = quantity
+            Quantity = quantity,
         };
         await _context.ProductInventories.AddAsync(productInventory);
 
+        if (isCommit)
+            await _context.SaveChangesAsync(cancellationToken);
+    }
+
+
+    public async Task AddQuantityRecord(int cartId,
+                                        DateTime submitDate,
+                                        bool isSold,
+                                        CancellationToken cancellationToken,
+                                        bool isCommit)
+    {
+        var orders = await _context.Orders.Where(o => o.CartId == cartId)
+                                    .Include(o => o.Product.NonAuctionPrice)
+                                    .ToListAsync(cancellationToken);
+
+        List<ProductInventory> productInventories = new();
+        foreach(var order in orders)
+        {
+            var productInventory = new ProductInventory()
+            { 
+                ChangedAt = submitDate,
+                IsSold = isSold,
+                ProductId = order.ProductId,
+                Quantity = order.Quantity,
+                SellPrice = order.Product.NonAuctionPrice.Price * (1 - (order.Product.NonAuctionPrice.Discount)/100m)
+            };
+            productInventories.Add(productInventory);
+
+        }
+
+        await _context.ProductInventories.AddRangeAsync(productInventories, cancellationToken);
         if (isCommit)
             await _context.SaveChangesAsync(cancellationToken);
     }
@@ -430,6 +462,27 @@ public class ProductRepository : IProductRepository
                                     Price = p.AuctionOrders.Select(p => p.Price).Max(),
                                     SellType = SellType.Auction,
                                 }).ToListAsync(cancellationToken);
+    }
+
+    public async Task AddWages(List<CreateWageDto> createWageDtos,
+                               CancellationToken cancellationToken)
+    {
+        List<Wage> wages = new();
+
+        foreach (var createWageDto in createWageDtos)
+        {
+            var newWage = new Wage()
+            {
+                BoothId = createWageDto.BoothId,
+                Date = createWageDto.Date,
+                ProductId = createWageDto.ProductId,
+                Wages = createWageDto.FinalWage
+            };
+            wages.Add(newWage);
+        }
+
+        await _context.Wages.AddRangeAsync(wages, cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
     }
 }
 

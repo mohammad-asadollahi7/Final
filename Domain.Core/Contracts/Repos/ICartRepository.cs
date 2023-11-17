@@ -1,4 +1,5 @@
-﻿using Domain.Core.Dtos.Cart;
+﻿using Domain.Core.Dtos.Booth;
+using Domain.Core.Dtos.Cart;
 using Domain.Core.Enums;
 using Microsoft.EntityFrameworkCore;
 
@@ -43,6 +44,6 @@ public interface ICartRepository
 
     Task CancelCart(int cartId, CancellationToken cancellationToken);
 
-
-
+    Task<List<OrderWithProductDto>> GetOrdersInCart(int cartId,
+                                      CancellationToken cancellationToken);
 }

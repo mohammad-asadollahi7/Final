@@ -1,4 +1,7 @@
 ﻿
+using Domain.Core.Contracts.Repos;
+using Domain.Core.Dtos.Booth;
+using Domain.Core.Dtos.Cart;
 using Domain.Core.Dtos.Pictures;
 using Domain.Core.Dtos.Product;
 using Domain.Core.Dtos.Products;
@@ -61,6 +64,12 @@ public interface IProductService
                            CancellationToken cancellationToken,
                            bool isCommit);
 
+     Task AddQuantityRecord(int cartId,
+                            DateTime submitDate,
+                            bool isSold,
+                            CancellationToken cancellationToken,
+                            bool isCommit);
+
     Task UpdateAuctionProduct(int productId,
                                AuctionDetailsDto productDto,
                                bool isCommit,
@@ -97,5 +106,6 @@ public interface IProductService
     Task<List<ProductOutputDto>> GetAuctions(bool? isApproved,
                                             CancellationToken cancellationToken);
 
-
+    Task AddWages(List<OrderWithProductDto> orderDtos,
+                   CancellationToken cancellationToken);
 }

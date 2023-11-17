@@ -1,8 +1,10 @@
 ﻿using Domain.Core.Contracts.Repos;
 using Domain.Core.Contracts.Services;
+using Domain.Core.Dtos.Cart;
 using Domain.Core.Dtos.Pictures;
 using Domain.Core.Dtos.Product;
 using Domain.Core.Dtos.Products;
+using Domain.Core.Entities;
 using Domain.Core.Enums;
 using Domain.Core.Exceptions;
 using Microsoft.AspNetCore.Mvc;
@@ -162,6 +164,20 @@ public class ProductService : IProductService
                                                        isCommit);
     }
 
+    public async Task AddQuantityRecord(int cartId,
+                                        DateTime submitDate,
+                                        bool isSold,
+                                        CancellationToken cancellationToken,
+                                        bool isCommit)
+    {
+            await _productRepository.AddQuantityRecord(cartId,
+                                                       submitDate,
+                                                       isSold,
+                                                       cancellationToken,
+                                                       isCommit);
+    }
+
+
 
     public async Task UpdateAuctionProduct(int productId,
                                            AuctionDetailsDto productDto,
@@ -297,4 +313,32 @@ public class ProductService : IProductService
 
         return products;
     }
+
+    public async Task AddWages(List<OrderWithProductDto> orderDtos,
+                               CancellationToken cancellationToken)
+    {
+        List<CreateWageDto> wages = new();
+        foreach (var order in orderDtos)
+        {
+            var price = order.DiscountedPrice;
+            var quantity = order.Quantity;
+            var wage = order.Wage / 100m;
+
+            var finalWage = price * quantity * wage;
+
+            var newWage = new CreateWageDto()
+            {
+                BoothId = order.BoothId,
+                Date = DateTime.Now,
+                ProductId = order.ProductId,
+                FinalWage = finalWage,
+            };
+            wages.Add(newWage);
+        }
+
+        await _productRepository.AddWages(wages, cancellationToken);
+    }
+
+
+   
 }

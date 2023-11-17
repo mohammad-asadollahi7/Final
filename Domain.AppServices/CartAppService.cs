@@ -9,11 +9,15 @@ public class CartAppService : ICartAppService
 {
     private readonly ICartService _cartService;
     private readonly IProductService _productService;
+    private readonly IBoothService _boothService;
 
-    public CartAppService(ICartService cartService, IProductService productService)
+    public CartAppService(ICartService cartService, 
+                          IProductService productService,
+                          IBoothService boothService)
     {
         _cartService = cartService;
         _productService = productService;
+        _boothService = boothService;
     }
     public async Task AddNonAuctionProductToCart(int customerId,
                                                 int productId,
@@ -78,7 +82,12 @@ public class CartAppService : ICartAppService
     public async Task FinalizeCart(int cartId, CancellationToken cancellationToken)
     {
         await _cartService.CheckCartStatus(cartId, CartStatus.In_Progress, cancellationToken);
+        await _productService.AddQuantityRecord(cartId, DateTime.Now, true, cancellationToken, true);
         await _cartService.FinalizeCart(cartId, cancellationToken);
+        var orders = await _cartService.GetOrdersInCart(cartId, cancellationToken);
+        await _productService.AddWages(orders, cancellationToken);
+        await _boothService.UpdateMedal(orders.Select(o => o.BoothId).ToList(), 
+                                                             cancellationToken);
     }
 
 

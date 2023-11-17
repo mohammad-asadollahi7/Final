@@ -21,7 +21,7 @@
             <td>@Model.OrderAt.ToPersian()</td>
             <td>@Model.OrderDtos.Sum(o => o.DiscountedPrice * o.Quantity) تومان</td>
             <td><a class="remove-dafault" asp-route-cartId="@Model.Id" asp-action="FinalizeCart"><img src="~/icon/shopping.png" /></a></td>
-            <td><a class="remove-dafault" asp-route-cartId="@Model.Id" asp-action="cancelationCart"><img src="~/icon/cancel.png" /></a></td>
+            <td><a class="remove-dafault" asp-route-cartId="@Model.Id" asp-action="cancelCart"><img src="~/icon/cancel.png" /></a></td>
         </tr>
     </tbody>
 </table>

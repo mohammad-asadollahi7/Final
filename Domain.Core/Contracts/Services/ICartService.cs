@@ -1,4 +1,5 @@
-﻿using Domain.Core.Dtos.Cart;
+﻿using Domain.Core.Dtos.Booth;
+using Domain.Core.Dtos.Cart;
 using Domain.Core.Enums;
 namespace Domain.Core.Contracts.Services;
 
@@ -46,5 +47,8 @@ public interface ICartService
                          decimal proposedPrice,
                          bool isCommit,
                          CancellationToken cancellationToken);
+
+    Task<List<OrderWithProductDto>> GetOrdersInCart(int cartId,
+                                                  CancellationToken cancellationToken);
 
 }

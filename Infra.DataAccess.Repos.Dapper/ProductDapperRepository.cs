@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using Domain.Core.Contracts.Repos;
 using Domain.Core.Dtos.Product;
+using Domain.Core.Entities;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 
@@ -14,6 +15,7 @@ public class ProductDapperRepository : IProductDapperRepository
     {
         _config = configuration;
     }
+
     public async Task<List<ProductOutputDto>> GetNonAuctionsByCategoryId(CancellationToken cancellationToken,
                                                                  params int[] ids)
     {
@@ -31,4 +33,5 @@ public class ProductDapperRepository : IProductDapperRepository
         var productdto = await conn.QueryAsync<ProductOutputDto>(sqlQuery, cancellationToken);
         return productdto.ToList();
     }
+
 }
