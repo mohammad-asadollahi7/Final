@@ -13,10 +13,10 @@ public class CommentService : ICommentService
     {
         _commentRepository = commentRepository;
     }
-    public async Task<List<CommentDto>> GetCommentsForApprove(bool? isApproved, CancellationToken cancellationToken)
+    public async Task<List<CommentDto>> GetAllComments(bool? isApproved, CancellationToken cancellationToken)
     {
-        var comments = await _commentRepository.GetCommentsForApprove(isApproved, 
-                                                                    cancellationToken);
+        var comments = await _commentRepository.GetAllComments(isApproved, 
+                                                            cancellationToken);
         if (comments.Count() == 0)
             throw new AppException(ExpMessage.HaveNotComment, ExpStatusCode.NotFound);
 
@@ -38,5 +38,16 @@ public class CommentService : ICommentService
     public async Task<int> GetNumberOfCommentsForApprove(CancellationToken cancellationToken)
     {
         return await _commentRepository.GetNumberOfCommentsForApprove(cancellationToken);
+    }
+
+    public async Task<List<CommentDto>> GetCommentsByProductId(int productId,
+                                            CancellationToken cancellationToken)
+    {
+        var comments = await _commentRepository.GetCommentsByProductId(productId, 
+                                                                cancellationToken);
+        if (comments.Count() == 0)
+            throw new AppException(ExpMessage.HaveNotComment, ExpStatusCode.NotFound);
+
+        return comments;
     }
 }

@@ -107,16 +107,16 @@ builder.Services.AddAuthentication(options =>
 }).AddJwtBearer(options =>
 {
     options.TokenValidationParameters =
-                                new TokenValidationParameters()
-                                {
-                                    ValidateIssuer = true,
-                                    ValidIssuer = builder.Configuration["Issuer"],
-                                    ValidateAudience = true,
-                                    ValidAudience = builder.Configuration["Audience"],
-                                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes
-                                                              (builder.Configuration["IssuerSigningKey"])),
-                                    ValidateIssuerSigningKey = true,
-                                };
+                    new TokenValidationParameters()
+                    {
+                        ValidateIssuer = true,
+                        ValidIssuer = builder.Configuration["Issuer"],
+                        ValidateAudience = true,
+                        ValidAudience = builder.Configuration["Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes
+                                                  (builder.Configuration["IssuerSigningKey"])),
+                        ValidateIssuerSigningKey = true,
+                    };
 
 
 });

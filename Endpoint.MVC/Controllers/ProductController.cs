@@ -1,4 +1,5 @@
-﻿using Endpoint.MVC.Dtos.Products;
+﻿using Endpoint.MVC.Dtos.Comment;
+using Endpoint.MVC.Dtos.Products;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Endpoint.MVC.Controllers;
@@ -15,9 +16,10 @@ public class ProductController : BaseController
     }
 
 
-    public async Task<IActionResult> GetNonAuctions(CancellationToken cancellationToken)
+    public async Task<IActionResult> GetNonAuctions(CancellationToken cancellationToken,
+                                                    int categoryId = 1)
     {
-        var httpResponseMessage = await SendGetRequest("product/GetNonAuctionsByCategoryId/1", 
+        var httpResponseMessage = await SendGetRequest($"product/GetNonAuctionsByCategoryId/{categoryId}", 
                                                         cancellationToken);
 
         if(!httpResponseMessage.IsSuccessStatusCode)
@@ -47,7 +49,7 @@ public class ProductController : BaseController
     }
 
 
-
+    
     //public async Task<IActionResult> GetAuctions(CancellationToken cancellationToken)
     //{
 
@@ -63,3 +65,4 @@ public class ProductController : BaseController
 
 
 }
+ 

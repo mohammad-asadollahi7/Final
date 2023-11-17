@@ -2,6 +2,7 @@
 using Domain.Core.Dtos.Comment;
 using Infra.Db.EF;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 
 namespace Infra.DataAccess.Repos.EF;
 
@@ -11,7 +12,7 @@ public class CommentRepository : ICommentRepository
 
     public CommentRepository(FinalContext context) => _context = context;
 
-    public async Task<List<CommentDto>> GetCommentsForApprove(bool? isApproved, 
+    public async Task<List<CommentDto>> GetAllComments(bool? isApproved,
                                             CancellationToken cancellationToken)
     {
         return await _context.Comments.Where(c => c.IsApproved == isApproved)
@@ -44,4 +45,24 @@ public class CommentRepository : ICommentRepository
     {
         return await _context.Comments.Where(c => c.IsApproved == null).CountAsync(cancellationToken);
     }
+
+    public async Task<List<CommentDto>> GetCommentsByProductId(int productId,
+                                            CancellationToken cancellationToken)
+    {
+        return await _context.Comments.Where(c => c.ProductId == productId 
+                                       && c.IsApproved == true)
+                                       .Select(c => new CommentDto()
+                                       {
+                                           Id = c.Id,
+                                           Description = c.Description,
+                                           SubmittedDate = c.SubmittedDate,
+                                           CustomerName = c.Customer.ApplicationUser.FullName,
+                                           IsRecommended = c.IsRecommended,
+                                           ProductTitle = c.Product.PersianTitle,
+                                           Title = c.Title
+
+                                       }).ToListAsync(cancellationToken);
+
+    }
 }
+

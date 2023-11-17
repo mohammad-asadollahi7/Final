@@ -11,5 +11,5 @@ public partial class Seller
 
     public virtual ApplicationUser ApplicationUser { get; set; } = null!;
 
-    public virtual Booth Booth { get; set; } = null!;
+    public virtual Booth Booth { get; set; } 
 }

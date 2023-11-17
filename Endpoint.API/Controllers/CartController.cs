@@ -19,7 +19,7 @@ public class CartController : BaseController
 
 
     [HttpGet("AddProduct/{productId}")]
-    [HaveAccess(Role.Customer)]
+    //[HaveAccess(Role.Customer)]
     public async Task<IActionResult> AddProductToCart(int productId, CancellationToken cancellationToken)
     {
         await _cartAppService.AddNonAuctionProductToCart(CurrentUserId,

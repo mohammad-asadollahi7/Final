@@ -33,11 +33,83 @@
             })
         }
 
-    </script>
 
+        let id = 1;
+        function getComment(productId) {
+            
+            if (id == 1) {
+
+                $.ajax({
+                    url: `http://localhost:5153/api/Product/GetCommentsByProductId/` + productId,
+                    type: 'get',
+                    dataType: 'json',
+                    success: function (response) {
+
+                        for (var i = 0; i < response.length; i++) {
+
+                            const comment_container = document.createElement("div");
+                            comment_container.classList.add('my-3', 'p-2', 'd-flex', 'flex-column', 'border', 'border-secondary', 'rounded-1');
+
+
+                            const comment_header = document.createElement("header");
+                            comment_header.classList.add('d-flex', 'justify-content-around', 'gap-3');
+
+
+                            const h5_title = document.createElement("h7");
+                            h5_title.innerHTML = '<span class="">' + 'عنوان: ' + response[i].title + '</span>' ;
+
+
+
+                            const h6_buyer = document.createElement("h7");
+                            h6_buyer.innerHTML = '<span class="">' + 'خریدار: ' + response[i].customerName+ '</span>';
+
+
+                            const h6_date = document.createElement("h7");
+                            h6_date.innerHTML = '<span class="">' + 'تاریخ ثبت نظر: ' + response[i].submittedDate + '</span>';
+
+
+                            const h6_recommended = document.createElement("h7");
+                            if (response[i].isRecommended == true) {
+
+                                h6_recommended.innerHTML = '<img src=" "/>' + 'پیشنهاد میشود';
+                            }
+                            else {
+                                h6_recommended.innerHTML = '<img src=" "/>' + 'پیشنهاد نمیشود';
+
+                            }
+
+
+                            const div_description = document.createElement("div");
+                            div_description.classList.add('mt-2', 'pe-5', 'fs-7', 'text-justify');
+                            div_description.innerHTML = response[i].description;
+
+                            comment_header.append(h5_title);
+                            comment_header.append(h6_buyer);
+                            comment_header.append(h6_date);
+                            comment_header.append(h6_recommended);
+                            comment_container.append(comment_header);
+                            comment_container.append(div_description);
+
+                            var comment = document.getElementById('comment');
+                            comment.append(comment_container);
+                            id++;
+                        }
+
+                    },
+                    error: function (error) {
+
+                        alert(JSON.stringify(error.responseText));
+                    }
+                })
+
+            }
+        }
+
+
+    </script>
     }
 
-
+@using Endpoint.MVC.ExtensionMethods;
 <div class="container">
     <div class="row">
         <div class="col-md-12">
@@ -56,7 +128,7 @@
                                 <div class="single-content-right">
 
                                     <br>
-                                    <span>مشخصات مختصر محصول :</span><br>
+                                    <span>مشخصات محصول :</span><br>
                                     <ul class="product-ul">
                                         @for (int i = 0; i < Model.CustomAttributes.Count(); i++)
                                         {
@@ -85,10 +157,10 @@
                             </div>
                         </div>
                         <hr>
-                        <h3>@Model.Price تومان (تخفیف % @Model.DiscountPercent)</h3>
+                        <h4>@Model.Price تومان (تخفیف % @Model.DiscountPercent)</h4>
 
                         <div class="btn-single">
-                            <a href="javascript:AddProductToCart(@Model.Id);" class="btn fa fa-cart-plus"> افزودن به سبد </a>
+                            <a href="javascript:AddProductToCart(@Model.Id);" class="btn"> افزودن به سبد </a>
                         </div>
                     </div>
                     <div class="col-md-5">
@@ -103,5 +175,10 @@
             </div>
         </div>
     </div>
+</div>
+<div id="comment" class="my-5">
+    <hr />
+    <button id="space1" onclick="getComment(@Model.Id)" class="btn btn-light">مشاهده نظرات</button>
+
 </div>
 

@@ -4,7 +4,8 @@
     <div class="d-flex flex-wrap gap-3 justify-content-center">
         
             @foreach (var product in @Model)
-            {<div class="">
+            {
+                <div>
                 <div class="blog-content cursor-pointer">
                     <figure>
                         <img src="~/img/@product.PicturesName" style="width: 13rem;height: 10rem;">
@@ -17,7 +18,8 @@
                         <li><i class="fa fa-bars"></i>تخفیف: @product.DiscountPercent %</li>
                         <li><i class="fa fa-calendar-o"></i>قیمت: @product.Price</li>
                     </ul>
-                    <a asp-controller="product" asp-action="getnonauction" asp-route-id="@product.Id" class="mybtn"><i class="fa fa-continuous"></i>ادامه مطلب&raquo;</a>
+                    <hr>
+                    <a asp-controller="product" asp-action="getnonauction" asp-route-id="@product.Id" class="mybtn mt-1"><i class="fa fa-continuous"></i>ادامه مطلب&raquo;</a>
                 </div>
             </div>
             }

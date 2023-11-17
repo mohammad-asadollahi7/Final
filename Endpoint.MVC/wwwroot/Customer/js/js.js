@@ -129,6 +129,3 @@ $(".s-img").elevateZoom();
 	});
 
 
-
-
-

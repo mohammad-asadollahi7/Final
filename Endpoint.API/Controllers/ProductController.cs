@@ -120,12 +120,12 @@ public class ProductController : BaseController
         return Ok();
     }
 
-    [HttpGet("GetCommentsForApprove")]
+    [HttpGet("GetAllComments")]
    // [HaveAccess(Role.Admin)]
-    public async Task<IActionResult> GetCommentsForApprove([FromQuery] bool? isApproved, 
+    public async Task<IActionResult> GetAllComments([FromQuery] bool? isApproved, 
                                                     CancellationToken cancellationToken)
     {
-        var comments = await _commentAppService.GetCommentsForApprove(isApproved, cancellationToken);
+        var comments = await _commentAppService.GetAllComments(isApproved, cancellationToken);
         return Ok(comments);
     }
 
@@ -183,6 +183,16 @@ public class ProductController : BaseController
     {
         var products = await _productAppService.GetAuctions(isApproved, cancellationToken);
         return Ok(products);
+    }
+
+
+    [HttpGet("GetCommentsByProductId/{productId}")]
+    public async Task<IActionResult> GetCommentsByProductId(int productId,
+                                            CancellationToken cancellationToken)
+    {
+        var comments = await _commentAppService.GetCommentsByProductId(productId, 
+                                                             cancellationToken);
+        return Ok(comments);
     }
 }
 
