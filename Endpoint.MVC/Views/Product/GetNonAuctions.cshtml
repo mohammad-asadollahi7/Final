@@ -2,28 +2,28 @@
 
 <div class="container">
     <div class="d-flex flex-wrap gap-3 justify-content-center">
-        
-            @foreach (var product in @Model)
-            {
-                <div>
-                <div class="blog-content cursor-pointer">
-                    <figure>
-                        <img src="~/img/@product.PicturesName" style="width: 13rem;height: 10rem;">
-                    </figure>
-                    <h5><i class="fa fa-title"></i>@product.PersianTitle</h5>
-                    <p></p>
-                    <ul>
-                        <li>غرفه: @product.BoothTitle</li>
 
-                        <li><i class="fa fa-bars"></i>تخفیف: @product.DiscountPercent %</li>
-                        <li><i class="fa fa-calendar-o"></i>قیمت: @product.Price</li>
-                    </ul>
-                    <hr>
-                    <a asp-controller="product" asp-action="getnonauction" asp-route-id="@product.Id" class="mybtn mt-1"><i class="fa fa-continuous"></i>ادامه مطلب&raquo;</a>
+        @foreach (var product in @Model)
+        {
+            <a class="remove-dafault" asp-controller="product" asp-action="getnonauction" asp-route-id="@product.Id">
+                <div class="d-flex flex-column justify-content-between blog-content cursor-pointer" style="max-width:16rem; min-height:22rem;">
+                    <div>
+                        <figure>
+                            <img src="~/img/@product.PicturesName" style="width: 13rem;height: 10rem;">
+                        </figure>
+                        <h6><i class="fa fa-title"></i>@product.PersianTitle</h6>
+                    </div>
+                    <div>
+                        <ul>
+                            <li class="text-primary">غرفه: @product.BoothTitle</li>
+                            <li><i class="fa fa-bars"></i>تخفیف: @product.DiscountPercent %</li>
+                            <li><i class="fa fa-calendar-o"></i>قیمت: @product.Price</li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-            }
+            </a>
+        }
 
-       
+
     </div>
 </div>

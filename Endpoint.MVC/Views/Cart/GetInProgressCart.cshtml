@@ -1,0 +1,61 @@
+﻿@using Endpoint.MVC.ExtensionMethods;
+@model Endpoint.MVC.Dtos.Cart.CartDetailsDto
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>کد سفارش</th>
+            <th>وضعیت سبد خرید</th>
+            <th>زمان سفارش</th>
+            <th>هزینه سفارش</th>
+            <th>نهایی کردن</th>
+            <th>لغو کردن</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@Model.Id</td>
+            <td>@Html.DisplayFor(Model => Model.CartStatus)</td>
+            <td>@Model.OrderAt.ToPersian()</td>
+            <td>@Model.OrderDtos.Sum(o => o.DiscountedPrice * o.Quantity) تومان</td>
+            <td><a class="remove-dafault" asp-route-cartId="@Model.Id" asp-action="FinalizeCart"><img src="~/icon/shopping.png" /></a></td>
+            <td><a class="remove-dafault" asp-route-cartId="@Model.Id" asp-action="cancelationCart"><img src="~/icon/cancel.png" /></a></td>
+        </tr>
+    </tbody>
+</table>
+
+<h5 class="text-right mt-5">لیست محصولات:</h5>
+
+<table class="table table-striped">
+    <thead>
+        <tr class="text-center">
+            <th>عنوان</th>
+            <th>تعداد</th>
+            <th>قیمت (تومان)</th>
+            <th>تصویر</th>
+            <th>حذف</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model.OrderDtos)
+        {
+            <tr>
+                <td class="fs-6">@product.ProductDto.PersianTitle</td>
+                <td>@product.Quantity</td>
+                <td>@product.DiscountedPrice</td>
+                <td><img class="small-pic" src="~/img/@product.ProductDto.PictureName" /></td>
+                <td><a class="remove-dafault" asp-route-orderId="@product.Id" asp-action="deleteOrder"> <img src="~/icon/delete.png" /> </a></td>
+
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+<div class="text-center">
+    <a class="btn btn-light border" asp-area="customer" asp-action="GetAllByCustomerId">نمایش همه سفارشات</a>
+</div>
+
+

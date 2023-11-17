@@ -1015,3 +1015,15 @@ ul {
 
 
 /*h*/
+.small-pic {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 5px;
+}
+
+.remove-dafault, .remove-dafault:hover {
+    text-decoration: none !important;
+    text-decoration-color: none !important;
+    color: inherit;
+    font-family: inherit;
+}

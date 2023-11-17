@@ -113,7 +113,8 @@ public class CartRepository : ICartRepository
             CartId = cartId,
             DiscountedPrice = discountedPrice,
             ProductId = productId,
-            Quantity = quantity
+            Quantity = quantity,
+            BuyType = 0,
         };
         var cart = await _context.Carts.SingleOrDefaultAsync(c => c.Id == cartId);
         cart.Orders.Add(newOrder);

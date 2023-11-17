@@ -15,7 +15,7 @@ public partial class Order
 
     public int CartId { get; set; }
 
-    public bool BuyType { get; set; }
+    public int BuyType { get; set; }
 
     public virtual Cart Cart { get; set; } = null!;
 
