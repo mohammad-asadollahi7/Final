@@ -39,14 +39,14 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var product in Model.OrderDtos)
+        @foreach (var order in Model.OrderDtos)
         {
             <tr>
-                <td class="fs-6">@product.ProductDto.PersianTitle</td>
-                <td>@product.Quantity</td>
-                <td>@product.DiscountedPrice</td>
-                <td><img class="small-pic" src="~/img/@product.ProductDto.PictureName" /></td>
-                <td><a class="remove-dafault" asp-route-orderId="@product.Id" asp-action="deleteOrder"> <img src="~/icon/delete.png" /> </a></td>
+                <td class="fs-6">@order.ProductDto.PersianTitle</td>
+                <td>@order.Quantity</td>
+                <td>@order.DiscountedPrice</td>
+                <td><img class="small-pic" src="~/img/@order.ProductDto.PictureName" /></td>
+                <td><a class="remove-dafault" asp-route-orderId="@order.Id" asp-action="deleteOrder"> <img src="~/icon/delete.png" /> </a></td>
 
             </tr>
         }
@@ -55,7 +55,7 @@
 </table>
 
 <div class="text-center">
-    <a class="btn btn-light border" asp-area="customer" asp-action="GetAllByCustomerId">نمایش همه سفارشات</a>
+    <a class="btn btn-light border" asp-action="GetAllByCustomerId" asp-controller="cart">نمایش همه سفارشات</a>
 </div>
 
 

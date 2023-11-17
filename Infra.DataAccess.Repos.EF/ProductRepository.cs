@@ -80,7 +80,7 @@ public class ProductRepository : IProductRepository
 
     public async Task<List<ProductOutputApprove>> GetProductsForApprove(CancellationToken cancellationToken)
     {
-        return await _context.Products.Where(p => p.IsApproved == null)
+        return await _context.Products.Where(p => p.IsApproved == null && p.IsDeleted == false)
                                .Select(p => new ProductOutputApprove()
                                { 
                                    Id = p.Id,

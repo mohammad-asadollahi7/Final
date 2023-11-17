@@ -1,0 +1,25 @@
+﻿@using Endpoint.MVC.ExtensionMethods;
+@model List<Endpoint.MVC.Dtos.Cart.CartDto>
+
+
+<table class="table mt-2">
+    <thead>
+        <tr>
+            <th>کد سفارش</th>
+            <th>وضعیت سبد خرید</th>
+            <th>زمان سفارش</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var cart in @Model)
+        {
+            <tr>
+                <td>@cart.Id</td>
+                <td>@Html.DisplayFor(Model => cart.CartStatus)</td>
+                <td>@cart.OrderAt.ToPersian()</td>
+            </tr>
+
+        }
+    </tbody>
+</table>

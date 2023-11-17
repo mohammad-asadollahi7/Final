@@ -74,7 +74,6 @@ public class CartController : BaseController
             return RedirectToErrorPage(httpResponseMessage);
 
         return RedirectToAction("GetInProgressCart");
-
     }
 
     public async Task<IActionResult> FinalizeCart(int cartId,

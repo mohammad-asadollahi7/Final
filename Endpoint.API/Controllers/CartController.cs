@@ -20,7 +20,8 @@ public class CartController : BaseController
 
     [HttpGet("AddProduct/{productId}")]
     //[HaveAccess(Role.Customer)]
-    public async Task<IActionResult> AddProductToCart(int productId, CancellationToken cancellationToken)
+    public async Task<IActionResult> AddProductToCart(int productId, 
+                                                CancellationToken cancellationToken)
     {
         await _cartAppService.AddNonAuctionProductToCart(CurrentUserId,
                                                          productId,
@@ -47,7 +48,7 @@ public class CartController : BaseController
     [HttpGet("GetCurrentCartByCustomerId")]
    // [HaveAccess(Role.Customer)]
     public async Task<IActionResult> GetCurrentCartByCustomerId(CancellationToken
-                                                                            cancellationToken)
+                                                                    cancellationToken)
     {
         var carts = await _cartAppService.GetByCartStatus(CurrentUserId,
                                               CartStatus.In_Progress,
