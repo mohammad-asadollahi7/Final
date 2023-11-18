@@ -82,14 +82,14 @@ public class BaseController : Controller
 
     public virtual IActionResult RedirectToErrorPage(HttpResponseMessage httpResponseMessage)
     {
-       // if (httpResponseMessage.StatusCode == HttpStatusCode.Unauthorized)
-         //   TempData["ErrorMessage"] = "عدم دسترسی به محتوای جاری";
+        if (httpResponseMessage.StatusCode == HttpStatusCode.Unauthorized)
+            TempData["ErrorMessage"] = "عدم دسترسی به محتوای جاری";
 
-      //  else
-      //  {
+        else
+        {
             var errorMessage = httpResponseMessage.Content.ReadAsStringAsync().Result;
             TempData["ErrorMessage"] = errorMessage;
-       // }
+        }
         return RedirectToAction("Error", "Home");
     }
 

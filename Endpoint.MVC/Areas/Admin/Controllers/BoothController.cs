@@ -73,7 +73,7 @@ public class BoothController : AdminBaseController
 
 
 
-    [HttpGet("UpdateNonAuction")]
+    [HttpGet]
     public async Task<IActionResult> UpdateNonAuction(int id, CancellationToken cancellationToken)
     {
         var httpResponseMessage = await SendGetRequest($"Product/GetNonAuctionProductById/{id}?isApproved=true",
@@ -103,9 +103,9 @@ public class BoothController : AdminBaseController
 
 
 
-    [HttpPost("Update")]
+    [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Update(UpdateProductDto updateProductDto, 
+    public async Task<IActionResult> UpdateNonAuction(UpdateProductDto updateProductDto, 
                                                      CancellationToken cancellationToken)
     {
         var httpResponseMessage = await SendPutRequest($"Product/UpdateNonAuction/{updateProductDto.Id}",

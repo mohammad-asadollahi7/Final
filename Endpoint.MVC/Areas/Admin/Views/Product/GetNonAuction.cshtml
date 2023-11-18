@@ -33,44 +33,7 @@
             </ul>
         </div>
 
-        <!-- Product Configuration -->
-        <div class="product-configuration">
-
-            <!-- Product Color -->
-            @*   <div class="product-color">
-            <span>Color</span>
-
-            <div class="color-choose">
-            <div>
-            <input data-image="red" type="radio" id="red" name="color" value="red" checked>
-            <label for="red"><span></span></label>
-            </div>
-            <div>
-            <input data-image="blue" type="radio" id="blue" name="color" value="blue">
-            <label for="blue"><span></span></label>
-            </div>
-            <div>
-            <input data-image="black" type="radio" id="black" name="color" value="black">
-            <label for="black"><span></span></label>
-            </div>
-            </div>
-
-            </div>*@
-
-
-
-            @*  <!-- Cable Configuration -->
-            <div class="cable-config">
-            <span>Cable configuration</span>
-
-            <div class="cable-choose">
-            <button>Straight</button>
-            <button>Coiled</button>
-            <button>Long-coiled</button>
-            </div>
-            </div>*@
-
-        </div>
+        
 
         <!-- Product Pricing -->
         <div class="product-price">
@@ -81,7 +44,7 @@
 
 </main>
 <div class="m-2 text-center">
-    <a class="btn btn-primary" asp-area="admin" asp-controller="product" asp-action="updatenonauctionbyid" asp-route-id="@Model.Id">بروزرسانی</a>
+    <a class="btn btn-primary" asp-area="admin" asp-controller="product" asp-action="updatenonauction" asp-route-id="@Model.Id">بروزرسانی</a>
     <a class="btn btn-danger" asp-area="admin" asp-action="delete" asp-controller="product" asp-route-productId="@Model.Id" asp-route-categoryId="@Model.CategoryId">حذف</a>
 </div>
 

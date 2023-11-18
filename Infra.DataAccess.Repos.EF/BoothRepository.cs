@@ -156,7 +156,7 @@ public class BoothRepository : IBoothRepository
                                     CancellationToken cancellationToken)
     {
         return await _context.Booths
-                        .Where(b => b.Title.ToLower() == title.ToLower())
+                        .Where(b => b.Title.ToLower().Contains(title.ToLower()))
                         .Select(b => new BoothDto()
                         {
                             Id = b.Id,

@@ -65,8 +65,6 @@ public class AccountController : BaseController
 
         Response.Cookies.Append("authorize", loginOutput.Token);
         Response.Cookies.Append("fullName", loginOutput.FullName);
-     //   TempData.Peek("Role");
-      //  TempData["Role"] = loginDto.Role;
 
 
         if (loginDto.Role.ToString().ToLower() == "admin")

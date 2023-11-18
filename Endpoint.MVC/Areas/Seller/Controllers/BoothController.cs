@@ -73,7 +73,7 @@ public class BoothController : SellerBaseController
             PictureName = uniqueFileName,
             Title = booth.Title,
         };
-        var httpResponseMessage = await SendPutRequest($"Booth/Update/{updateDto.Id}",
+        var httpResponseMessage = await SendPutRequest($"Booth/UpdateNonAuction/{updateDto.Id}",
                                                       JsonConvert.SerializeObject(updateDto),
                                                        cancellationToken);
 

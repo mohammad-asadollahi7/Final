@@ -29,11 +29,12 @@ public class ProductController : AdminBaseController
         _hostingEnvironment = hostingEnvironment;
     }
 
-
     public IActionResult Index()
     {
         return View();
     }
+
+    #region Get
     public async Task<IActionResult> GetWages(CancellationToken cancellationToken)
     {
         var httpResponseMessage = await SendGetRequest($"Product/GetWages",
@@ -47,7 +48,7 @@ public class ProductController : AdminBaseController
                                               .ReadFromJsonAsync<List<WageDto>>();
         return View(wages);
     }
-    
+
     public async Task<IActionResult> GetProductsForApprove(CancellationToken cancellationToken)
     {
         var httpResponseMessage = await SendGetRequest($"Product/GetProductsForApprove",
@@ -61,7 +62,6 @@ public class ProductController : AdminBaseController
                                               .ReadFromJsonAsync<List<ProductOutputApprove>>();
         return View(products);
     }
-
 
     public async Task<IActionResult> GetProductById(int productId, SellType sellType,
                                                 CancellationToken cancellationToken,
@@ -100,38 +100,22 @@ public class ProductController : AdminBaseController
         return View(product);
     }
 
-
-    public async Task<IActionResult> GetNonAuctionById(int id, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetAuctions(CancellationToken cancellationToken)
     {
-
-        var httpResponseMessage = await SendGetRequest($"Product/GetNonAuctionProductById/{id}?isApproved=true",
-                                                                            cancellationToken);
+        var httpResponseMessage = await SendGetRequest($"Product/GetAuctions?isApproved=true",
+                                                                    cancellationToken);
 
         if (!httpResponseMessage.IsSuccessStatusCode)
             return RedirectToErrorPage(httpResponseMessage);
 
 
-        var product = await httpResponseMessage.Content
-                                         .ReadFromJsonAsync<ProductDetailsDto>();
-        return View(product);
+        var products = await httpResponseMessage.Content.ReadFromJsonAsync<List<ProductOutputDto>>();
+        return View(products);
     }
-    public async Task<IActionResult> ApproveProduct(int id, bool isApproved, 
-                                                    CancellationToken cancellationToken)
-    {
-        var httpResponseMessage = await SendPatchRequest($"Product/ApproveProduct/{id}/{isApproved}", 
-                                                            cancellationToken);
-
-        if (!httpResponseMessage.IsSuccessStatusCode)
-            return RedirectToErrorPage(httpResponseMessage);
-
-        return RedirectToAction(nameof(GetProductsForApprove));
-    }
-
-
 
     public async Task<IActionResult> GetCommentsForApprove(CancellationToken cancellationToken)
     {
-        var httpResponseMessage = await SendGetRequest("Product/GetAllComments", 
+        var httpResponseMessage = await SendGetRequest("Product/GetAllComments",
                                                             cancellationToken);
 
         if (!httpResponseMessage.IsSuccessStatusCode)
@@ -144,20 +128,8 @@ public class ProductController : AdminBaseController
 
     }
 
-    public async Task<IActionResult> ApproveComment(int id, bool isApproved,
-                                                  CancellationToken cancellationToken)
-    {
-        var httpResponseMessage = await SendPatchRequest($"Product/ApproveComment/{id}?isApproved={isApproved}", 
-                                                            cancellationToken);
-
-        if (!httpResponseMessage.IsSuccessStatusCode)
-            return RedirectToErrorPage(httpResponseMessage);
-
-        return RedirectToAction(nameof(GetCommentsForApprove));
-    }
-
     public async Task<IActionResult> GetNonAuctionsByCategoryId(CancellationToken cancellationToken,
-                                                                int id = 1)
+                                                               int id = 1)
     {
         var httpResponseMessage = await SendGetRequest($"Product/GetNonAuctionsByCategoryId/{id}",
                                                                     cancellationToken);
@@ -175,34 +147,26 @@ public class ProductController : AdminBaseController
 
         return View(products);
     }
-
-    public async Task<IActionResult> GetAuctions(CancellationToken cancellationToken)
+    public async Task<IActionResult> GetNonAuctionById(int id, CancellationToken cancellationToken)
     {
-        var httpResponseMessage = await SendGetRequest($"Product/GetAuctions?isApproved=true",
-                                                                    cancellationToken);
+
+        var httpResponseMessage = await SendGetRequest($"Product/GetNonAuctionProductById/{id}?isApproved=true",
+                                                                            cancellationToken);
 
         if (!httpResponseMessage.IsSuccessStatusCode)
             return RedirectToErrorPage(httpResponseMessage);
 
 
-        var products = await httpResponseMessage.Content.ReadFromJsonAsync<List<ProductOutputDto>>();
-        return View(products);
+        var product = await httpResponseMessage.Content
+                                         .ReadFromJsonAsync<ProductDetailsDto>();
+        return View(product);
     }
-    public async Task<IActionResult> Delete(int productId, int categoryId,
-                                           CancellationToken cancellationToken)
-    {
-        var httpResponseMessage = await SendDeleteRequest($"product/remove/{productId}",
-                                                          cancellationToken);
-        if (!httpResponseMessage.IsSuccessStatusCode)
-            return RedirectToErrorPage(httpResponseMessage);
-
-        return RedirectToAction(nameof(GetNonAuctionsByCategoryId), new { id = categoryId });
-    }
+    #endregion
 
 
-
-    [HttpGet("UpdateNonAuctionById")]
-    public async Task<IActionResult> UpdateNonAuctionById(int id, CancellationToken cancellationToken)
+    #region Update
+  [HttpGet]
+    public async Task<IActionResult> UpdateNonAuction(int id, CancellationToken cancellationToken)
     {
         var httpResponseMessage = await SendGetRequest($"Product/GetNonAuctionProductById/{id}?isApproved=true",
                                                        cancellationToken);
@@ -229,10 +193,9 @@ public class ProductController : AdminBaseController
     }
 
 
-
-    [HttpPost("Updates")]
+    [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Updates(UpdateProductDto updateProductDto,
+    public async Task<IActionResult> UpdateNonAuction(UpdateProductDto updateProductDto,
                                             CancellationToken cancellationToken)
     {
         var httpResponseMessage = await SendPutRequest($"Product/UpdateNonAuction/{updateProductDto.Id}",
@@ -245,10 +208,8 @@ public class ProductController : AdminBaseController
                                 new { id = updateProductDto.CategoryId });
     }
 
-
-
-    [HttpGet("UpdateAuctionById")]
-    public async Task<IActionResult> UpdateAuctionById(int id, CancellationToken cancellationToken)
+    [HttpGet]
+    public async Task<IActionResult> UpdateAuction(int id, CancellationToken cancellationToken)
     {
         var httpResponseMessage = await SendGetRequest($"Product/GetAuctionProductById/{id}?isApproved=true",
                                                        cancellationToken);
@@ -259,15 +220,14 @@ public class ProductController : AdminBaseController
 
         var productDetails = await httpResponseMessage.Content
                                              .ReadFromJsonAsync<AuctionDetailsDto>();
-        
+
         return View(productDetails);
     }
 
 
-
-    [HttpPost("UpdatesAuction")]
+    [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> UpdatesAuction(AuctionDetailsDto updateProductDto,
+    public async Task<IActionResult> UpdateAuction(AuctionDetailsDto updateProductDto,
                                             CancellationToken cancellationToken)
     {
         var httpResponseMessage = await SendPutRequest($"Product/UpdateAuction/{updateProductDto.Id}",
@@ -278,6 +238,52 @@ public class ProductController : AdminBaseController
 
         return RedirectToAction(nameof(GetAuctions));
     }
+
+    #endregion
+
+
+    public async Task<IActionResult> ApproveProduct(int id, bool isApproved,
+                                                    CancellationToken cancellationToken)
+    {
+        var httpResponseMessage = await SendPatchRequest($"Product/ApproveProduct/{id}/{isApproved}",
+                                                            cancellationToken);
+
+        if (!httpResponseMessage.IsSuccessStatusCode)
+            return RedirectToErrorPage(httpResponseMessage);
+
+        return RedirectToAction(nameof(GetProductsForApprove));
+    }
+
+
+    public async Task<IActionResult> ApproveComment(int id, bool isApproved,
+                                                  CancellationToken cancellationToken)
+    {
+        var httpResponseMessage = await SendPatchRequest($"Product/ApproveComment/{id}?isApproved={isApproved}",
+                                                            cancellationToken);
+
+        if (!httpResponseMessage.IsSuccessStatusCode)
+            return RedirectToErrorPage(httpResponseMessage);
+
+        return RedirectToAction(nameof(GetCommentsForApprove));
+    }
+
+
+
+
+    public async Task<IActionResult> Delete(int productId, int categoryId,
+                                           CancellationToken cancellationToken)
+    {
+        var httpResponseMessage = await SendDeleteRequest($"product/remove/{productId}",
+                                                          cancellationToken);
+        if (!httpResponseMessage.IsSuccessStatusCode)
+            return RedirectToErrorPage(httpResponseMessage);
+
+        return RedirectToAction(nameof(GetNonAuctionsByCategoryId), new { id = categoryId });
+    }
+
+
+
+
 
     public async Task<IActionResult> DeleteAuction(int productId,
                                                   CancellationToken cancellationToken)
@@ -292,7 +298,7 @@ public class ProductController : AdminBaseController
 
 
 
-    [HttpGet("CreateNonAuction")] 
+    [HttpGet("CreateNonAuction")]
     public async Task<IActionResult> CreateNonAuction(CancellationToken cancellationToken)
     {
         var httpResponseMessage = await SendGetRequest("CreateNonAuction/GetLeafCategories",
@@ -305,49 +311,6 @@ public class ProductController : AdminBaseController
                                              .ReadFromJsonAsync<List<CategoryTitleDto>>();
         return View(categoryTitles);
     }
-
-
-    //[HttpGet("Update/{productId}")]
-    //public async Task<IActionResult> Update(int productId,
-    //                                        CancellationToken cancellationToken)
-    //{
-    //    var httpResponseMessage = await SendGetRequest($"Product/GetById/{productId}",
-    //                                                    cancellationToken);
-    //    if (!httpResponseMessage.IsSuccessStatusCode)
-    //        return RedirectToErrorPage(httpResponseMessage);
-
-    //    var product = await httpResponseMessage.Content.ReadFromJsonAsync<ProductDetailsDto>();
-    //    var updateProductDto = new UpdateProductDto()
-    //    {
-    //        Id = product.Id,
-    //        Description = product.Description,
-    //        PersianTitle = product.PersianTitle,
-    //        EnglishTitle = product.EnglishTitle,
-    //        CustomAttributes = product.CustomAttributes
-    //    };
-
-
-    //    return View(updateProductDto);
-    //}
-
-
-    //[HttpPost("Update/{productId}")]
-    //[ValidateAntiForgeryToken]
-    //public async Task<IActionResult> Update(int productId,
-    //                                        UpdateProductDto productDto,
-    //                                        CancellationToken cancellationToken)
-    //{
-    //    var httpResponseMessage = await SendPutRequest($"Product/Update/{productId}",
-    //                                                   JsonConvert.SerializeObject(productDto),
-    //                                                   cancellationToken);
-    //    if (!httpResponseMessage.IsSuccessStatusCode)
-    //        return RedirectToErrorPage(httpResponseMessage);
-
-    //    return RedirectToAction("GetAllByCategoryId");
-    //}
-
-
-  
 
 }
 
