@@ -1,0 +1,65 @@
+﻿@model Endpoint.MVC.Dtos.Products.AuctionDetailsDto;
+
+
+@using Endpoint.MVC.ExtensionMethods;
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="single-box">
+                <div class="row">
+                    <div class="col-md-7">
+                        <div class="text-right">
+                            <h6>@Model.EnglishTitle</h6>
+                            <h4>@Model.PersianTitle</h4>
+                            <hr />
+                            <p><span class="fw-1">توضیحات:</span>  @Model.Description</p>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-7">
+                                <div class="single-content-right">
+
+                                    <br>
+                                    <span>مشخصات محصول :</span><br>
+                                    <ul class="product-ul">
+                                        @for (int i = 0; i < Model.CustomAttributes.Count(); i++)
+                                        {
+                                            <li class="list-font list-group-item">@Model.CustomAttributes[i].Title : @Model.CustomAttributes[i].Value</li>
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="single-content-left">
+                                    <ul>
+                                        <span>بالاترین پیشنهاد ثبت شده :  @Model.MaxPrice</span>
+                                        <br>
+
+                                        <li>
+                                            <span>آغاز مزایده: @Model.FromDate.ToPersian()</span>
+                                            <span>پایان مزایده: @Model.ToDate.ToPersian()</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <h4>پایین ترین قیمت قابل پیشنهاد: @Model.MinPrice</h4>
+
+                        <div class="btn-single">
+                            <a href="javascript:AddProductToCart(@Model.Id);" class="btn">ارائه پیشنهاد</a>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="single-img">
+                            <figure>
+                                <img src="~/img/@Model.PictureName" class="w-100">
+                            </figure>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

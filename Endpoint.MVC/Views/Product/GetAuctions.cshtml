@@ -1,0 +1,28 @@
+﻿@model List<Endpoint.MVC.Dtos.Products.ProductOutputDto>
+
+<div class="container">
+    <div class="d-flex flex-wrap gap-3 justify-content-center">
+
+        @foreach (var product in @Model)
+        {
+            <a class="remove-dafault" asp-controller="product" asp-action="getauction" asp-route-id="@product.Id">
+                <div class="d-flex flex-column justify-content-between blog-content cursor-pointer" style="max-width:16rem; min-height:22rem;">
+                    <div>
+                        <figure>
+                            <img src="~/img/@product.PicturesName" style="width: 13rem;height: 10rem;">
+                        </figure>
+                        <h6><i class="fa fa-title"></i>@product.PersianTitle</h6>
+                    </div>
+                    <div>
+                        <ul>
+                            <li class="text-primary">غرفه: @product.BoothTitle</li>
+                            <li><i class="fa fa-calendar-o"></i>پایین ترین قیمت قابل پیشنهاد: @product.Price</li>
+                        </ul>
+                    </div>
+                </div>
+            </a>
+        }
+
+
+    </div>
+</div>

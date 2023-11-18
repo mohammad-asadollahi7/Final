@@ -15,23 +15,6 @@ public class CartController : BaseController
         return View();
     }
 
-
-    //[HttpPost]
-    //[ValidateAntiForgeryToken]
-    //public async Task<IActionResult> AddProductToCart(int productId,
-    //                                                 CancellationToken cancellationToken)
-    //{
-    //    var content = JsonConvert.SerializeObject(new { ProductId = productId, Count = 1 });
-    //    var httpResponseMessage = await SendPostRequest("Cart/AddProduct", content, cancellationToken);
-
-    //    if (!httpResponseMessage.IsSuccessStatusCode)
-    //        return RedirectToErrorPage(httpResponseMessage);
-
-    //    return RedirectToAction("GetAllByCategoryId", "Product");
-    //}
-
-
-
     public async Task<IActionResult> GetInProgressCart(CancellationToken cancellationToken)
     {
         var httpResponseMessage = await SendGetRequest("Cart/GetCurrentCartByCustomerId", cancellationToken);
@@ -98,4 +81,10 @@ public class CartController : BaseController
 
         return RedirectToAction("GetAllByCustomerId");
     }
+
+    //public async Task<IActionResult> AddAuctionOrder(int id, CancellationToken cancellationToken)
+    //{
+
+    //}
+
 }

@@ -61,6 +61,7 @@ public class ProductRepository : IProductRepository
                                                       FromDate = p.Auction.FromDate,
                                                       ToDate = p.Auction.ToDate,
                                                       CategoryId = p.Categories.First().Id,
+                                                      MaxPrice = p.AuctionOrders.Select(a => a.Price).Max(),
                                                       Description = p.Description,
                                                       MinPrice = p.Auction.MinPrice,
                                                       BoothTitle = p.Booth.Title,

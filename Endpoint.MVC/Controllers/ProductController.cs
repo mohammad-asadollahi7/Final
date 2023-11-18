@@ -71,20 +71,39 @@ public class ProductController : BaseController
         return RedirectToAction(nameof(GetNonAuctions));
     }
 
-    
-    //public async Task<IActionResult> GetAuctions(CancellationToken cancellationToken)
-    //{
 
-    //}
+    public async Task<IActionResult> GetAuctions(CancellationToken cancellationToken)
+    {
+        var httpResponseMessage = await SendGetRequest($"product/GetAuctions?isApproved=true",
+                                                        cancellationToken);
+
+        if (!httpResponseMessage.IsSuccessStatusCode)
+            return RedirectToErrorPage(httpResponseMessage);
+
+        var products = await httpResponseMessage.Content
+                                            .ReadFromJsonAsync<List<ProductOutputDto>>();
+
+        return View(products);
+    }
 
 
 
 
-    //public async Task<IActionResult> GetAuction(int id, CancellationToken cancellationToken)
-    //{
+    public async Task<IActionResult> GetAuction(int id, 
+                                            CancellationToken cancellationToken)
+    {
+        var httpResponseMessage = await SendGetRequest($"product/GetAuctionProductById/{id}?isApproved=true",
+                                                         cancellationToken);
 
-    //}
+        if (!httpResponseMessage.IsSuccessStatusCode)
+            return RedirectToErrorPage(httpResponseMessage);
+
+        var product = await httpResponseMessage.Content
+                                            .ReadFromJsonAsync<AuctionDetailsDto>();
+
+        return View(product);
+    }
+
 
 
 }
- 

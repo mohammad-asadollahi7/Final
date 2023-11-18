@@ -12,6 +12,7 @@ public class AuctionDetailsDto
 
     public string Description { get; set; } = null!;
 
+    public decimal MaxPrice { get; set; }
     public int CategoryId { get; set; }
 
     public decimal MinPrice { get; set; }

@@ -13,7 +13,7 @@ public class AuctionDetailsDto
     public string EnglishTitle { get; set; } = null!;
 
     public string Description { get; set; } = null!;
-
+    public decimal MaxPrice { get; set; }
     public int CategoryId { get; set; }
     public DateTime FromDate { get; set; }
     public DateTime ToDate { get; set; }
