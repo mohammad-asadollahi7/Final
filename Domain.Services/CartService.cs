@@ -26,13 +26,13 @@ public class CartService : ICartService
     }
 
     public async Task AddAuctionOrder(int? customerId, int productId,
-                                       decimal lastSubmittedPrice, decimal proposedPrice,
+                                       decimal MinPrice, decimal proposedPrice,
                                        bool isCommit,
                                        CancellationToken cancellationToken)
     {
-        if (lastSubmittedPrice > proposedPrice)
+        if (MinPrice > proposedPrice)
             throw new AppException(ExpMessage.LowPrice,
-                                     ExpStatusCode.BadRequest);
+                                   ExpStatusCode.BadRequest);
 
 
         await _cartRepository.AddAuctionOrder(customerId, productId,

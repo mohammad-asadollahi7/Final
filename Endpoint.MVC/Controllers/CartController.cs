@@ -1,4 +1,5 @@
 ﻿using Endpoint.MVC.Dtos.Cart;
+using Endpoint.MVC.Dtos.Products;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -82,9 +83,18 @@ public class CartController : BaseController
         return RedirectToAction("GetAllByCustomerId");
     }
 
-    //public async Task<IActionResult> AddAuctionOrder(int id, CancellationToken cancellationToken)
-    //{
 
-    //}
+    [HttpPost]
+    public async Task<IActionResult> AddAuctionOrder(AddAuctionOrderDto auctionOrder, 
+                                                     CancellationToken cancellationToken)
+    {
+        var httpResponseMessage = await SendPostRequest($"cart/AddAuctionOrder",
+                                                        JsonConvert.SerializeObject(auctionOrder),
+                                                         cancellationToken);
+        if (!httpResponseMessage.IsSuccessStatusCode)
+            return RedirectToErrorPage(httpResponseMessage);
+
+        return RedirectToAction("GetNonAuctions", "Product");
+    }
 
 }

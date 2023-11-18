@@ -47,7 +47,11 @@
                         <h4>پایین ترین قیمت قابل پیشنهاد: @Model.MinPrice</h4>
 
                         <div class="btn-single">
-                            <a href="javascript:AddProductToCart(@Model.Id);" class="btn">ارائه پیشنهاد</a>
+                            <form class="form" method="post" asp-controller="cart" asp-action="addauctionorder">
+                                <input class="form-control" type="hidden" name="ProductId" value="@Model.Id">
+                                <input class="form-control" type="number" name="ProposedPrice" placeholder="پیشنهاد (تومان)"/>
+                                <button type="submit" class="btn">ارائه پیشنهاد</button>
+                            </form>
                         </div>
                     </div>
                     <div class="col-md-5">

@@ -1,4 +1,5 @@
 ﻿using Domain.Core.Contracts.AppServices;
+using Domain.Core.Dtos.Product;
 using Domain.Core.Enums;
 using Endpoint.API.CustomAttributes;
 using Endpoint.API.Dtos;
@@ -107,13 +108,13 @@ public class CartController : BaseController
 
 
 
-    [HttpPatch("AddAuctionOrder/{productId}")]
+    [HttpPost("AddAuctionOrder")]
   //  [HaveAccess(Role.Customer)]
-    public async Task AddAuctionOrder(int productId, decimal proposedPrice,
+    public async Task AddAuctionOrder([FromBody] AddAuctionOrderDto orderDto,
                                       CancellationToken cancellationToken)
     {
-        await _cartAppService.AddAuctionOrder(CurrentUserId, productId,
-                                              proposedPrice, cancellationToken);
+        await _cartAppService.AddAuctionOrder(CurrentUserId, orderDto.ProductId,
+                                              orderDto.ProposedPrice, cancellationToken);
     }
 
 }
