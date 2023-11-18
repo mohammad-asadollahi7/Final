@@ -51,4 +51,6 @@ public interface ICartService
     Task<List<OrderWithProductDto>> GetOrdersInCart(int cartId,
                                                   CancellationToken cancellationToken);
 
+     Task EnsureCustomerBuyed(int customerId, int productId,
+                              CancellationToken cancellationToken);
 }

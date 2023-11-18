@@ -1,6 +1,7 @@
 ﻿using Endpoint.MVC.Dtos.Comment;
 using Endpoint.MVC.Dtos.Products;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace Endpoint.MVC.Controllers;
 
@@ -48,6 +49,27 @@ public class ProductController : BaseController
         return View(product);
     }
 
+    [HttpGet] 
+    public IActionResult CreateComment(int productId)
+    {
+        return View(productId);
+    }
+
+
+    [HttpPost]
+    public async Task<IActionResult> CreateComment(CreateCommentDto createCommentDto, 
+                                                    CancellationToken cancellationToken)
+    {
+        var httpResponseMessage = await SendPostRequest($"product/CreateComment/",
+                                                        JsonConvert.SerializeObject(createCommentDto),
+                                                        cancellationToken);
+
+        if (!httpResponseMessage.IsSuccessStatusCode)
+            return RedirectToErrorPage(httpResponseMessage);
+
+
+        return RedirectToAction(nameof(GetNonAuctions));
+    }
 
     
     //public async Task<IActionResult> GetAuctions(CancellationToken cancellationToken)

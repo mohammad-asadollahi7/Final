@@ -46,4 +46,7 @@ public interface ICartRepository
 
     Task<List<OrderWithProductDto>> GetOrdersInCart(int cartId,
                                       CancellationToken cancellationToken);
+
+    Task<bool> HasCustomerBuyed(int customerId, int productId,
+                                      CancellationToken cancellationToken);
 }

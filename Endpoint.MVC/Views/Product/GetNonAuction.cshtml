@@ -63,11 +63,6 @@
                             const h6_buyer = document.createElement("h7");
                             h6_buyer.innerHTML = '<span class="">' + 'خریدار: ' + response[i].customerName+ '</span>';
 
-
-                            const h6_date = document.createElement("h7");
-                            h6_date.innerHTML = '<span class="">' + 'تاریخ ثبت نظر: ' + response[i].submittedDate + '</span>';
-
-
                             const h6_recommended = document.createElement("h7");
                             if (response[i].isRecommended == true) {
 
@@ -85,7 +80,6 @@
 
                             comment_header.append(h5_title);
                             comment_header.append(h6_buyer);
-                            comment_header.append(h6_date);
                             comment_header.append(h6_recommended);
                             comment_container.append(comment_header);
                             comment_container.append(div_description);
@@ -178,7 +172,11 @@
 </div>
 <div id="comment" class="my-5">
     <hr />
-    <button id="space1" onclick="getComment(@Model.Id)" class="btn btn-light">مشاهده نظرات</button>
+    <div class="d-flex gap-2">
+        <button id="space1" onclick="getComment(@Model.Id)" class="btn btn-light">مشاهده نظرات</button>
+        <a class="btn btn-light" asp-action="createcomment" asp-controller="product" asp-route-productId="@Model.Id">ثبت نظر</a>
+
+    </div>
 
 </div>
 

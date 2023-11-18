@@ -11,4 +11,6 @@ public interface ICommentService
 
     Task<List<CommentDto>> GetCommentsByProductId(int productId,
                                             CancellationToken cancellationToken);
+    Task Create(CreateCommentDto commentDto,
+                  CancellationToken cancellationToken);
 }

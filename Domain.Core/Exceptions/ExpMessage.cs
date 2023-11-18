@@ -32,5 +32,6 @@ public static class ExpMessage
     public static string WrongCartStatus { get; } = "وضعیت سبد خرید انتخابی قابل تغییر نیست";
     public static string NotFoundWage { get; } = "کارمزدی  پیدا نشد";
     public static string NotHaveOrder { get; } = "سبد خرید خالی است";
+    public static string HasNotBuyed { get; } = "شمااین محصول را قبلا خریداری نکرده اید و قادر به ثبت نظر نیستید";
 
 }

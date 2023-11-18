@@ -140,5 +140,15 @@ public class CartService : ICartService
     {
         return await _cartRepository.GetOrdersInCart(cartId, cancellationToken);
     }
-    
+
+    public async Task EnsureCustomerBuyed(int customerId, int productId,
+                                      CancellationToken cancellationToken)
+    {
+        var hasBuyed = await _cartRepository.HasCustomerBuyed(customerId, 
+                                            productId, cancellationToken);
+        if (!hasBuyed)
+            throw new AppException(ExpMessage.HasNotBuyed, ExpStatusCode.BadRequest);
+    }
+
+
 }

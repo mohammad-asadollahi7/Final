@@ -131,7 +131,7 @@ public class ProductController : AdminBaseController
 
     public async Task<IActionResult> GetCommentsForApprove(CancellationToken cancellationToken)
     {
-        var httpResponseMessage = await SendGetRequest("Product/GetCommentsForApprove", 
+        var httpResponseMessage = await SendGetRequest("Product/GetAllComments", 
                                                             cancellationToken);
 
         if (!httpResponseMessage.IsSuccessStatusCode)

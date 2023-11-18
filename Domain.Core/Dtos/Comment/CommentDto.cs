@@ -16,7 +16,7 @@ public class CommentDto
 
     public string ProductTitle { get; set; }
 
-    public DateTime SubmittedDate { get; set; }
+    public DateTime? SubmittedDate { get; set; }
 
     public bool IsRecommended { get; set; }
 

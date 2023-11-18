@@ -1,5 +1,6 @@
 ﻿using Domain.Core.Contracts.Repos;
 using Domain.Core.Dtos.Comment;
+using Domain.Core.Entities;
 using Infra.Db.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
@@ -62,7 +63,23 @@ public class CommentRepository : ICommentRepository
                                            Title = c.Title
 
                                        }).ToListAsync(cancellationToken);
+    }
 
+    public async Task Create(CreateCommentDto commentDto, 
+                          CancellationToken cancellationToken)
+    {
+        var comment = new Comment()
+        {
+            IsApproved = null,
+            CustomerId = commentDto.CustomerId,
+            Description = commentDto.Description,
+            SubmittedDate = commentDto.SubmittedDate,
+            IsRecommended = commentDto.IsRecommended,
+            Title = commentDto.Title,
+            ProductId = commentDto.ProductId,
+        };
+        await _context.Comments.AddAsync(comment);  
+        await _context.SaveChangesAsync(cancellationToken); 
     }
 }
 

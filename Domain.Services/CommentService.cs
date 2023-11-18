@@ -50,4 +50,11 @@ public class CommentService : ICommentService
 
         return comments;
     }
+
+    public async Task Create(CreateCommentDto commentDto,
+                          CancellationToken cancellationToken)
+    {
+        commentDto.SubmittedDate = DateTime.Now;
+        await _commentRepository.Create(commentDto, cancellationToken);
+    }
 }

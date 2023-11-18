@@ -194,5 +194,18 @@ public class ProductController : BaseController
                                                              cancellationToken);
         return Ok(comments);
     }
+
+
+    [HttpPost("CreateComment")]
+    //[HaveAccess(Role.Customer)]
+
+    public async Task<IActionResult> CreateComment(CreateCommentDto commentDto, 
+                                CancellationToken cancellationToken)
+    {
+        commentDto.CustomerId = CurrentUserId;
+        await _commentAppService.Create(commentDto, cancellationToken);
+        return Ok();
+    }
+
 }
 

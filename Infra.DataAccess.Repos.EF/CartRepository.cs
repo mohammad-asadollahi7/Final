@@ -195,4 +195,12 @@ public class CartRepository : ICartRepository
                                               Wage = o.Product.Booth.Wage
                                           }).ToListAsync(cancellationToken);
     }
+
+
+    public async Task<bool> HasCustomerBuyed(int customerId, int productId, 
+                                      CancellationToken cancellationToken)
+    {
+        return await _context.Orders.Where(o => o.Cart.CustomerId == customerId)
+                           .AnyAsync(o => o.ProductId == productId, cancellationToken);
+    }
 }

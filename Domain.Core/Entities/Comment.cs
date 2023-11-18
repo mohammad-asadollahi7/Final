@@ -15,7 +15,7 @@ public partial class Comment
 
     public int ProductId { get; set; }
 
-    public DateTime SubmittedDate { get; set; }
+    public DateTime? SubmittedDate { get; set; }
 
     public bool IsRecommended { get; set; }
 
