@@ -1,4 +1,5 @@
 ﻿using Endpoint.MVC.Dtos;
+using Endpoint.MVC.Dtos.Account;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Net;
@@ -59,13 +60,13 @@ public class AccountController : BaseController
             return RedirectToErrorPage(httpResponseMessage);
 
 
-        var token = await httpResponseMessage.Content.ReadAsStringAsync();
+        var loginOutput = await httpResponseMessage.Content
+                                                .ReadFromJsonAsync<LoginOutputDto>();
 
-        Response.Cookies.Append("authorize", token);
-        // HttpContext.Session.SetString("authorize", token);
-
-        TempData.Peek("Role");
-        TempData["Role"] = loginDto.Role;
+        Response.Cookies.Append("authorize", loginOutput.Token);
+        Response.Cookies.Append("fullName", loginOutput.FullName);
+     //   TempData.Peek("Role");
+      //  TempData["Role"] = loginDto.Role;
 
 
         if (loginDto.Role.ToString().ToLower() == "admin")
@@ -87,6 +88,6 @@ public class AccountController : BaseController
     public IActionResult Logout()
     {
         Response.Cookies.Delete("authorize");
-        return RedirectToAction("GetAllByCategoryId", "Product", new { area = "customer" });
+        return RedirectToAction("getnonauctions", "Product");
     }
 }

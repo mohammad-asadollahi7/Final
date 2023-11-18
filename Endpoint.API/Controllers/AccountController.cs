@@ -1,8 +1,8 @@
 ﻿using Domain.Core.Contracts.AppServices;
 using Domain.Core.Dtos;
+using Domain.Core.Dtos.Account;
 using Domain.Core.Entities;
 using Domain.Core.Enums;
-using Endpoint.API.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -44,11 +44,12 @@ public class AccountController : BaseController
                                            CancellationToken cancellationToken)
     {
 
-        var token = await _accountAppService.Login(model.Username,
+        var output = await _accountAppService.Login(model.Username,
                                                    model.Password,
                                                    model.Role,
                                                    cancellationToken);
-        return Ok(token);
+        
+        return Ok(output);
     }
 
 
@@ -70,11 +71,11 @@ public class AccountController : BaseController
     }
 
 
-    [HttpGet("GetUsersNumber")]
+    [HttpGet("GetUserNumbers")]
     //[HaveAccess(Role.Admin)]
-    public async Task<IActionResult> GetUsersNumber(CancellationToken cancellationToken)
+    public async Task<IActionResult> GetUserNumbers(CancellationToken cancellationToken)
     {
-        var numberOfUsers = await _accountAppService.GetUsersNumber(cancellationToken);
+        var numberOfUsers = await _accountAppService.GetUserNumbers(cancellationToken);
         return Ok(numberOfUsers);
     }
 }

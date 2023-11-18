@@ -1,4 +1,4 @@
-﻿using Domain.Core.Dtos;
+﻿using Domain.Core.Dtos.Account;
 using Domain.Core.Entities;
 using Domain.Core.Enums;
 using Microsoft.AspNetCore.DataProtection.KeyManagement.Internal;
@@ -40,7 +40,7 @@ public interface IAccountService
     Task DeleteUser(int userId, Role role, CancellationToken cancellationToken);
     Task EnsureUserExist(int userId, CancellationToken cancellationToken);
 
-    Task<int> GetUsersNumber(CancellationToken cancellationToken);
+    Task<int> GetUserNumbers(CancellationToken cancellationToken);
 
 
 }

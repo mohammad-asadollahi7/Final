@@ -2,7 +2,6 @@
 using Domain.Core.Dtos.Product;
 using Domain.Core.Enums;
 using Endpoint.API.CustomAttributes;
-using Endpoint.API.Dtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

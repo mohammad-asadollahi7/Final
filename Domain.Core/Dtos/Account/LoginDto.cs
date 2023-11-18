@@ -1,6 +1,6 @@
 ﻿using Domain.Core.Enums;
 
-namespace Endpoint.API.Dtos;
+namespace Domain.Core.Dtos.Account;
 
 
 public class LoginDto

@@ -1,5 +1,5 @@
 ﻿using Domain.Core.Contracts.Repos;
-using Domain.Core.Dtos;
+using Domain.Core.Dtos.Account;
 using Domain.Core.Entities;
 using Domain.Core.Enums;
 using Infra.Db.EF;
@@ -99,7 +99,7 @@ public class AccountRepository : IAccountRepository
         return await _userManager.Users.AnyAsync(u => u.Id == userId, cancellationToken);
     }
 
-    public async Task<int> GetUsersNumber(CancellationToken cancellationToken)
+    public async Task<int> GetUserNumbers(CancellationToken cancellationToken)
     {
        return await _userManager.Users.Where(u => u.Admin == null).CountAsync(cancellationToken);
     }

@@ -1,5 +1,5 @@
 ﻿using Domain.Core.Contracts.Services;
-using Domain.Core.Dtos;
+using Domain.Core.Dtos.Account;
 using Domain.Core.Entities;
 using Domain.Core.Enums;
 
@@ -8,10 +8,10 @@ namespace Domain.Core.Contracts.AppServices;
 public interface IAccountAppService
 {
 
-    Task<string> Login(string username,
-                       string password,
-                       Role role,
-                       CancellationToken cancellationToken);
+    Task<LoginOutputDto> Login(string username,
+                              string password,
+                              Role role,
+                              CancellationToken cancellationToken);
 
     Task Register(ApplicationUser user,
                   string password,
@@ -23,7 +23,7 @@ public interface IAccountAppService
     Task DeleteUser(int userId, Role role,
                       CancellationToken cancellationToken);
 
-    Task<int> GetUsersNumber(CancellationToken cancellationToken);
+    Task<int> GetUserNumbers(CancellationToken cancellationToken);
 
 
 }

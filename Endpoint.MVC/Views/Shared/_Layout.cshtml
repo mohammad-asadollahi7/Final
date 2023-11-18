@@ -1,4 +1,6 @@
-﻿<!doctype html>
+﻿@inject IHttpContextAccessor contextAccessor
+
+<!doctype html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -28,18 +30,34 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <div class="login">
-                        <a asp-action="register" asp-controller="account" class="mybtn"><i class="fa fa-user-plus"></i>ثبت نام</a>
-                        <a asp-action="login" asp-controller="account" class="mybtn"><i class="fa fa-user-o"></i>ورود</a>
-                        <a asp-action="GetInProgressCart" asp-controller="cart" class="mybtn"><i class="fa fa-cart-arrow-down"></i>سبد</a>
+                    <div class="">
+                        @if (contextAccessor.HttpContext.Request.Cookies["authorize"] == null)
+                        {
+                            <a asp-action="register" asp-controller="account" class="mybtn"><i class="fa fa-user-plus"></i>ثبت نام</a>
+                            <a asp-action="login" asp-controller="account" class="mybtn"><i class="fa fa-user-o"></i>ورود</a>
+
+                        }
+                        else
+                        {
+                                @if (contextAccessor.HttpContext.Request.Cookies["authorize"] != null)
+                                {
+                                <span class="ms-5"> | @contextAccessor.HttpContext.Request.Cookies["fullName"] <span>خوش آمدید |</span> </span>
+                                }
+                            <a asp-action="GetInProgressCart" asp-controller="cart" class="mybtn"><i class="fa fa-cart-arrow-down"></i>سبد</a>
+                            <a asp-action="logout" asp-controller="account" class="mybtn"><i class="fa fa-user-o"></i>خروج</a>
+                            
+                          
+                            
+                        }
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="border col-md-6">
                     <form action="">
                         <input type="text" placeholder="کالای مورد نظر را جستجو کنید">
                         <button type="submit"><i class="fa fa-search"></i></button>
                     </form>
                 </div>
+                
             </div>
         </div>
     </div>
@@ -62,7 +80,7 @@
                         <li>
                             <a asp-action="GetNonAuctions" asp-controller="product" asp-route-categoryId="2">کالای دیجیتال</a>
                             <ul>
-                                
+
                                 <li><a asp-action="GetNonAuctions" asp-controller="product" asp-route-categoryId="5">موبایل ساده</a></li>
                                 <li><a asp-action="GetNonAuctions" asp-controller="product" asp-route-categoryId="6">موبایل هوشمند</a></li>
                                 <li><a asp-action="GetNonAuctions" asp-controller="product" asp-route-categoryId="8">لپ تاپ بازی</a></li>
@@ -75,8 +93,8 @@
                             <ul>
                                 <li><a asp-action="GetNonAuctions" asp-controller="product" asp-route-categoryId="15">شلوار</a></li>
                                 <li><a asp-action="GetNonAuctions" asp-controller="product" asp-route-categoryId="16">پیراهن</a></li>
-                            <li><a asp-action="GetNonAuctions" asp-controller="product" asp-route-categoryId="14">کفش</a></li>
-                            <li><a asp-action="GetNonAuctions" asp-controller="product" asp-route-categoryId="12">کلاه</a></li>
+                                <li><a asp-action="GetNonAuctions" asp-controller="product" asp-route-categoryId="14">کفش</a></li>
+                                <li><a asp-action="GetNonAuctions" asp-controller="product" asp-route-categoryId="12">کلاه</a></li>
                             </ul>
                         </li>
 

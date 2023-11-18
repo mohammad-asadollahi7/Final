@@ -1,5 +1,4 @@
-﻿
-using Domain.Core.Dtos;
+﻿using Domain.Core.Dtos.Account;
 using Domain.Core.Entities;
 using Domain.Core.Enums;
 using Microsoft.AspNetCore.Identity;
@@ -27,7 +26,7 @@ public interface IAccountRepository
 
     Task<List<UserOutputDto>> GetUsers(CancellationToken cancellationToken);
 
-    Task<int> GetUsersNumber(CancellationToken cancellationToken);
+    Task<int> GetUserNumbers(CancellationToken cancellationToken);
     Task DeleteUser(int userId, CancellationToken cancellationToken);
 
     Task<bool> IsUserExistById(int userId, CancellationToken cancellationToken);

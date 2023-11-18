@@ -167,11 +167,12 @@
             <div class="sidebar" style="direction: ltr">
                 <div style="direction: rtl">
                     <!-- Sidebar user panel (optional) -->
-                    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                        <div class="info">
-                            <a href="#" class="d-block">اسم فروشنده</a>
+                    @if (contextAccessor.HttpContext.Request.Cookies["authorize"] != null)
+                    {
+                        <div class="m-2 text-center info">
+                            <p class="d-block text-light">@contextAccessor.HttpContext.Request.Cookies["fullName"]</p>
                         </div>
-                    </div>
+                    }
 
                     <!-- Sidebar Menu -->
                     <nav class="mt-2">
@@ -242,7 +243,12 @@
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-left">
                                 <li class="breadcrumb-item"><a href="#">خانه</a></li>
-                                <li class="breadcrumb-item active">داشبورد</li>
+                                <li class="breadcrumb-item active">
+                                    @if (contextAccessor.HttpContext.Request.Cookies["authorize"] != null)
+                                    {
+                                        <a asp-action="logout" asp-controller="account" asp-area="">خروج</a>
+                                    }
+                                </li>
                             </ol>
                         </div><!-- /.col -->
                     </div><!-- /.row -->

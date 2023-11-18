@@ -1,6 +1,6 @@
 ﻿using Domain.Core.Contracts.Repos;
 using Domain.Core.Contracts.Services;
-using Domain.Core.Dtos;
+using Domain.Core.Dtos.Account;
 using Domain.Core.Entities;
 using Domain.Core.Enums;
 using Domain.Core.Exceptions;
@@ -210,9 +210,9 @@ public class AccountService : IAccountService
             throw new AppException(ExpMessage.NotFoundUser, ExpStatusCode.NotFound);
     }
 
-    public async Task<int> GetUsersNumber(CancellationToken cancellationToken)
+    public async Task<int> GetUserNumbers(CancellationToken cancellationToken)
     {
-        return await _accountRepository.GetUsersNumber(cancellationToken);
+        return await _accountRepository.GetUserNumbers(cancellationToken);
     }
 
 }

@@ -1,6 +1,6 @@
 ﻿using Domain.Core.Contracts.AppServices;
 using Domain.Core.Contracts.Services;
-using Domain.Core.Dtos;
+using Domain.Core.Dtos.Account;
 using Domain.Core.Entities;
 using Domain.Core.Enums;
 using System.Data;
@@ -13,10 +13,10 @@ public class AccountAppService : IAccountAppService
     public AccountAppService(IAccountService accountService) =>
                                 _accountService = accountService;
 
-    public async Task<string> Login(string username,
-                                    string password,
-                                    Role role,
-                                    CancellationToken cancellationToken)
+    public async Task<LoginOutputDto> Login(string username,
+                                            string password,
+                                            Role role,
+                                            CancellationToken cancellationToken)
     {
         _accountService.EnsureRoleExist(role);
         var user = await _accountService.GetApplicationUserByUsername(username);
@@ -26,7 +26,12 @@ public class AccountAppService : IAccountAppService
         var JWTToken = await _accountService.GenerateJWTToken(user,
                                                               roleNames.First(),
                                                               cancellationToken);
-        return JWTToken;
+        var loginOutput = new LoginOutputDto()
+        {
+            FullName = user.FullName,
+            Token = JWTToken,
+        };
+        return loginOutput;
     }
 
     public async Task Register(ApplicationUser user,
@@ -60,8 +65,8 @@ public class AccountAppService : IAccountAppService
         await _accountService.DeleteUser(userId, role, cancellationToken);
     }
 
-    public async Task<int> GetUsersNumber(CancellationToken cancellationToken)
+    public async Task<int> GetUserNumbers(CancellationToken cancellationToken)
     {
-        return await _accountService.GetUsersNumber(cancellationToken);
+        return await _accountService.GetUserNumbers(cancellationToken);
     }
 }

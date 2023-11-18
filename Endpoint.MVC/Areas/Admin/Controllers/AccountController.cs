@@ -10,8 +10,7 @@ public class AccountController : AdminBaseController
 {
     public AccountController(IHttpClientFactory httpClientFactory) 
                                             : base(httpClientFactory)
-    {
-    }
+    { }
 
     public async Task<IActionResult> GetUsers(CancellationToken cancellationToken)
     {

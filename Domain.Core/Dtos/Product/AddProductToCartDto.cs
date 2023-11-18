@@ -1,4 +1,4 @@
-﻿namespace Endpoint.API.Dtos;
+﻿namespace Domain.Core.Dtos.Product;
 
 
 public class AddProductToCartDto
