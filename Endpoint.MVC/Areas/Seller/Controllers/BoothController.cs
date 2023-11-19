@@ -2,8 +2,7 @@
 using Endpoint.MVC.Dtos.Booth;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-
-
+using System.Diagnostics.CodeAnalysis;
 
 namespace Endpoint.MVC.Areas.Seller.Controllers;
 
@@ -61,19 +60,26 @@ public class BoothController : SellerBaseController
     public async Task<IActionResult> Update(UpdateBoothViewModel booth,
                                         CancellationToken cancellationToken)
     {
-        string uniqueFileName = string.Empty;
-        string uploadFolder = Path.Combine(_hostingEnvironment.WebRootPath, "img");
-        uniqueFileName = Guid.NewGuid().ToString() + booth.Picture.FileName;
-        string filePath = Path.Combine(uploadFolder, uniqueFileName);
-        booth.Picture.CopyTo(new FileStream(filePath, FileMode.Create));
+        if (!ModelState.IsValid)
+            return View(booth);
+
         var updateDto = new UpdateBoothDto()
         {
             Description = booth.Description,
             Id = booth.Id,
-            PictureName = uniqueFileName,
             Title = booth.Title,
         };
-        var httpResponseMessage = await SendPutRequest($"Booth/UpdateNonAuction/{updateDto.Id}",
+
+        if (booth.Picture is not null)
+        {
+            string uniqueFileName = string.Empty;
+            string uploadFolder = Path.Combine(_hostingEnvironment.WebRootPath, "img");
+            uniqueFileName = Guid.NewGuid().ToString() + booth.Picture.FileName;
+            string filePath = Path.Combine(uploadFolder, uniqueFileName);
+            booth.Picture.CopyTo(new FileStream(filePath, FileMode.Create));
+            updateDto.PictureName = uniqueFileName;
+        }
+        var httpResponseMessage = await SendPutRequest($"Booth/Update/{updateDto.Id}",
                                                       JsonConvert.SerializeObject(updateDto),
                                                        cancellationToken);
 
@@ -94,9 +100,12 @@ public class BoothController : SellerBaseController
 
 
     [HttpPost]
-    public async Task<IActionResult> Create(CreateBoothViewModel model, 
+    public async Task<IActionResult> Create(CreateBoothViewModel model,
                                             CancellationToken cancellationToken)
     {
+        if (!ModelState.IsValid) 
+            return View(model);
+
         string uniqueFileName = string.Empty;
         string uploadFolder = Path.Combine(_hostingEnvironment.WebRootPath, "img");
         uniqueFileName = Guid.NewGuid().ToString() + model.Picture.FileName;

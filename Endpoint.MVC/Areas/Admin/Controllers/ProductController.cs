@@ -198,6 +198,8 @@ public class ProductController : AdminBaseController
     public async Task<IActionResult> UpdateNonAuction(UpdateProductDto updateProductDto,
                                             CancellationToken cancellationToken)
     {
+        if (!ModelState.IsValid)
+            return View(updateProductDto);
         var httpResponseMessage = await SendPutRequest($"Product/UpdateNonAuction/{updateProductDto.Id}",
                                                       JsonConvert.SerializeObject(updateProductDto),
                                                       cancellationToken);
@@ -230,6 +232,8 @@ public class ProductController : AdminBaseController
     public async Task<IActionResult> UpdateAuction(AuctionDetailsDto updateProductDto,
                                             CancellationToken cancellationToken)
     {
+        if (!ModelState.IsValid)
+            return View(updateProductDto);
         var httpResponseMessage = await SendPutRequest($"Product/UpdateAuction/{updateProductDto.Id}",
                                                       JsonConvert.SerializeObject(updateProductDto),
                                                       cancellationToken);

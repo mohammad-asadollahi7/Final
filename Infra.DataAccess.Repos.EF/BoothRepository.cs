@@ -109,7 +109,7 @@ public class BoothRepository : IBoothRepository
                             .ThenInclude(b => b.Picture)
                             .FirstOrDefaultAsync(cancellationToken);
 
-        booth.BoothPicture.Picture.Name = boothDto.PictureName;
+        booth.BoothPicture.Picture.Name = boothDto.PictureName ?? booth.BoothPicture.Picture.Name;
         booth.Description = boothDto.Description;
         booth.Title = boothDto.Title;
         await _context.SaveChangesAsync(cancellationToken);

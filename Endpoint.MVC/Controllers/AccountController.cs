@@ -111,6 +111,9 @@ public class AccountController : BaseController
     public async Task<IActionResult> Update(UpdateUserDto updateDto,
                                     CancellationToken cancellationToken)
     {
+        if(!ModelState.IsValid)
+            return View(updateDto);
+
         var httpResponseMessage = await SendPostRequest("Account/update",
                                                         JsonConvert.SerializeObject(updateDto),
                                                         cancellationToken);

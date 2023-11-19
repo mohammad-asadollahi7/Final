@@ -5,31 +5,47 @@
 
     <form method="post" asp-controller="product" asp-area="seller" asp-action="createauction" class="form" enctype="multipart/form-data">
 
+        <div>
 
+     
         <label class="form-label">عنوان فارسی</label>
         <input type="text" required class="form-control" name="PersianTitle" />
+        </div>
+        <div>
+            <label class="mt-4 form-label">عنوان لاتین</label>
+            <input type="text" required class="form-control" name="EnglishTitle" />
+        </div>
+  
+        <div>
+            <label class="mt-4 form-label">توضیحات</label>
+            <textarea class="form-control" required name="Description"> </textarea>
+        </div>
 
-        <label class="mt-4 form-label">عنوان لاتین</label>
-        <input type="text" required class="form-control" name="EnglishTitle" />
+        <div>
+            <label class="mt-4 form-label">کمترین قیمت (تومان)</label>
+            <input type="number" required class="form-control" name="MinPrice" />
+        </div>
 
-        <label class="mt-4 form-label">توضیحات</label>
-        <textarea class="form-control" required name="Description"> </textarea>
+        <div>
+            <label class="mt-4 form-label">تعداد</label>
+            <input type="number" required class="form-control" name="FirstQuantity" />
+        </div>
 
+        <div>
+            <label class="mt-4 form-label">زمان شروع مزایده</label>
+            <input type="date" required class="form-control" name="FromDate" />
+        </div>
 
-        <label class="mt-4 form-label">کمترین قیمت (تومان)</label>
-        <input type="number" required class="form-control" name="MinPrice" />
+        <div>
+            <label class="mt-4 form-label">زمان اتمام مزایده</label>
+            <input type="date" required class="form-control" name="ToDate" />
+        </div>
 
-        <label class="mt-4 form-label">تعداد</label>
-        <input type="number" required class="form-control" name="FirstQuantity" />
+        <div>
+            <label class="mt-4 form-label">عکس</label>
+            <input type="file" required class="form-control" name="Picture" />
+        </div>
 
-        <label class="mt-4 form-label">زمان شروع مزایده</label>
-        <input type="date" required class="form-control" name="FromDate" />
-
-        <label class="mt-4 form-label">زمان اتمام مزایده</label>
-        <input type="date" required class="form-control" name="ToDate" />
-
-        <label class="mt-4 form-label">عکس</label>
-        <input type="file" required class="form-control" name="Picture" />
 
         <select name="CategoryId" id="select-category" class="mt-4 form-select" onChange="GetAttributeTitles()">
             <option disabled selected>انتخاب دسته بندی</option>

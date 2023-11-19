@@ -108,6 +108,9 @@ public class BoothController : AdminBaseController
     public async Task<IActionResult> UpdateNonAuction(UpdateProductDto updateProductDto, 
                                                      CancellationToken cancellationToken)
     {
+        if (!ModelState.IsValid)
+            return View(updateProductDto);
+
         var httpResponseMessage = await SendPutRequest($"Product/UpdateNonAuction/{updateProductDto.Id}",
                                                       JsonConvert.SerializeObject(updateProductDto),
                                                       cancellationToken);

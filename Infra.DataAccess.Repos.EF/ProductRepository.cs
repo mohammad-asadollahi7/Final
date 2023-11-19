@@ -453,7 +453,8 @@ public class ProductRepository : IProductRepository
     {
         return await _context.Products.Where(p => p.IsDeleted == false
                                 && p.IsApproved == isApproved
-                                && p.SellType == SellType.Auction)
+                                && p.SellType == SellType.Auction
+                                && p.Auction.ToDate > DateTime.Now)
                                 .Select(p => new ProductOutputDto()
                                 {
                                     Id = p.Id,

@@ -7,22 +7,37 @@
         
         <input type="hidden" class="form-control" asp-for="@Model.Id" />
         <input type="hidden" class="form-control" asp-for="@Model.BoothTitle" />
+        <div>
+            <label class="form-label">عنوان فارسی</label>
+            <input type="text" class="form-control" asp-for="@Model.PersianTitle" />
+            <span class="text-danger" asp-validation-for="@Model.PersianTitle"></span>
+        </div>
 
-        <label class="form-label">عنوان فارسی</label>
-        <input type="text" required class="form-control" asp-for="@Model.PersianTitle" />
+        <div>
+            <label class="mt-4 form-label">عنوان لاتین</label>
+            <input type="text" class="form-control" asp-for="@Model.EnglishTitle" />
+            <span class="text-danger" asp-validation-for="@Model.EnglishTitle"></span>
+        </div>
 
-        <label class="mt-4 form-label">عنوان لاتین</label>
-        <input type="text" required class="form-control" asp-for="@Model.EnglishTitle" />
-
-        <label class="mt-4 form-label">تخفیف %</label>
-        <input type="text" required class="form-control" asp-for="@Model.Discount" />
-
-        <label class="mt-4 form-label">قیمت (تومان)</label>
-        <input type="text" required class="form-control" asp-for="@Model.Price" />
-
-        <label class="mt-4 form-label">توضیحات</label>
-        <textarea class="form-control" required asp-for="@Model.Description">@Model.Description</textarea>
-
+        <div>
+            <label class="mt-4 form-label">تخفیف %</label>
+            <input type="text" class="form-control" asp-for="@Model.Discount" />
+            <span class="text-danger" asp-validation-for="@Model.Discount"></span>
+        </div>
+  
+        <div>
+            <label class="mt-4 form-label">قیمت (تومان)</label>
+            <input type="text" class="form-control" asp-for="@Model.Price" />
+            <span class="text-danger" asp-validation-for="@Model.Price"></span>
+        </div>
+   
+        <div>
+            <label class="mt-4 form-label">توضیحات</label>
+            <textarea class="form-control" asp-for="@Model.Description">@Model.Description</textarea>
+            <span class="text-danger" asp-validation-for="@Model.Description"></span>
+        </div>
+      
+        
         <div class="mt-4">
             @for (int i = 0; i < Model.CustomAttributes.Count(); i++)
             {
@@ -30,7 +45,8 @@
                     <input type="hidden" asp-for="@Model.CustomAttributes[i].Id" />
                     <input type="hidden" asp-for="@Model.CustomAttributes[i].Title" />
                     <label class="mt-1 form-label">@Model.CustomAttributes[i].Title:  </label>
-                    <input required type="text" class="form-control" asp-for="@Model.CustomAttributes[i].Value" />
+                    <input  type="text" class="form-control" asp-for="@Model.CustomAttributes[i].Value" />
+                    <span class="text-danger" asp-validation-for="@Model.CustomAttributes"></span>
 
                 </div>
             }

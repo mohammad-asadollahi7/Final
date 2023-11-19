@@ -11,10 +11,17 @@
     </div>
 
     <form method="post" asp-action="login" asp-controller="account" class="d-flex flex-column gap-3 mx-1">
-        <input name="Username" class="form-control" type="text" placeholder="نام کاربری">
-        <span class="text-danger" asp-validation-for="@Model.Username"></span>
-        <input name="Password" class="form-control" type="password" placeholder="رمز عبور">
-        <span class="text-danger" asp-validation-for="@Model.Password"></span>
+        <div>
+            <input name="Username" class="form-control" type="text" placeholder="نام کاربری">
+            <span class="text-danger" asp-validation-for="@Model.Username"></span>
+        </div>
+  
+        <div>
+            <input name="Password" class="form-control" type="password" placeholder="رمز عبور">
+            <span class="text-danger" asp-validation-for="@Model.Password"></span>
+        </div>
+
+
         <select name="Role" class="form-select">
             <option class="form-control" disabled selected>نقش</option>
             <option class="form-control" value="0">خریدار</option>

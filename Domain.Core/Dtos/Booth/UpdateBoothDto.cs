@@ -11,5 +11,5 @@ public class UpdateBoothDto
     public string Title { get; set; } = null!;
 
     public string Description { get; set; }
-    public string PictureName { get; set; } = null!;
+    public string? PictureName { get; set; }
 }

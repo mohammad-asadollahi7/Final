@@ -11,23 +11,42 @@
         <input type="hidden" class="form-control" asp-for="@Model.BoothTitle" />
         <input type="hidden" class="form-control" asp-for="@Model.PictureName" />
 
-        <label class="form-label">عنوان فارسی</label>
-        <input type="text" required class="form-control" asp-for="@Model.PersianTitle" />
+        <div>
+            <label class="form-label">عنوان فارسی</label>
+            <input type="text" class="form-control" asp-for="@Model.PersianTitle" />
+            <span class="text-danger" asp-validation-for="@Model.PersianTitle"> </span>
+        </div>
 
-        <label class="mt-4 form-label">عنوان لاتین</label>
-        <input type="text" required class="form-control" asp-for="@Model.EnglishTitle" />
+        <div>
+            <label class="mt-4 form-label">عنوان لاتین</label>
+            <input type="text" class="form-control" asp-for="@Model.EnglishTitle" />
+            <span class="text-danger" asp-validation-for="@Model.EnglishTitle"> </span>
+        </div>
 
-        <label class="mt-4 form-label">زمان شروع</label>
-        <input type="datetime" required class="form-control" asp-for="@Model.FromDate" />
+        <div>
+            <label class="mt-4 form-label">زمان شروع</label>
+            <input type="datetime" class="form-control" asp-for="@Model.FromDate" />
+            <span class="text-danger" asp-validation-for="@Model.FromDate"> </span>
+        </div>
 
-        <label class="mt-4 form-label">زمان پایان</label>
-        <input type="datetime" required class="form-control" asp-for="@Model.ToDate"/>
-
-        <label class="mt-4 form-label">حداقل قیمت قابل پیشنهاد (تومان)</label>
-        <input type="text" required class="form-control" asp-for="@Model.MinPrice" />
-
-        <label class="mt-4 form-label">توضیحات</label>
-        <textarea class="form-control" required asp-for="@Model.Description">@Model.Description</textarea>
+        <div>
+            <label class="mt-4 form-label">زمان پایان</label>
+            <input type="datetime" class="form-control" asp-for="@Model.ToDate" />
+            <span class="text-danger" asp-validation-for="@Model.ToDate"> </span>
+        </div>
+        
+        <div>
+            <label class="mt-4 form-label">حداقل قیمت قابل پیشنهاد (تومان)</label>
+            <input type="text" class="form-control" asp-for="@Model.MinPrice" />
+            <span class="text-danger" asp-validation-for="@Model.MinPrice"> </span>
+        </div>
+       
+        <div>
+            <label class="mt-4 form-label">توضیحات</label>
+            <textarea class="form-control" asp-for="@Model.Description">@Model.Description</textarea>
+            <span class="text-danger" asp-validation-for="@Model.Description"> </span>
+        </div>
+    
 
         <div class="mt-4">
             @for (int i = 0; i < Model.CustomAttributes.Count(); i++)
@@ -36,7 +55,8 @@
                     <input type="hidden" asp-for="@Model.CustomAttributes[i].Id" />
                     <input type="hidden" asp-for="@Model.CustomAttributes[i].Title" />
                     <label class="mt-1 form-label">@Model.CustomAttributes[i].Title:  </label>
-                    <input required type="text" class="form-control" asp-for="@Model.CustomAttributes[i].Value" />
+                    <input type="text" class="form-control" asp-for="@Model.CustomAttributes[i].Value" />
+                    <span class="text-danger" asp-validation-for="@Model.CustomAttributes[i]"> </span>
 
                 </div>
             }
