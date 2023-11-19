@@ -13,37 +13,37 @@
 
         <div>
         <label class="form-label">عنوان فارسی</label>
-        <input type="text"  class="form-control" asp-for="@Model.PersianTitle" />
+            <input type="text" required oninvalid="this.setCustomValidity('فیلد الزامی')" oninput="this.setCustomValidity('')" class="form-control" asp-for="@Model.PersianTitle" />
         <span class="text-danger" asp-validation-for="@Model.PersianTitle"></span>
         </div>
 
         <div>
         <label class="mt-4 form-label">عنوان لاتین</label>
-        <input type="text"  class="form-control" asp-for="@Model.EnglishTitle" />
+            <input type="text" required oninvalid="this.setCustomValidity('فیلد الزامی')" oninput="this.setCustomValidity('')" class="form-control" asp-for="@Model.EnglishTitle" />
         <span class="text-danger" asp-validation-for="@Model.EnglishTitle"></span>
         </div>
 
         <div>
         <label class="mt-4 form-label">زمان شروع</label>
-        <input type="date"  class="form-control" asp-for="@Model.FromDate" />
-        <span class="text-danger" asp-validation-for="@Model.FromDate"></span>
+            <input type="date" required oninvalid="this.setCustomValidity('فیلد الزامی')" oninput="this.setCustomValidity('')" class="form-control" asp-for="@Model.FromDate" />
+
         </div>
 
         <div>
         <label class="mt-4 form-label">زمان پایان</label>
-        <input type="date"  class="form-control" asp-for="@Model.ToDate"/>
-        <span class="text-danger" asp-validation-for="@Model.ToDate"></span>
+            <input type="date" required oninvalid="this.setCustomValidity('فیلد الزامی')" oninput="this.setCustomValidity('')" class="form-control" asp-for="@Model.ToDate" />
+
         </div>
 
         <div>
         <label class="mt-4 form-label">حداقل قیمت قابل پیشنهاد (تومان)</label>
-        <input type="text"  class="form-control" asp-for="@Model.MinPrice" />
-        <span class="text-danger" asp-validation-for="@Model.MinPrice"></span>
+            <input type="text" required oninvalid="this.setCustomValidity('فیلد الزامی')" oninput="this.setCustomValidity('')" class="form-control" asp-for="@Model.MinPrice" />
+
         </div>
 
         <div>
         <label class="mt-4 form-label">توضیحات</label>
-        <textarea class="form-control"  asp-for="@Model.Description">@Model.Description</textarea>
+            <textarea class="form-control" required oninvalid="this.setCustomValidity('فیلد الزامی')" oninput="this.setCustomValidity('')" asp-for="@Model.Description">@Model.Description</textarea>
         <span class="text-danger" asp-validation-for="@Model.Description"></span>
         </div>
 
@@ -54,8 +54,8 @@
                     <input type="hidden" asp-for="@Model.CustomAttributes[i].Id" />
                     <input type="hidden" asp-for="@Model.CustomAttributes[i].Title" />
                     <label class="mt-1 form-label">@Model.CustomAttributes[i].Title:  </label>
-                    <input  type="text" class="form-control" asp-for="@Model.CustomAttributes[i].Value" />
-                    <span class="text-danger" asp-validation-for="@Model.CustomAttributes"></span>
+                    <input type="text" required oninvalid="this.setCustomValidity('فیلد الزامی')" oninput="this.setCustomValidity('')" class="form-control" asp-for="@Model.CustomAttributes[i].Value" />
+                    <span class="text-danger" asp-validation-for="@Model.CustomAttributes[i].Value"></span>
 
                 </div>
             }

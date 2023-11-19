@@ -6,19 +6,19 @@
     <form method="post" asp-area="seller" asp-controller="booth" asp-action="create" class="form" enctype="multipart/form-data">
         <div>
             <label class="form-label">عنوان غرفه</label>
-            <input type="text" class="form-control" name="Title" />
+            <input required oninvalid="this.setCustomValidity('فیلد الزامی')" oninput="this.setCustomValidity('')" type="text" class="form-control" name="Title" />
             <span class="text-danger" asp-validation-for="@Model.Title"></span>
         </div>
 
         <div>
             <label class="mt-4 form-label">توضیحات</label>
-            <textarea class="form-control" name="Description"></textarea>
+            <textarea required oninvalid="this.setCustomValidity('فیلد الزامی')" oninput="this.setCustomValidity('')" class="form-control" name="Description"></textarea>
             <span class="text-danger" asp-validation-for="@Model.Description"></span>
         </div>
 
         <div>
-            <label class="form-label">تصویر</label>
-            <input type="file" class="form-control" name="Picture" />
+            <label class="mt-4 form-label">تصویر</label>
+            <input required oninvalid="this.setCustomValidity('فیلد الزامی')" oninput="this.setCustomValidity('')" type="file" class="form-control" name="Picture" />
             <span class="text-danger" asp-validation-for="@Model.Picture"></span>
         </div>
  

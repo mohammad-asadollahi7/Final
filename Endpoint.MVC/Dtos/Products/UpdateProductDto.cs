@@ -18,17 +18,11 @@ public class UpdateProductDto
     [Required(ErrorMessage = "فیلد الزامی")]
     public string Description { get; set; }
 
-
     public string BoothTitle { get; set; }
-
     public int CategoryId { get; set; }
 
-
-    [Required(ErrorMessage = "فیلد الزامی")]
     public int Discount { get; set; }
 
-
-    [Required(ErrorMessage = "فیلد الزامی")]
     public decimal Price { get; set; }
 
 

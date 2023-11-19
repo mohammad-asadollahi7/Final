@@ -9,49 +9,49 @@
 
      
         <label class="form-label">عنوان فارسی</label>
-        <input type="text" required class="form-control" name="PersianTitle" />
+            <input type="text" required oninvalid="this.setCustomValidity('فیلد الزامی')" oninput="this.setCustomValidity('')" class="form-control" name="PersianTitle" />
         </div>
         <div>
             <label class="mt-4 form-label">عنوان لاتین</label>
-            <input type="text" required class="form-control" name="EnglishTitle" />
+            <input type="text" required oninvalid="this.setCustomValidity('فیلد الزامی')" oninput="this.setCustomValidity('')" class="form-control" name="EnglishTitle" />
         </div>
   
         <div>
             <label class="mt-4 form-label">توضیحات</label>
-            <textarea class="form-control" required name="Description"> </textarea>
+            <textarea class="form-control" required oninvalid="this.setCustomValidity('فیلد الزامی')" oninput="this.setCustomValidity('')" name="Description"> </textarea>
         </div>
 
         <div>
             <label class="mt-4 form-label">کمترین قیمت (تومان)</label>
-            <input type="number" required class="form-control" name="MinPrice" />
+            <input type="number" required oninvalid="this.setCustomValidity('فیلد الزامی')" oninput="this.setCustomValidity('')" class="form-control" name="MinPrice" />
         </div>
 
         <div>
             <label class="mt-4 form-label">تعداد</label>
-            <input type="number" required class="form-control" name="FirstQuantity" />
+            <input type="number" required oninvalid="this.setCustomValidity('فیلد الزامی')" oninput="this.setCustomValidity('')" class="form-control" name="FirstQuantity" />
         </div>
 
         <div>
             <label class="mt-4 form-label">زمان شروع مزایده</label>
-            <input type="date" required class="form-control" name="FromDate" />
+            <input type="date" required oninvalid="this.setCustomValidity('فیلد الزامی')" oninput="this.setCustomValidity('')" class="form-control" name="FromDate" />
         </div>
 
         <div>
             <label class="mt-4 form-label">زمان اتمام مزایده</label>
-            <input type="date" required class="form-control" name="ToDate" />
+            <input type="date" required oninvalid="this.setCustomValidity('فیلد الزامی')" oninput="this.setCustomValidity('')" class="form-control" name="ToDate" />
         </div>
 
         <div>
             <label class="mt-4 form-label">عکس</label>
-            <input type="file" required class="form-control" name="Picture" />
+            <input type="file" required oninvalid="this.setCustomValidity('فیلد الزامی')" oninput="this.setCustomValidity('')" class="form-control" name="Picture" />
         </div>
 
 
-        <select name="CategoryId" id="select-category" class="mt-4 form-select" onChange="GetAttributeTitles()">
-            <option disabled selected>انتخاب دسته بندی</option>
+        <select required oninvalid="this.setCustomValidity('فیلد الزامی')" oninput="this.setCustomValidity('')" name="CategoryId" id="select-category" class="mt-4 form-select" onChange="GetAttributeTitles()">
+            <option hidden disabled selected value="">انتخاب دسته بندی</option>
             @for (int i = 0; i < @Model.Count(); i++)
             {
-                <option class="form-control" required value="@Model[i].Id">@Model[i].Title</option>
+                <option class="form-control" value="@Model[i].Id">@Model[i].Title</option>
             }
         </select>
 

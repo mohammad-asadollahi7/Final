@@ -9,31 +9,26 @@ public class AuctionDetailsDto
 
 
     [Required(ErrorMessage = "فیلد الزامی")]
-    public string PersianTitle { get; set; } = null!;
-
-    [Required(ErrorMessage = "فیلد الزامی")]
-    public string EnglishTitle { get; set; } = null!;
+    public string PersianTitle { get; set; } 
 
 
     [Required(ErrorMessage = "فیلد الزامی")]
-    public string Description { get; set; } = null!;
+    public string EnglishTitle { get; set; } 
+
+
+    [Required(ErrorMessage = "فیلد الزامی")]
+    public string Description { get; set; } 
 
     public decimal MaxPrice { get; set; }
 
     public int CategoryId { get; set; }
 
-
-    [Required(ErrorMessage = "فیلد الزامی")]
     public decimal MinPrice { get; set; }
 
     public string BoothTitle { get; set; }
 
-
-    [Required(ErrorMessage = "فیلد الزامی")]
     public DateTime FromDate { get; set; }
 
-
-    [Required(ErrorMessage = "فیلد الزامی")]
     public DateTime ToDate { get; set; }
 
     public SellType SellType { get; set; }

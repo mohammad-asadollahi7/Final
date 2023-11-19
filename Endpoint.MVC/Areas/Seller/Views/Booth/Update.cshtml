@@ -8,13 +8,13 @@
         <input type="hidden" class="form-control" asp-for="@Model.Id" />
         <div>
             <label class="form-label">عنوان غرفه</label>
-            <input type="text" class="form-control" asp-for="@Model.Title" />
+            <input required oninvalid="this.setCustomValidity('فیلد الزامی')" oninput="this.setCustomValidity('')" type="text" class="form-control" asp-for="@Model.Title" />
             <span class="text-danger" asp-validation-for="@Model.Title"></span>
         </div>
        
         <div>
             <label class="mt-4 form-label">توضیحات</label>
-            <textarea class="form-control" asp-for="@Model.Description">@Model.Description</textarea>
+            <textarea required oninvalid="this.setCustomValidity('فیلد الزامی')" oninput="this.setCustomValidity('')" class="form-control" asp-for="@Model.Description">@Model.Description</textarea>
             <span class="text-danger" asp-validation-for="@Model.Description"></span>
         </div>
        

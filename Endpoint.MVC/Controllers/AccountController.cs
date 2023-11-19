@@ -102,8 +102,15 @@ public class AccountController : BaseController
 
         var user = await httpResponseMessage.Content
                                                 .ReadFromJsonAsync<UserOutputDto>();
+        var updateDto = new UpdateUserDto()
+        {
+            Email = user.Email,
+            FullName = user.FullName,
+            PhoneNumber = user.PhoneNumber,
+            Username = user.Username
+        };
 
-        return View(user);
+        return View(updateDto);
     }
 
 

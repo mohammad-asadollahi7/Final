@@ -12,22 +12,26 @@
 
     <form method="post" asp-action="login" asp-controller="account" class="d-flex flex-column gap-3 mx-1">
         <div>
-            <input name="Username" class="form-control" type="text" placeholder="نام کاربری">
+            <input required oninvalid="this.setCustomValidity('فیلد الزامی')" oninput="this.setCustomValidity('')" name="Username" class="form-control" type="text" placeholder="نام کاربری">
             <span class="text-danger" asp-validation-for="@Model.Username"></span>
         </div>
   
         <div>
-            <input name="Password" class="form-control" type="password" placeholder="رمز عبور">
+            <input required oninvalid="this.setCustomValidity('فیلد الزامی')" oninput="this.setCustomValidity('')" name="Password" class="form-control" type="password" placeholder="رمز عبور">
             <span class="text-danger" asp-validation-for="@Model.Password"></span>
         </div>
 
+        <div>
+            <select required oninvalid="this.setCustomValidity('فیلد الزامی')" oninput="this.setCustomValidity('')" name="Role" class="form-select">
+                <option class="form-control" hidden disabled selected value="">نقش</option>
+                <option class="form-control" value="0">خریدار</option>
+                <option class="form-control" value="1">ادمین</option>
+                <option class="form-control" value="2">فروشنده</option>
+            </select>
+            <span class="text-danger" asp-validation-for="@Model.Role"></span>
+        </div>
+       
 
-        <select name="Role" class="form-select">
-            <option class="form-control" disabled selected>نقش</option>
-            <option class="form-control" value="0">خریدار</option>
-            <option class="form-control" value="1">ادمین</option>
-            <option class="form-control" value="2">فروشنده</option>
-        </select>
 
 
 

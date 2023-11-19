@@ -8,10 +8,10 @@
         <input type="hidden" name="ProductId" value="@Model"/>
 
         <label class="form-label">عنوان</label>
-        <input type="text" required class="form-control" name="Title" />
+        <input type="text" required oninvalid="this.setCustomValidity('فیلد الزامی')" oninput="this.setCustomValidity('')" class="form-control" name="Title" />
 
         <label class="mt-4 form-label">توضیحات</label>
-        <textarea class="form-control" required name="Description"> </textarea>
+        <textarea class="form-control" required oninvalid="this.setCustomValidity('فیلد الزامی')" oninput="this.setCustomValidity('')" name="Description"> </textarea>
 
         <div class="d-flex gap-3 align-items-center mt-4">
             <label class="my-0 form-label">آیا خرید این محصول را توصیه میکنید؟ </label>

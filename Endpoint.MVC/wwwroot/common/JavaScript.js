@@ -34,6 +34,10 @@ function GetAttributeTitles() {
                 const input = document.createElement("input");
                 input.classList.add('form-control', 'mt-1');
                 input.setAttribute('name', `CustomAttributes[${i}].value`);
+                input.setAttribute('required', '');
+                input.setAttribute('oninvalid', 'this.setCustomValidity("فیلد الزامی")');
+                input.setAttribute('oninput', 'this.setCustomValidity("")');
+
 
                 var div = document.getElementById('attributeDiv');
                 div.append(label);

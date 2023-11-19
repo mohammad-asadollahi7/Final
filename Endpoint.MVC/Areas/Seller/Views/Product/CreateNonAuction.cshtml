@@ -7,32 +7,32 @@
 
 
         <label class="form-label">عنوان فارسی</label>
-        <input type="text" required class="form-control" name="PersianTitle" />
+        <input type="text" required oninvalid="this.setCustomValidity('فیلد الزامی')" oninput="this.setCustomValidity('')" class="form-control" name="PersianTitle" />
 
         <label class="mt-4 form-label">عنوان لاتین</label>
-        <input type="text" required class="form-control" name="EnglishTitle" />
+        <input type="text" required oninvalid="this.setCustomValidity('فیلد الزامی')" oninput="this.setCustomValidity('')" class="form-control" name="EnglishTitle" />
 
         <label class="mt-4 form-label">توضیحات</label>
-        <textarea class="form-control" required name="Description"> </textarea>
+        <textarea class="form-control" required oninvalid="this.setCustomValidity('فیلد الزامی')" oninput="this.setCustomValidity('')" name="Description"> </textarea>
 
 
         <label class="mt-4 form-label">تعداد اولیه محصول</label>
-        <input type="number" v class="form-control" name="FirstQuantity" />
+        <input type="number" required oninvalid="this.setCustomValidity('فیلد الزامی')" oninput="this.setCustomValidity('')" class="form-control" name="FirstQuantity" />
 
         <label class="mt-4 form-label">قیمت (تومان)</label>
-        <input type="number" required class="form-control" name="FirstPrice" />
+        <input type="number" required oninvalid="this.setCustomValidity('فیلد الزامی')" oninput="this.setCustomValidity('')" class="form-control" name="FirstPrice" />
 
         <label class="mt-4 form-label">تخفیف</label>
-        <input type="number" required class="form-control" name="FirstDiscount" />
+        <input type="number" required oninvalid="this.setCustomValidity('فیلد الزامی')" oninput="this.setCustomValidity('')" class="form-control" name="FirstDiscount" />
 
         <label class="mt-4 form-label">عکس</label>
-        <input type="file" required class="form-control" name="Picture" />
+        <input type="file" required oninvalid="this.setCustomValidity('فیلد الزامی')" oninput="this.setCustomValidity('')" class="form-control" name="Picture" />
 
-        <select name="CategoryId" id="select-category" class="mt-4 form-select" onChange="GetAttributeTitles()">
-            <option disabled selected>انتخاب دسته بندی</option>
+        <select required oninvalid="this.setCustomValidity('فیلد الزامی')" oninput="this.setCustomValidity('')" name="CategoryId" id="select-category" class="mt-4 form-select" onChange="GetAttributeTitles()">
+            <option hidden disabled selected value="">انتخاب دسته بندی</option>
             @for (int i = 0; i < @Model.Count(); i++)
             {
-                <option class="form-control" required value="@Model[i].Id">@Model[i].Title</option>
+                <option class="form-control"  oninput="this.setCustomValidity('')" value="@Model[i].Id">@Model[i].Title</option>
             }
         </select>
 

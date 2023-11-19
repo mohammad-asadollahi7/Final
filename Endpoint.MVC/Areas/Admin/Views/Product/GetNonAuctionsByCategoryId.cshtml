@@ -5,7 +5,7 @@
 
     @foreach (var product in Model)
     {
-        <a class="remove-dafault" asp-area="admin" asp-controller="product" asp-action="GetNonAuctionById" asp-route-id="@product.Id">
+        <a class="remove-dafault" asp-area="admin" asp-controller="product" asp-action="GetNonAuction" asp-route-id="@product.Id">
             <div style="border-radius:5px" class="max-width py-1 my-2 border border-dark rounded-3 cursor-pointer">
                 <div class="text-center">
                     <img class="picture-style" src="~/img/@product.PicturesName" alt="عکس محصول">

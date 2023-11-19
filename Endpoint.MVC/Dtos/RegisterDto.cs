@@ -22,12 +22,12 @@ public class RegisterDto
 
 
     [Required(ErrorMessage = "فیلد الزامی")]
-    [EmailAddress]
+    [EmailAddress(ErrorMessage = "فرمت نادرست")]
     public string Email { get; set; }
 
 
     [Required(ErrorMessage = "فیلد الزامی")]
-    [MinLength(11), MaxLength(11)]
+    [MinLength(11, ErrorMessage = "تعداد ارقام نادرست"), MaxLength(11, ErrorMessage = "تعداد ارقام نادرست")]
     public string PhoneNumber { get; set; }
 
 
@@ -36,7 +36,7 @@ public class RegisterDto
 
 
     [Required(ErrorMessage = "فیلد الزامی")]
-    [Compare(nameof(Password))]
+    [Compare(nameof(Password), ErrorMessage = "عدم تطابق رمزعبور با تکرار رمزعبور")]
     public string ConfirmPassword { get; set; }
 
 

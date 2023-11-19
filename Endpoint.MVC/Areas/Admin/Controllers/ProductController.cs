@@ -147,7 +147,7 @@ public class ProductController : AdminBaseController
 
         return View(products);
     }
-    public async Task<IActionResult> GetNonAuctionById(int id, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetNonAuction(int id, CancellationToken cancellationToken)
     {
 
         var httpResponseMessage = await SendGetRequest($"Product/GetNonAuctionProductById/{id}?isApproved=true",
@@ -165,7 +165,7 @@ public class ProductController : AdminBaseController
 
 
     #region Update
-  [HttpGet]
+    [HttpGet]
     public async Task<IActionResult> UpdateNonAuction(int id, CancellationToken cancellationToken)
     {
         var httpResponseMessage = await SendGetRequest($"Product/GetNonAuctionProductById/{id}?isApproved=true",
@@ -200,6 +200,7 @@ public class ProductController : AdminBaseController
     {
         if (!ModelState.IsValid)
             return View(updateProductDto);
+
         var httpResponseMessage = await SendPutRequest($"Product/UpdateNonAuction/{updateProductDto.Id}",
                                                       JsonConvert.SerializeObject(updateProductDto),
                                                       cancellationToken);
