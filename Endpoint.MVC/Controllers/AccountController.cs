@@ -88,4 +88,36 @@ public class AccountController : BaseController
         Response.Cookies.Delete("authorize");
         return RedirectToAction("getnonauctions", "Product");
     }
+
+
+
+    [HttpGet]
+    public async Task<IActionResult> Update(CancellationToken cancellationToken)
+    {
+        var httpResponseMessage = await SendGetRequest("Account/Get",
+                                                        cancellationToken);
+        if (!httpResponseMessage.IsSuccessStatusCode)
+            return RedirectToErrorPage(httpResponseMessage);
+
+
+        var user = await httpResponseMessage.Content
+                                                .ReadFromJsonAsync<UserOutputDto>();
+
+        return View(user);
+    }
+
+
+    [HttpPost]
+    public async Task<IActionResult> Update(UpdateUserDto updateDto,
+                                    CancellationToken cancellationToken)
+    {
+        var httpResponseMessage = await SendPostRequest("Account/update",
+                                                        JsonConvert.SerializeObject(updateDto),
+                                                        cancellationToken);
+        if (!httpResponseMessage.IsSuccessStatusCode)
+            return RedirectToErrorPage(httpResponseMessage);
+
+
+        return RedirectToAction("logout");
+    }
 }

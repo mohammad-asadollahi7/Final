@@ -69,4 +69,17 @@ public class AccountAppService : IAccountAppService
     {
         return await _accountService.GetUserNumbers(cancellationToken);
     }
+
+    public async Task Update(int id, string role, UpdateUserDto updateDto,
+                               CancellationToken cancellationToken)
+    {
+        await _accountService.Update(id, role, updateDto, cancellationToken);
+    }
+
+    public async Task<UserOutputDto> Get(int id, string role, 
+                                        CancellationToken cancellationToken)
+    {
+        return await _accountService.Get(id, role, cancellationToken);
+
+    }
 }

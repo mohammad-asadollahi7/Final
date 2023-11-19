@@ -2,6 +2,7 @@
 using Domain.Core.Entities;
 using Domain.Core.Enums;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Data;
 
 namespace Domain.Core.Contracts.Repos;
@@ -30,4 +31,5 @@ public interface IAccountRepository
     Task DeleteUser(int userId, CancellationToken cancellationToken);
 
     Task<bool> IsUserExistById(int userId, CancellationToken cancellationToken);
+
 }

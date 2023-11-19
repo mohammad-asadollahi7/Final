@@ -57,8 +57,6 @@
             </ul>
 
             <!-- SEARCH FORM -->
-            
-
             <!-- Right navbar links -->
             <ul class="navbar-nav mr-auto">
                 <!-- Messages Dropdown Menu -->
@@ -197,6 +195,22 @@
                                 </ul>
                             </li>
 
+                            @if (contextAccessor.HttpContext.Request.Cookies["authorize"] != null)
+                            {
+                                <li class="nav-item has-treeview">
+                                    <a asp-area="" asp-action="update" asp-controller="account" class="nav-link">
+                                        <i class="nav-icon fa fa-pie-chart"></i>
+                                        <p>
+                                            بروزرسانی حساب کاربری
+                                            <i class="right fa fa-angle-left"></i>
+                                        </p>
+                                    </a>
+                                </li>
+
+                            }
+
+
+
 
                             <li class="nav-item has-treeview">
                                 <a href="#" class="nav-link">
@@ -219,7 +233,7 @@
                                             <p>ایجاد غرفه</p>
                                         </a>
                                     </li>
-                                   
+
                                 </ul>
                             </li>
 
@@ -379,6 +393,6 @@
     <!-- AdminLTE for demo purposes -->
     <script src="~/Admin/dist/js/demo.js"></script>
     <script src="~/common/JavaScript.js"> </script>
-    @await RenderSectionAsync("GetProductByIdScript", required: false) 
+    @await RenderSectionAsync("GetProductByIdScript", required: false)
 </body>
 </html>

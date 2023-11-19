@@ -25,5 +25,9 @@ public interface IAccountAppService
 
     Task<int> GetUserNumbers(CancellationToken cancellationToken);
 
+    Task Update(int id, string role, UpdateUserDto updateDto,
+                              CancellationToken cancellationToken);
 
+     Task<UserOutputDto> Get(int id, string role,
+                            CancellationToken cancellationToken);
 }

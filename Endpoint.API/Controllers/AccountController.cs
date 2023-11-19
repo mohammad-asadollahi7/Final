@@ -78,4 +78,26 @@ public class AccountController : BaseController
         var numberOfUsers = await _accountAppService.GetUserNumbers(cancellationToken);
         return Ok(numberOfUsers);
     }
+
+    [HttpPost("Update")]
+    //[HaveAccess(Role.Admin, Role.Seller, Role.Customer)]
+    public async Task Update(UpdateUserDto updateDto,
+                            CancellationToken cancellationToken)
+    {
+        await _accountAppService.Update(CurrentUserId, 
+                            CurrentUserRole, updateDto, 
+                            cancellationToken);
+    }
+
+
+
+    [HttpGet("Get")]
+    //[HaveAccess(Role.Admin, Role.Seller, Role.Customer)]
+    public async Task<IActionResult> Get(CancellationToken cancellationToken)
+    {
+        var user = await _accountAppService.Get(CurrentUserId, 
+                                    CurrentUserRole, cancellationToken);
+
+        return Ok(user);
+    }
 }

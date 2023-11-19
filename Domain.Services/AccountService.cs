@@ -25,7 +25,7 @@ public class AccountService : IAccountService
                           IAdminService adminService,
                           ICustomerService customerService,
                           ISellerService sellerService,
-                          ICustomerRepository customerRepository,   
+                          ICustomerRepository customerRepository,
                           IOptionsSnapshot<JWTConfiguration> JWTConfigs)
     {
         _accountRepository = accountRepository;
@@ -51,7 +51,7 @@ public class AccountService : IAccountService
     {
         var customer = await _customerRepository.GetCustomerByPhoneNumber
                                                   (phoneNumber, cancellationToken);
-                                                
+
         if (customer is not null)
             throw new AppException(string.Format(ExpMessage.RegisterdUser, phoneNumber),
                                    ExpStatusCode.Conflict);
@@ -85,10 +85,10 @@ public class AccountService : IAccountService
                                       Role role,
                                       CancellationToken cancellationToken)
     {
-        var identityResult = await _accountRepository.Register(user, password, 
+        var identityResult = await _accountRepository.Register(user, password,
                                                         role, cancellationToken);
-        
-        
+
+
         if (!identityResult.Succeeded)
             throw new AppException(ExpMessage.InsuccessRegister,
                                    ExpStatusCode.InternalServerError);
@@ -105,7 +105,7 @@ public class AccountService : IAccountService
         else if (role.ToString().ToLower() == "customer")
             await _customerService.AddByApplicationUserId(userId, cancellationToken);
 
-        else if(role.ToString().ToLower() == "seller")
+        else if (role.ToString().ToLower() == "seller")
             await _sellerService.AddByApplicationUserId(userId, cancellationToken);
 
     }
@@ -192,7 +192,7 @@ public class AccountService : IAccountService
         return await _accountRepository.GetUsers(cancellationToken);
     }
 
-    public async Task DeleteUser(int userId, Role role, 
+    public async Task DeleteUser(int userId, Role role,
                                  CancellationToken cancellationToken)
     {
         if (role == Role.Seller)
@@ -215,4 +215,43 @@ public class AccountService : IAccountService
         return await _accountRepository.GetUserNumbers(cancellationToken);
     }
 
+
+
+    public async Task Update(int id, string role, UpdateUserDto updateDto,
+                             CancellationToken cancellationToken)
+    {
+        if (role.ToLower() == "seller")
+        {
+            await _sellerService.EnsureExistById(id, cancellationToken);
+            await _sellerService.Update(id, updateDto, cancellationToken);
+        }
+        else if (role.ToLower() == "customer")
+        {
+            await _customerService.EnsureExistById(id, cancellationToken);
+            await _customerService.Update(id, updateDto, cancellationToken);
+        }
+        else if (role.ToLower() == "admin")
+        {
+            await _adminService.EnsureExistById(id, cancellationToken);
+            await _adminService.Update(id, updateDto, cancellationToken);
+        }
+    }
+
+
+    public async Task<UserOutputDto> Get(int id, string role, 
+                                        CancellationToken cancellationToken)
+    {
+        UserOutputDto user = new();
+
+        if (role.ToLower() == "seller")
+            user  = await _sellerService.Get(id, cancellationToken);
+        
+        else if (role.ToLower() == "customer")
+            user = await _customerService.Get(id, cancellationToken);
+        
+        else if (role.ToLower() == "admin")
+            user = await _adminService.Get(id, cancellationToken);
+
+        return user;
+    }
 }
