@@ -4,6 +4,7 @@ using Domain.Core.Contracts.Services;
 using Domain.Core.Dtos.Account;
 using Domain.Core.Entities;
 using Domain.Core.Exceptions;
+using System.ComponentModel.DataAnnotations;
 
 namespace Domain.Services;
 
@@ -71,4 +72,6 @@ public class CustomerService : ICustomerService
 
         return customer;    
     }
+
+   
 }

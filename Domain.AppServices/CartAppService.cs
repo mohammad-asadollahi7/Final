@@ -85,7 +85,7 @@ public class CartAppService : ICartAppService
         await _productService.AddQuantityRecord(cartId, DateTime.Now, true, cancellationToken, true);
         await _cartService.FinalizeCart(cartId, cancellationToken);
         var orders = await _cartService.GetOrdersInCart(cartId, cancellationToken);
-        await _productService.AddWages(orders, cancellationToken);
+        await _productService.AddNonAuctionWages(orders, cancellationToken);
         await _boothService.UpdateMedal(orders.Select(o => o.BoothId).ToList(), 
                                                              cancellationToken);
     }

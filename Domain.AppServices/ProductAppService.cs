@@ -29,7 +29,7 @@ public class ProductAppService : IProductAppService
                                                                    CancellationToken cancellationToken)
     {
         await _categoryService.EnsureExistById(categoryId, cancellationToken);
-        var categoriesIds = await _categoryService.GetSubcategoriesIdsByCategoryId(categoryId, 
+        var categoriesIds = await _categoryService.GetSubcategoriesIdsByCategoryId(categoryId,
                                                                                 cancellationToken);
         var products = await _productService.GetNonAuctionsByCategoryId(cancellationToken,
                                                                        categoriesIds.ToArray());
@@ -67,14 +67,14 @@ public class ProductAppService : IProductAppService
 
         await _boothService.EnsureExistBySellerId(sellerId, cancellationToken);
 
-         var newProductId = await _productService.Create(sellerId,
-                                                        createProduct.PersianTitle,
-                                                        createProduct.EnglishTitle,
-                                                        createProduct.Description,
-                                                        createProduct.CategoryId,
-                                                        SellType.NonAuction,
-                                                        false,
-                                                        cancellationToken);
+        var newProductId = await _productService.Create(sellerId,
+                                                       createProduct.PersianTitle,
+                                                       createProduct.EnglishTitle,
+                                                       createProduct.Description,
+                                                       createProduct.CategoryId,
+                                                       SellType.NonAuction,
+                                                       false,
+                                                       cancellationToken);
 
         await _productService.AddCustomAttributes(newProductId,
                                                   createProduct.CustomAttributes,
@@ -98,7 +98,7 @@ public class ProductAppService : IProductAppService
                                          createProduct.PictureDto,
                                          cancellationToken, false);
 
-       
+
         await _productService.SaveChangesAsync(cancellationToken);
     }
 
@@ -133,20 +133,14 @@ public class ProductAppService : IProductAppService
                                          false,
                                          cancellationToken);
 
-        
-        await _cartService.AddAuctionOrder(null, 
+
+        await _cartService.AddAuctionOrder(null,
                                            newProductId,
                                            0,
-                                           createProduct.MinPrice, 
+                                           createProduct.MinPrice,
                                            false,
                                            cancellationToken);
 
-        await _productService.AddQuantityRecord(newProductId,
-                                                createProduct.FirstQuantity,
-                                                DateTime.Now,
-                                                false,
-                                                cancellationToken,
-                                                false);
 
         await _productService.AddPicture(newProductId,
                                          createProduct.PictureDto,
@@ -162,11 +156,11 @@ public class ProductAppService : IProductAppService
         await _productService.Remove(productId, cancellationToken);
     }
 
-    public async Task UpdateNonAuction(int productId, 
+    public async Task UpdateNonAuction(int productId,
                                        UpdateNonAuctionProductDto productDto,
                                        CancellationToken cancellationToken)
     {
-        await _productService.UpdateNonAuctionProduct(productId,productDto,
+        await _productService.UpdateNonAuctionProduct(productId, productDto,
                                                     false, cancellationToken);
 
         await _productService.SaveChangesAsync(cancellationToken);
@@ -190,7 +184,7 @@ public class ProductAppService : IProductAppService
 
     public async Task<List<WageDto>> GetWages(CancellationToken cancellationToken)
     {
-       return await _productService.GetWages(cancellationToken);
+        return await _productService.GetWages(cancellationToken);
     }
 
     public async Task<int> GetNumberOfProductsForApprove(CancellationToken cancellationToken)
@@ -209,9 +203,27 @@ public class ProductAppService : IProductAppService
         return await _productService.GetAuctions(isApproved, cancellationToken);
     }
 
-    public async Task<List<ProductOutputDto>> GetAuctionsBySellerId(int id, 
+    public async Task<List<ProductOutputDto>> GetAuctionsBySellerId(int id,
                                                             CancellationToken cancellationToken)
     {
         return await _boothService.GetAuctionsBySellerId(id, cancellationToken);
+    }
+
+
+    public async Task FinalizeAuctionOrder(int sellerId, int productId, CancellationToken cancellationToken)
+    {
+        var order = await _productService.GetBestAuctionOrder(productId, cancellationToken);
+
+        await _productService.FinalizeAuctionOrder((int)order.CustomerId,
+                                                   productId, order.MaxPrice, cancellationToken);
+
+        await _productService.DeactiveAuction(productId, cancellationToken);
+        var booth = await _boothService.GetBoothBySellerId(sellerId, cancellationToken);
+        await _productService.AddAuctionWage(order.MaxPrice, booth.Wage, booth.Id, productId, cancellationToken);
+    }
+
+    public async Task DeactiveAuction(int productId, CancellationToken cancellationToken)
+    {
+        await _productService.DeactiveAuction(productId, cancellationToken);
     }
 }

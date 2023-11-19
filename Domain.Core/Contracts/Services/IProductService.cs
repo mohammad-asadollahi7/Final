@@ -64,11 +64,11 @@ public interface IProductService
                            CancellationToken cancellationToken,
                            bool isCommit);
 
-     Task AddQuantityRecord(int cartId,
-                            DateTime submitDate,
-                            bool isSold,
-                            CancellationToken cancellationToken,
-                            bool isCommit);
+    Task AddQuantityRecord(int cartId,
+                           DateTime submitDate,
+                           bool isSold,
+                           CancellationToken cancellationToken,
+                           bool isCommit);
 
     Task UpdateAuctionProduct(int productId,
                                AuctionDetailsDto productDto,
@@ -106,6 +106,17 @@ public interface IProductService
     Task<List<ProductOutputDto>> GetAuctions(bool? isApproved,
                                             CancellationToken cancellationToken);
 
-    Task AddWages(List<OrderWithProductDto> orderDtos,
+    Task AddNonAuctionWages(List<OrderWithProductDto> orderDtos,
                    CancellationToken cancellationToken);
+
+    Task FinalizeAuctionOrder(int customerId, int productId, 
+                                decimal price, CancellationToken cancellationToken);
+
+    Task<AuctionOrderDto> GetBestAuctionOrder(int productId,
+                                           CancellationToken cancellationToken);
+
+     Task DeactiveAuction(int productId, CancellationToken cancellationToken);
+
+    Task AddAuctionWage(decimal price, int wage,
+                        int boothId, int productId, CancellationToken cancellationToken);
 }

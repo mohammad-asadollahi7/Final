@@ -196,7 +196,8 @@ public class BoothRepository : IBoothRepository
                                         CancellationToken cancellationToken)
     {
         return await _context.Products.Where(p => p.IsDeleted == false && p.IsApproved == true
-                                       && p.Booth.Seller.Id == id && p.SellType == SellType.Auction)
+                                       && p.Booth.Seller.Id == id && p.SellType == SellType.Auction
+                                       && p.Auction.IsActive == true)
                                        .Select(p => new ProductOutputDto()
                                        {
                                            Id = p.Id,

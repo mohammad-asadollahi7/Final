@@ -24,5 +24,4 @@ public interface ICustomerService
 
     Task<UserOutputDto> Get(int id, CancellationToken cancellationToken);
 
-
 }

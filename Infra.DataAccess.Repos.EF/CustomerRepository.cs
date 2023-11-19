@@ -84,7 +84,5 @@ public class CustomerRepository : ICustomerRepository
                                                updateDto.NewPassword);
     }
 
-   
-
 }
 

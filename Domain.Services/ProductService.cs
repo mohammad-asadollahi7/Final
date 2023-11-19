@@ -314,7 +314,7 @@ public class ProductService : IProductService
         return products;
     }
 
-    public async Task AddWages(List<OrderWithProductDto> orderDtos,
+    public async Task AddNonAuctionWages(List<OrderWithProductDto> orderDtos,
                                CancellationToken cancellationToken)
     {
         List<CreateWageDto> wages = new();
@@ -339,6 +339,35 @@ public class ProductService : IProductService
         await _productRepository.AddWages(wages, cancellationToken);
     }
 
+    public async Task FinalizeAuctionOrder(int customerId, int productId, 
+                                        decimal price, CancellationToken cancellationToken)
+    {
+        await _productRepository.FinalizeAuctionOrder(customerId, productId, 
+                                                      price, cancellationToken);
+    }
 
-   
+    public async Task<AuctionOrderDto> GetBestAuctionOrder(int productId,
+                                             CancellationToken cancellationToken)
+    {
+        var order = await _productRepository.GetBestAuctionOrder(productId, cancellationToken);
+
+        if(order.CustomerId is null)
+            throw new AppException(ExpMessage.NoAuctionOrder,
+                                   ExpStatusCode.BadRequest);
+
+        return order;   
+    }
+
+    public async Task DeactiveAuction(int productId, CancellationToken cancellationToken)
+    {
+        await _productRepository.DeactiveAuction(productId, cancellationToken);
+    }
+
+    public async Task AddAuctionWage(decimal price, int wage, 
+                                    int boothId, int productId, CancellationToken cancellationToken)
+    {
+        var finalWage = price * (wage / 100m);
+        DateTime date = DateTime.Now;
+        await _productRepository.AddAuctionWage(finalWage, date, boothId, productId, cancellationToken);
+    }
 }

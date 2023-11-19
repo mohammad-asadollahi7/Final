@@ -88,6 +88,8 @@
 <div class="m-2 text-center">
     <a class="btn btn-primary" asp-area="seller" asp-action="updateAuction" asp-controller="product" asp-route-id="@Model.Id">بروزرسانی</a>
     <a class="btn btn-danger" asp-area="seller" asp-action="deleteAuction" asp-controller="product" asp-route-id="@Model.Id">حذف</a>
+    <a class="btn btn-secondary" asp-area="seller" asp-action="FinalizeAuctionOrder" asp-controller="product" asp-route-productId="@Model.Id">نهایی کردن مزایده</a>
+    <a class="btn btn-info" asp-area="seller" asp-action="DeactiveAuction" asp-controller="product" asp-route-productId="@Model.Id">غیرفعال کردن مزایده</a>
 </div>
 
 

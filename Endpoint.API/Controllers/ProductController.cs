@@ -198,12 +198,30 @@ public class ProductController : BaseController
 
     [HttpPost("CreateComment")]
     //[HaveAccess(Role.Customer)]
-
     public async Task<IActionResult> CreateComment(CreateCommentDto commentDto, 
                                 CancellationToken cancellationToken)
     {
         commentDto.CustomerId = CurrentUserId;
         await _commentAppService.Create(commentDto, cancellationToken);
+        return Ok();
+    }
+
+
+
+    [HttpGet("FinalizeAuctionOrder/{productId}")]
+    //[HaveAccess(Role.Seller)]
+    public async Task<IActionResult> FinalizeAuctionOrder(int productId, CancellationToken cancellationToken)
+    {
+        await _productAppService.FinalizeAuctionOrder(CurrentUserId, productId, cancellationToken);
+        return Ok();
+    }
+
+
+    [HttpPatch("DeactiveAuction/{productId}")]
+    //[HaveAccess(Role.Seller)]
+    public async Task<IActionResult> DeactiveAuction(int productId, CancellationToken cancellationToken)
+    {
+        await _productAppService.DeactiveAuction(productId, cancellationToken);
         return Ok();
     }
 

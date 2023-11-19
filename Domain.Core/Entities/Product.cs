@@ -22,6 +22,9 @@ public partial class Product
 
     public bool? IsApproved { get; set; }
 
+    public FinalAuctionOrder? FinalAuctionOrder { get; set; }
+
+
     public virtual ICollection<AuctionOrder> AuctionOrders { get; set; } = new List<AuctionOrder>();
 
     public virtual Booth Booth { get; set; } = null!;

@@ -52,5 +52,8 @@ public interface IProductAppService
                                            CancellationToken cancellationToken);
 
 
+     Task FinalizeAuctionOrder(int sellerId, int productId, CancellationToken cancellationToken);
+
+     Task DeactiveAuction(int productId, CancellationToken cancellationToken);
 
 }

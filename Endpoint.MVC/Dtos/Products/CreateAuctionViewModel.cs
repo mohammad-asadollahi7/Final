@@ -18,7 +18,6 @@ public class CreateAuctionViewModel
     public decimal MinPrice { get; set; }
     public string BoothTitle { get; set; }
     public SellType SellType { get; set; }
-    public int FirstQuantity { get; set; }
 
     public IEnumerable<CustomAttributeDto> CustomAttributes { get; set; }
 

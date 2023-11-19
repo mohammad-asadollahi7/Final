@@ -54,10 +54,24 @@ public class FinalContext : IdentityDbContext<ApplicationUser, IdentityRole<int>
     public virtual DbSet<CategoryPicture> CategoryPicture { get; set; }
     public virtual DbSet<Wage> Wages { get; set; }
 
-
+    public virtual DbSet<FinalAuctionOrder> FinalAuctionOrders { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+
+        modelBuilder.Entity<FinalAuctionOrder>(entity =>
+        {
+            entity.HasOne(e => e.Product).WithOne(p => p.FinalAuctionOrder)
+                                .HasForeignKey<FinalAuctionOrder>(e => e.ProductId)
+                                 .OnDelete(DeleteBehavior.ClientSetNull);
+
+            entity.HasOne(e => e.Customer).WithMany(p => p.FinalAuctionOrders)
+                                .HasForeignKey(e => e.CustomerId)
+                                 .OnDelete(DeleteBehavior.ClientSetNull);
+        });
+
+
+
         modelBuilder.Entity<BoothPicture>(entity =>
         {
             entity.HasIndex(p => p.BoothId).IsUnique();

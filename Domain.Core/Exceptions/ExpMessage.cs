@@ -33,5 +33,6 @@ public static class ExpMessage
     public static string NotFoundWage { get; } = "کارمزدی  پیدا نشد";
     public static string NotHaveOrder { get; } = "سبد خرید خالی است";
     public static string HasNotBuyed { get; } = "شمااین محصول را قبلا خریداری نکرده اید و قادر به ثبت نظر نیستید";
+    public static string NoAuctionOrder { get; } = "هیچ پیشنهادی برای این مزایده ثبت نشده است";
 
 }

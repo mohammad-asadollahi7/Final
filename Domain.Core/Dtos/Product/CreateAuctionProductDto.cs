@@ -14,8 +14,6 @@ public class CreateAuctionProductDto
 
     public int BoothId { get; set; }
 
-    public int FirstQuantity { get; set; }
-
     public int CategoryId { get; set; }
 
     public DateTime FromDate { get; set; }

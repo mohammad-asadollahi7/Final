@@ -19,7 +19,7 @@ public interface IProductRepository
                                                           CancellationToken cancellationToken);
 
     Task<List<ProductOutputApprove>> GetProductsForApprove(CancellationToken cancellationToken);
-    
+
     Task<SellType> GetSellType(int productId, CancellationToken cancellationToken);
 
     Task<int> Create(int sellerId,
@@ -84,11 +84,11 @@ public interface IProductRepository
 
 
 
-     Task UpdateNonAuctionPrice(int productId,
-                                decimal price,
-                                int discount,
-                                bool isCommit,
-                                CancellationToken cancellationToken);
+    Task UpdateNonAuctionPrice(int productId,
+                               decimal price,
+                               int discount,
+                               bool isCommit,
+                               CancellationToken cancellationToken);
 
     Task<bool> Delete(int productId,
                       CancellationToken cancellationToken);
@@ -104,7 +104,7 @@ public interface IProductRepository
     Task<bool> IsExistById(int id, bool? isApproved, CancellationToken cancellationToken);
 
 
-    Task ApproveProduct(int id, bool isApproved,CancellationToken cancellationToken);
+    Task ApproveProduct(int id, bool isApproved, CancellationToken cancellationToken);
 
     Task SaveChangesAsync(CancellationToken cancellationToken);
 
@@ -116,6 +116,16 @@ public interface IProductRepository
 
     Task AddWages(List<CreateWageDto> createWageDtos,
                   CancellationToken cancellationToken);
-    
+
+    Task FinalizeAuctionOrder(int customerId, int productId,
+                        decimal price, CancellationToken cancellationToken);
+
+    Task<AuctionOrderDto> GetBestAuctionOrder(int productId,
+                                          CancellationToken cancellationToken);
+
+    Task DeactiveAuction(int productId, CancellationToken cancellationToken);
+
+     Task AddAuctionWage(decimal finalWage, DateTime date,
+                              int boothId, int productId, CancellationToken cancellationToken);
 
 }

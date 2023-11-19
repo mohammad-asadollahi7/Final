@@ -280,7 +280,6 @@ public class ProductController : SellerBaseController
             Description = model.Description,
             MinPrice = model.MinPrice,
             CategoryId = model.CategoryId,
-            FirstQuantity = model.FirstQuantity,
             FromDate = model.FromDate,
             ToDate = model.ToDate,
             CustomAttributes = model.CustomAttributes.ToList(),
@@ -300,5 +299,29 @@ public class ProductController : SellerBaseController
 
 
 
+    public async Task<IActionResult> FinalizeAuctionOrder(int productId, 
+                                        CancellationToken cancellationToken)
+    {
+        var httpResponseMessage = await SendGetRequest($"product/FinalizeAuctionOrder/{productId}",
+                                                                cancellationToken);
+
+        if (!httpResponseMessage.IsSuccessStatusCode)
+            return RedirectToErrorPage(httpResponseMessage);
+
+        return RedirectToAction(nameof(GetAuctions));
+    }
+
+
+    public async Task<IActionResult> DeactiveAuction(int productId,
+                                            CancellationToken cancellationToken)
+    {
+        var httpResponseMessage = await SendPatchRequest($"product/DeactiveAuction/{productId}",
+                                                                  cancellationToken);
+
+        if (!httpResponseMessage.IsSuccessStatusCode)
+            return RedirectToErrorPage(httpResponseMessage);
+
+        return RedirectToAction(nameof(GetAuctions));
+    }
 
 }

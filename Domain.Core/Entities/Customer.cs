@@ -11,7 +11,9 @@ public partial class Customer
 
     public virtual ApplicationUser ApplicationUser { get; set; } = null!;
 
+
     public virtual ICollection<AuctionOrder> AuctionOrders { get; set; } = new List<AuctionOrder>();
+    public virtual ICollection<FinalAuctionOrder> FinalAuctionOrders { get; set; } = new List<FinalAuctionOrder>();
 
     public virtual ICollection<Cart> Carts { get; set; } = new List<Cart>();
 }

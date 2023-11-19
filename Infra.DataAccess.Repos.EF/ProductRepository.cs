@@ -454,7 +454,8 @@ public class ProductRepository : IProductRepository
         return await _context.Products.Where(p => p.IsDeleted == false
                                 && p.IsApproved == isApproved
                                 && p.SellType == SellType.Auction
-                                && p.Auction.ToDate > DateTime.Now)
+                                && p.Auction.ToDate > DateTime.Now
+                                & p.Auction.IsActive == true)
                                 .Select(p => new ProductOutputDto()
                                 {
                                     Id = p.Id,
@@ -486,5 +487,51 @@ public class ProductRepository : IProductRepository
         await _context.Wages.AddRangeAsync(wages, cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);
     }
-}
 
+
+    public async Task FinalizeAuctionOrder(int customerId, int productId, 
+                                decimal price, CancellationToken cancellationToken)
+    {
+        var newOrder = new FinalAuctionOrder()
+        {
+            CustomerId = customerId,
+            Price = price,
+            ProductId = productId
+        };
+
+        await _context.FinalAuctionOrders.AddAsync(newOrder, cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task<AuctionOrderDto> GetBestAuctionOrder(int productId,
+                                             CancellationToken cancellationToken)
+    {
+        return await _context.AuctionOrders.Where(a => a.ProductId == productId)
+                                .OrderByDescending(a => a.Price).Take(1).Select(a => new AuctionOrderDto()
+                                {
+                                    CustomerId = a.CustomerId,
+                                    MaxPrice = a.Price,
+                                }).FirstAsync(cancellationToken);
+    }
+
+    public async Task DeactiveAuction(int productId, CancellationToken cancellationToken)
+    {
+        var order = await _context.Auctions.FirstOrDefaultAsync(a => a.ProductId == productId);
+        order.IsActive = false;
+        await _context.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task AddAuctionWage(decimal finalWage, DateTime date,
+                               int boothId, int productId, CancellationToken cancellationToken)
+    {
+        var newWage = new Wage()
+        {
+            BoothId = boothId,
+            Date = date,
+            ProductId = productId,
+            Wages = finalWage
+        };
+        await _context.Wages.AddAsync(newWage, cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
+    }
+}
