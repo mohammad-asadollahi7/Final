@@ -3,6 +3,7 @@ using Domain.Core.Dtos;
 using Domain.Core.Dtos.Account;
 using Domain.Core.Entities;
 using Domain.Core.Enums;
+using Endpoint.API.CustomAttributes;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -54,15 +55,16 @@ public class AccountController : BaseController
 
 
     [HttpGet("GetUsers")]
-    //[HaveAccess(Role.Admin)]
+    [HaveAccess(Role.Admin)]
     public async Task<IActionResult> GetUsers(CancellationToken cancellationToken)
     {
         var users = await _accountAppService.GetUsers(cancellationToken);
         return Ok(users);
     }
 
+
     [HttpDelete("DeleteUser/{userId}")]
-    //[HaveAccess(Role.Admin)]
+    [HaveAccess(Role.Admin)]
     public async Task<IActionResult> DeleteUser(int userId, Role role,
                                             CancellationToken cancellationToken)
     {
@@ -72,15 +74,16 @@ public class AccountController : BaseController
 
 
     [HttpGet("GetUserNumbers")]
-    //[HaveAccess(Role.Admin)]
+    [HaveAccess(Role.Admin)]
     public async Task<IActionResult> GetUserNumbers(CancellationToken cancellationToken)
     {
         var numberOfUsers = await _accountAppService.GetUserNumbers(cancellationToken);
         return Ok(numberOfUsers);
     }
 
+
     [HttpPost("Update")]
-    //[HaveAccess(Role.Admin, Role.Seller, Role.Customer)]
+    [HaveAccess(Role.Admin, Role.Seller, Role.Customer)]
     public async Task Update(UpdateUserDto updateDto,
                             CancellationToken cancellationToken)
     {
@@ -92,7 +95,7 @@ public class AccountController : BaseController
 
 
     [HttpGet("Get")]
-    //[HaveAccess(Role.Admin, Role.Seller, Role.Customer)]
+    [HaveAccess(Role.Admin, Role.Seller, Role.Customer)]
     public async Task<IActionResult> Get(CancellationToken cancellationToken)
     {
         var user = await _accountAppService.Get(CurrentUserId, 

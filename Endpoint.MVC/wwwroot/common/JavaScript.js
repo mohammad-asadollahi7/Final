@@ -1,5 +1,19 @@
 ﻿
 function GetAttributeTitles() {
+
+    let cookies = document.cookie;
+    let cookieArray = cookies.split("; ");
+
+    for (let i = 0; i < cookieArray.length; i++) {
+        let cookie = cookieArray[i];
+        let [name, value] = cookie.split("=");
+
+        if (name === 'authorize') {
+            var token = 'Bearer ' + decodeURIComponent(value);
+        }
+    }
+
+
     var container_div = document.getElementById("attributeDiv");
     container_div.innerHTML = "";
 
@@ -11,6 +25,9 @@ function GetAttributeTitles() {
         url: `http://localhost:5153/api/Category/GetCustomAttributeTitles/` + categoryId,
         type: 'get',
         dataType: 'json',
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization', token);
+        },
         success: function (response) {
 
             for (var i = 0; i < response.length; i++) {
@@ -49,7 +66,7 @@ function GetAttributeTitles() {
         },
         error: function (error) {
 
-            alert(JSON.stringify(error.responseText));
+            alert('لطفا وارد شوید');
         }
     })
 }

@@ -20,7 +20,7 @@ public class BoothController : BaseController
 
 
     [HttpGet("GetBySellerId")]
-    //[HaveAccess(Role.Seller)]
+    [HaveAccess(Role.Seller)]
     public async Task<IActionResult> GetBoothBySellerId(CancellationToken cancellationToken)
     {
         var booth = await _boothAppService.GetBySellerId(CurrentUserId, 
@@ -30,7 +30,7 @@ public class BoothController : BaseController
 
 
     [HttpGet("GetNonAuctionsByBoothTitle/{title}")]
-    //[HaveAccess(Role.Customer)]
+    [HaveAccess(Role.Customer, Role.Admin)]
     public async Task<IActionResult> GetNonAuctionsByBoothTitle(string title,
                                             CancellationToken cancellationToken)
     {
@@ -41,7 +41,7 @@ public class BoothController : BaseController
 
 
     [HttpPost("Create")]
-    //[HaveAccess(Role.Seller)]
+    [HaveAccess(Role.Seller)]
     public async Task<IActionResult> Create(CreateBoothDto boothDto,
                                              CancellationToken cancellationToken)
     {
@@ -51,7 +51,7 @@ public class BoothController : BaseController
 
 
     [HttpPut("Update/{boothId}")]
-    //[HaveAccess(Role.Seller)]
+    [HaveAccess(Role.Seller, Role.Admin)]
     public async Task<IActionResult> Update(int boothId, UpdateBoothDto boothDto,
                                               CancellationToken cancellationToken)
     {
@@ -60,7 +60,7 @@ public class BoothController : BaseController
     }
 
     [HttpDelete("Delete/{boothId}")]
-    //[HaveAccess(Role.Seller, Role.Admin)]
+    [HaveAccess(Role.Seller, Role.Admin)]
     public async Task<IActionResult> Delete(int boothId, 
                                         CancellationToken cancellationToken)
     {
@@ -69,7 +69,7 @@ public class BoothController : BaseController
     }
 
     [HttpGet("GetById/{boothId}")]
-    //[HaveAccess(Role.Admin, Role.Customer)]
+    [HaveAccess(Role.Admin, Role.Customer)]
     public async Task<IActionResult> GetById(int boothId, 
                                              CancellationToken cancellationToken)
     {
@@ -79,7 +79,7 @@ public class BoothController : BaseController
 
 
     [HttpGet("GetByTitle/{title}")]
-    //[HaveAccess(Role.Admin, Role.Customer)]
+    [HaveAccess(Role.Admin, Role.Customer)]
     public async Task<IActionResult> GetByTitle(string title,
                                               CancellationToken cancellationToken)
     {
@@ -89,7 +89,7 @@ public class BoothController : BaseController
 
 
     [HttpGet("GetNonAuctionsBySellerId")]
-    //[HaveAccess(Role.Seller)]
+    [HaveAccess(Role.Seller)]
     public async Task<IActionResult> GetNonAuctionsBySellerId(CancellationToken cancellationToken)
     {
         var products = await _boothAppService.GetNonAuctionsBySellerId(CurrentUserId, 
@@ -100,7 +100,7 @@ public class BoothController : BaseController
 
 
     [HttpGet("GetAuctionsBySellerId")]
-    //[HaveAccess(Role.Seller)]
+    [HaveAccess(Role.Seller)]
     public async Task<IActionResult> GetAuctionsBySellerId(CancellationToken cancellationToken)
     {
         var products = await _boothAppService.GetAuctionsBySellerId(CurrentUserId,

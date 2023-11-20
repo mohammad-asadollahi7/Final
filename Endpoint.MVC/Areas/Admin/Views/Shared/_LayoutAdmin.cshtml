@@ -345,18 +345,34 @@
 
     <script>
         window.onload = function () {
+
+             let cookies = document.cookie;
+            let cookieArray = cookies.split("; ");
+
+            for (let i = 0; i < cookieArray.length; i++) {
+                let cookie = cookieArray[i];
+                let [name, value] = cookie.split("=");
+
+                if (name === 'authorize') {
+                    var token = 'Bearer ' + decodeURIComponent(value);
+                }
+            }
+
             $.ajax({
 
                 url: `http://localhost:5153/api/Product/GetNumberOfProductsForApprove`,
                 type: 'get',
                 dataType: 'json',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', token);
+                },
                 success: function (response) {
                     var num_tag = document.getElementById('product_number');
                     num_tag.innerHTML = response;
                 },
                 error: function (error) {
 
-                    alert(JSON.stringify(error.responseText));
+                    alert('عدم دسترسی');
                 }
             })
 
@@ -365,13 +381,16 @@
                 url: `http://localhost:5153/api/Product/GetNumberOfCommentsForApprove`,
                 type: 'get',
                 dataType: 'json',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', token);
+                },
                 success: function (response) {
                     var num_tag = document.getElementById('comment_number');
                     num_tag.innerHTML = response;
                 },
                 error: function (error) {
 
-                    alert(JSON.stringify(error.responseText));
+                    alert('عدم دسترسی');
                 }
             })
 
@@ -380,13 +399,16 @@
                 url: `http://localhost:5153/api/Account/GetUserNumbers`,
                 type: 'get',
                 dataType: 'json',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', token);
+                },
                 success: function (response) {
                     var num_tag = document.getElementById('user_number');
                     num_tag.innerHTML = response;
                 },
                 error: function (error) {
 
-                    alert(JSON.stringify(error.responseText));
+                    alert('عدم دسترسی');
                 }
             })
 
@@ -397,13 +419,16 @@
                 url: `http://localhost:5153/api/Product/GetWageNumbers`,
                 type: 'get',
                 dataType: 'json',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', token);
+                },
                 success: function (response) {
                     var num_tag = document.getElementById('wage_number');
                     num_tag.innerHTML = response;
                 },
                 error: function (error) {
 
-                    alert(JSON.stringify(error.responseText));
+                    alert('عدم دسترسی');
                 }
             })
 

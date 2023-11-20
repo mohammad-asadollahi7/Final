@@ -9,7 +9,7 @@ namespace Endpoint.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-//[Authorize(AuthenticationSchemes = "Bearer")]
+[Authorize(AuthenticationSchemes = "Bearer")]
 [EnableCors("AllowMyFrontEnd")]
 public class BaseController : ControllerBase
 {

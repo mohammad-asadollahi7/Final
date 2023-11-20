@@ -19,7 +19,7 @@ public class CartController : BaseController
 
 
     [HttpGet("AddProduct/{productId}")]
-    //[HaveAccess(Role.Customer)]
+    [HaveAccess(Role.Customer)]
     public async Task<IActionResult> AddProductToCart(int productId, 
                                                 CancellationToken cancellationToken)
     {
@@ -33,7 +33,7 @@ public class CartController : BaseController
 
 
     [HttpGet("GetByStatus")]
-    //[HaveAccess(Role.Customer, Role.Admin)]
+    [HaveAccess(Role.Customer, Role.Admin)]
     public async Task<IActionResult> GetByCartStatus(CartStatus cartStatus,
                                                      CancellationToken cancellationToken)
     {
@@ -46,7 +46,7 @@ public class CartController : BaseController
 
 
     [HttpGet("GetCurrentCartByCustomerId")]
-   // [HaveAccess(Role.Customer)]
+    [HaveAccess(Role.Customer)]
     public async Task<IActionResult> GetCurrentCartByCustomerId(CancellationToken
                                                                     cancellationToken)
     {
@@ -59,7 +59,7 @@ public class CartController : BaseController
 
 
     [HttpGet("GetByCustomerId")]
-   // [HaveAccess(Role.Customer)]
+    [HaveAccess(Role.Customer)]
     public async Task<IActionResult> GetAllByCustomerId(CancellationToken cancellationToken)
     {
         var carts = await _cartAppService.GetAllByCustomerId(CurrentUserId, cancellationToken);
@@ -69,7 +69,7 @@ public class CartController : BaseController
 
 
     [HttpDelete("DeleteOrder/{orderId}")]
-   // [HaveAccess(Role.Customer)]
+    [HaveAccess(Role.Customer)]
     public async Task<IActionResult> DeleteOrder(int orderId,
                                                  CancellationToken cancellationToken)
     {
@@ -80,7 +80,7 @@ public class CartController : BaseController
 
 
     [HttpGet("GetDetailsByCartId/{cartId}")]
-   // [HaveAccess(Role.Customer)]
+    [HaveAccess(Role.Customer)]
     public async Task<IActionResult> GetDetailsByCartId(int cartId,
                                                         CancellationToken cancellationToken)
     {
@@ -90,7 +90,7 @@ public class CartController : BaseController
 
 
     [HttpPatch("FinalizeCart/{cartId}")]
-    //[HaveAccess(Role.Customer, Role.Admin)]
+    [HaveAccess(Role.Customer, Role.Admin)]
     public async Task<IActionResult> FinalizeCart(int cartId, CancellationToken cancellationToken)
     {
         await _cartAppService.FinalizeCart(cartId, cancellationToken);
@@ -98,7 +98,7 @@ public class CartController : BaseController
     }
 
     [HttpPatch("CancelCart/{cartId}")]
-   // [HaveAccess(Role.Customer, Role.Admin)]
+    [HaveAccess(Role.Customer, Role.Admin)]
     public async Task<IActionResult> CancelCart(int cartId, CancellationToken cancellationToken)
     {
         await _cartAppService.CancelCart(cartId, cancellationToken);
@@ -108,7 +108,7 @@ public class CartController : BaseController
 
 
     [HttpPost("AddAuctionOrder")]
-  //  [HaveAccess(Role.Customer)]
+    [HaveAccess(Role.Customer)]
     public async Task AddAuctionOrder([FromBody] AddAuctionOrderDto orderDto,
                                       CancellationToken cancellationToken)
     {
