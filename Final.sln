@@ -31,7 +31,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infra.DataAccess.Repos.EF",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infra.DataAccess.Repos.Dapper", "Infra.DataAccess.Repos.Dapper\Infra.DataAccess.Repos.Dapper.csproj", "{37B5CEEA-C5B4-470C-834F-2CEAE36C7A12}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Endpoint.MVC", "Endpoint.MVC\Endpoint.MVC.csproj", "{2D39C2C4-3130-4799-89DE-D83D69FC968E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Endpoint.MVC", "Endpoint.MVC\Endpoint.MVC.csproj", "{2D39C2C4-3130-4799-89DE-D83D69FC968E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
